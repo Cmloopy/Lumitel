@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="blue">#0072BC</color>
+    <color name="yellow">#FFF200</color>
+
+    <color name="orange">#F7941E</color>
+    <color name="gray">#A7A9AC</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="orange_1">#F26522</color>
+    <color name="orange_2">#F47920</color>
+    <color name="blue_1">#006AB6</color>
+    <color name="blue_2">#153C66</color>
+    <color name="blue_3">#007AFF</color>
+    <color name="pp">#7D4F58</color>
 </resources>

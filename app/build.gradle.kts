@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.cmloopy.lumitel"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.cmloopy.lumitel"
@@ -32,6 +32,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    dataBinding{
+        enable = true
+    }
+    viewBinding {
+        enable = true
     }
 }
 

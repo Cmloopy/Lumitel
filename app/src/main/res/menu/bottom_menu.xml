@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/frg_home"
+        android:title="Home"
+        android:icon="@drawable/ic_menu_home"/>
+    <item
+        android:id="@+id/frg_phone"
+        android:title="Phone"
+        android:icon="@drawable/ic_menu_phone"/>
+    <item
+        android:id="@+id/frg_selfcare"
+        android:title="Selfcare"
+        android:icon="@drawable/ic_menu_selfcare"/>
+    <item
+        android:id="@+id/frg_video"
+        android:title="Video"
+        android:icon="@drawable/ic_menu_video"/>
+    <item
+        android:id="@+id/frg_account"
+        android:title="Account"
+        android:icon="@drawable/ic_menu_account"/>
+</menu>
