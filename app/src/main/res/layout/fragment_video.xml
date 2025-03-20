@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.VideoFragment">
+
+    <LinearLayout
+        android:id="@+id/ln_tab"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:paddingBottom="15dp"
+        android:background="@drawable/subtract"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_category"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_width="270dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom"/>
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="3"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/btn_video_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_bell"/>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/btn_video_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:src="@drawable/ic_group"/>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/btn_video_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:src="@drawable/ic_more"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpg_tab_category"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ln_tab" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

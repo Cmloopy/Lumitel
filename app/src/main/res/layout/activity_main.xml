@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="false"
+    tools:context=".views.MainActivity">
 
     <FrameLayout
         android:id="@+id/frm_container"
@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         app:labelVisibilityMode="labeled"
         android:paddingTop="2dp"
+        app:itemBackground="@android:color/transparent"
         app:itemTextColor="@color/bottom_item_active"
         app:itemIconTint="@color/bottom_item_active"
         app:layout_constraintBottom_toBottomOf="parent"
