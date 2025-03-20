@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Lumitel</string>
+    <string name="home">Home</string>
+    <string name="phone">Phone</string>
+    <string name="selfcare">Selfcare</string>
+    <string name="video">Video</string>
+    <string name="account">Account</string>
 </resources>

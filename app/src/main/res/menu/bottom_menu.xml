@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/frg_home"
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/ic_menu_home"/>
     <item
         android:id="@+id/frg_phone"
-        android:title="Phone"
+        android:title="@string/phone"
         android:icon="@drawable/ic_menu_phone"/>
     <item
         android:id="@+id/frg_selfcare"
-        android:title="Selfcare"
+        android:title="@string/selfcare"
         android:icon="@drawable/ic_menu_selfcare"/>
     <item
         android:id="@+id/frg_video"
-        android:title="Video"
+        android:title="@string/video"
         android:icon="@drawable/ic_menu_video"/>
     <item
         android:id="@+id/frg_account"
-        android:title="Account"
+        android:title="@string/account"
         android:icon="@drawable/ic_menu_account"/>
 </menu>
