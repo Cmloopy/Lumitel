@@ -7,15 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cmloopy.lumitel.R
-import com.cmloopy.lumitel.viewmodels.PhoneFragmentViewModel
 
 class PhoneFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = PhoneFragment()
-    }
-
-    private val viewModel: PhoneFragmentViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
