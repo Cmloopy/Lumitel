@@ -10,7 +10,8 @@ class VideoCategoryAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     private val fragments = listOf(
         AccountFragment(),
         HomeFragment(),
-        PhoneFragment()
+        PhoneFragment(),
+        AccountFragment()
     )
     override fun getItemCount(): Int = fragments.size
 
