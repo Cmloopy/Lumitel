@@ -5,6 +5,6 @@
     android:layout_height="wrap_content"
     android:textColor="@color/blue_4"
     android:textSize="15sp"
-    android:gravity="center|top"
+    android:gravity="center"
     android:textAllCaps="false"
-    android:textStyle="bold"/>
+    android:textStyle="normal"/>

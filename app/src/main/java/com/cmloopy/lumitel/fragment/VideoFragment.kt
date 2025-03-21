@@ -1,5 +1,6 @@
 package com.cmloopy.lumitel.fragment
 
+import android.graphics.Typeface
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.view.Gravity
@@ -51,14 +52,14 @@ class VideoFragment : Fragment() {
             override fun onTabSelected(p0: TabLayout.Tab?) {
                 val customView = p0?.customView
                 customView?.findViewById<TextView>(R.id.tabText)?.apply {
-                    textSize = 24f
+                    textSize = 25f
                     setTextColor(ContextCompat.getColor(context, R.color.blue_3))
                 }
             }
             override fun onTabUnselected(p0: TabLayout.Tab?) {
                 val customView = p0?.customView
                 customView?.findViewById<TextView>(R.id.tabText)?.apply {
-                    textSize = 14f
+                    textSize = 15f
                     setTextColor(ContextCompat.getColor(context, R.color.blue_4))
                 }
             }

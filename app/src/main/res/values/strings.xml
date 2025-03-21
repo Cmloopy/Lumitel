@@ -5,4 +5,6 @@
     <string name="selfcare">Selfcare</string>
     <string name="video">Video</string>
     <string name="account">Account</string>
+    <string name="short_video">Short video</string>
+    <string name="hot_video">Hot video</string>
 </resources>

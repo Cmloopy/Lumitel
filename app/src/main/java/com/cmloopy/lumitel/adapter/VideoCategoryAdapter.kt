@@ -3,14 +3,13 @@ package com.cmloopy.lumitel.adapter
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.cmloopy.lumitel.fragment.AccountFragment
-import com.cmloopy.lumitel.fragment.HomeFragment
-import com.cmloopy.lumitel.fragment.PhoneFragment
+import com.cmloopy.lumitel.fragment.HotVideoFragment
 
 class VideoCategoryAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     private val fragments = listOf(
+        HotVideoFragment(),
         AccountFragment(),
-        HomeFragment(),
-        PhoneFragment(),
+        AccountFragment(),
         AccountFragment()
     )
     override fun getItemCount(): Int = fragments.size

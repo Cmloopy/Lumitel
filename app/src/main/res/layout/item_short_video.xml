@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="135dp"
+    android:layout_height="225dp">
+
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/video_view_short"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_title_short_video"
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="25dp"
+        android:text="Quán lẩu mà sinh viên cực thích"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textStyle="bold"
+        android:textSize="11sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_view_short_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="26 lượt xem"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="5dp"
+        android:textSize="11sp"/>
+</FrameLayout>
