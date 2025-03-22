@@ -1,5 +1,6 @@
 package com.cmloopy.lumitel.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,13 +8,27 @@ import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.ShortVideo
+import com.cmloopy.lumitel.utils.VideoThumb
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
-class ShortVideoAdapter(private val shortVideoList : List<ShortVideo>): RecyclerView.Adapter<ShortVideoAdapter.ShortVideoViewHolder>() {
+class ShortVideoAdapter(private val context: Context,private var shortVideoList : List<ShortVideo>)
+    : RecyclerView.Adapter<ShortVideoAdapter.ShortVideoViewHolder>() {
     inner class ShortVideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var urlShort = itemView.findViewById<PlayerView>(R.id.video_view_short)
+        var thumb = itemView.findViewById<ShapeableImageView>(R.id.img_thumbnail)
         var title = itemView.findViewById<MaterialTextView>(R.id.txt_title_short_video)
         var view = itemView.findViewById<MaterialTextView>(R.id.txt_view_short_video)
+        fun bind(video: ShortVideo){
+            title.text = video.title
+
+            thumb.setImageResource(video.img)
+
+            view.text = "${video.view} lượt xem"
+
+            itemView.setOnClickListener {
+
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShortVideoViewHolder {
@@ -26,6 +41,12 @@ class ShortVideoAdapter(private val shortVideoList : List<ShortVideo>): Recycler
     }
 
     override fun onBindViewHolder(holder: ShortVideoViewHolder, position: Int) {
+        val video = shortVideoList[position]
+        holder.bind(video)
+    }
 
+    fun updateData(newList: List<ShortVideo>) {
+        shortVideoList = newList
+        notifyDataSetChanged()
     }
 }

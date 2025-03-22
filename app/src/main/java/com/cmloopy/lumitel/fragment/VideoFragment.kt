@@ -36,6 +36,8 @@ class VideoFragment : Fragment() {
         val adapter = VideoCategoryAdapter(this)
         binding.vpgTabCategory.adapter = adapter
 
+        binding.vpgTabCategory.isUserInputEnabled = false
+
         //Gán fragment với tab
         val tabTitles = listOf("Hot", "Funny", "News", "Motivasaun")
         TabLayoutMediator(binding.tabCategory, binding.vpgTabCategory) { tab, position ->
@@ -44,8 +46,6 @@ class VideoFragment : Fragment() {
             textView.text = tabTitles[position]
             tab.customView = customView
         }.attach()
-
-        binding.tabCategory
 
         //Set hiệu ứng khi chọn tab & kéo đến tab
         binding.tabCategory.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
