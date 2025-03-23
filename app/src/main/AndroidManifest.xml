@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Lumitel"
         tools:targetApi="31">
         <activity
-            android:name=".ShortVideoActivity"
+            android:name=".views.ShortVideoActivity"
             android:exported="false" />
         <activity
             android:name=".views.MainActivity"

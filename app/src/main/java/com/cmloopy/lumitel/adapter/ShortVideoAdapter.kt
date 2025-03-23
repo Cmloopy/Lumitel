@@ -1,6 +1,7 @@
 package com.cmloopy.lumitel.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.ShortVideo
 import com.cmloopy.lumitel.utils.VideoThumb
+import com.cmloopy.lumitel.views.ShortVideoActivity
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
@@ -26,7 +28,9 @@ class ShortVideoAdapter(private val context: Context,private var shortVideoList 
             view.text = "${video.view} lượt xem"
 
             itemView.setOnClickListener {
-
+                val context = itemView.context
+                val intent = Intent(context, ShortVideoActivity::class.java)
+                context.startActivity(intent)
             }
         }
     }
