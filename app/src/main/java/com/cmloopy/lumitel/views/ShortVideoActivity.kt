@@ -24,6 +24,11 @@ class ShortVideoActivity : AppCompatActivity() {
         viewModel.videos.observe(this, Observer { videos ->
             adapter.updateData(videos)
         })
+
+        binding.btnDropBack.setOnClickListener {
+            onBackPressed()
+            finish()
+        }
     }
     override fun onDestroy() {
         super.onDestroy()

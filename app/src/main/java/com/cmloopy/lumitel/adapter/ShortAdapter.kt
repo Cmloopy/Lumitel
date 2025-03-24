@@ -1,7 +1,9 @@
 package com.cmloopy.lumitel.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.net.Uri
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.ShortVideo
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
 class ShortAdapter(private val context: Context, private var shortList: List<ShortVideo>) :
@@ -21,15 +24,19 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
 
     inner class ShortViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var playerView: PlayerView = itemView.findViewById(R.id.player_view_short_video)
-        var like: MaterialTextView = itemView.findViewById(R.id.txt_number_like)
-        var cmt: MaterialTextView = itemView.findViewById(R.id.txt_number_cmt)
-        var share: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
+        var scLike: MaterialTextView = itemView.findViewById(R.id.txt_number_like)
+        var btnLike: ShapeableImageView = itemView.findViewById(R.id.btn_like)
+        var scCmt: MaterialTextView = itemView.findViewById(R.id.txt_number_cmt)
+        var btnCmt: ShapeableImageView = itemView.findViewById(R.id.btn_like)
+        var scShare: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
+        var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_like)
+        var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
         var player: ExoPlayer? = null
 
         fun bind(context: Context, video: ShortVideo) {
-            like.text = video.like.toString()
-            cmt.text = video.cmt.toString()
-            share.text = video.share.toString()
+            scLike.text = video.like.toString()
+            scCmt.text = video.cmt.toString()
+            scShare.text = video.share.toString()
 
             val uri = Uri.parse("android.resource://${context.packageName}/${video.urlShort}")
 
@@ -40,6 +47,23 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
                 playWhenReady = false
             }
             playerView.player = player
+
+            btnLike.setOnClickListener {
+                btnLike.setColorFilter(Color.parseColor("#FF3B30"))
+            }
+
+            itemView.setOnClickListener {
+                player?.let {
+                    if(it.isPlaying){
+                        it.pause()
+                        btnPauseResume.visibility = View.VISIBLE
+                    }
+                    else {
+                        it.play()
+                        btnPauseResume.visibility = View.GONE
+                    }
+                }
+            }
         }
 
         fun playVideo() {

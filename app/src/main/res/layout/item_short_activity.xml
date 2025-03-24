@@ -122,4 +122,12 @@
             android:layout_marginTop="8dp"
             android:text="Thủ Tướng Chỉ Đạo 10 Tỉnh, Thành Phố Chuẩn Bị Sẵn Sàng Để Hỗ Trợ Hà Nội Phòng, Chống Dịch Covid-19 | Tin Nóng ANTV"/>
     </LinearLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/btn_pause_resume"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:src="@drawable/ic_pause"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
 </FrameLayout>
