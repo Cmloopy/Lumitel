@@ -14,6 +14,6 @@ class HotVideoViewModel : ViewModel() {
         loadVideos()
     }
     private fun loadVideos() {
-        _videos.value = repository.getShort()
+        _videos.value = repository.getShortExample()
     }
 }
