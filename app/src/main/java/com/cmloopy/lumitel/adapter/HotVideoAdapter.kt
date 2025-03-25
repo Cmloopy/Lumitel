@@ -1,0 +1,46 @@
+package com.cmloopy.lumitel.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.cmloopy.lumitel.R
+import com.cmloopy.lumitel.data.models.Video
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.textview.MaterialTextView
+
+class HotVideoAdapter(private var videoList: List<Video>): RecyclerView.Adapter<HotVideoAdapter.HotVideoViewHolder>() {
+    inner class HotVideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        var imgBiaVideo = itemView.findViewById<ShapeableImageView>(R.id.img_bia_video)
+        var txtLengthVideo = itemView.findViewById<MaterialTextView>(R.id.txt_length_video)
+        var imgAuthor = itemView.findViewById<ShapeableImageView>(R.id.img_author)
+        var txtTitleVideo = itemView.findViewById<MaterialTextView>(R.id.txt_title_video)
+        var txtNameAuthor = itemView.findViewById<MaterialTextView>(R.id.txt_name_author)
+        var txtViewVideo = itemView.findViewById<MaterialTextView>(R.id.txt_view_video)
+        var txtUpdatedAt = itemView.findViewById<MaterialTextView>(R.id.txt_updated_at)
+
+        fun bind(video: Video){
+            imgBiaVideo.setImageResource(video.imgVideo)
+            txtLengthVideo.text = "5:08"
+            imgAuthor.setImageResource(R.drawable.nen1)
+            txtTitleVideo.text = video.title
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotVideoViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_hot_video, parent, false)
+        return HotVideoViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return videoList.size
+    }
+
+    override fun onBindViewHolder(holder: HotVideoViewHolder, position: Int) {
+        holder.bind(videoList[position])
+    }
+    fun updateData(newList: List<Video>){
+        videoList = newList
+        notifyDataSetChanged()
+    }
+}

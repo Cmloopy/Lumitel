@@ -27,9 +27,9 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
         var scLike: MaterialTextView = itemView.findViewById(R.id.txt_number_like)
         var btnLike: ShapeableImageView = itemView.findViewById(R.id.btn_like)
         var scCmt: MaterialTextView = itemView.findViewById(R.id.txt_number_cmt)
-        var btnCmt: ShapeableImageView = itemView.findViewById(R.id.btn_like)
+        var btnCmt: ShapeableImageView = itemView.findViewById(R.id.btn_comment)
         var scShare: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
-        var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_like)
+        var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
         var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
         var player: ExoPlayer? = null
 
@@ -68,6 +68,7 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
 
         fun playVideo() {
             player?.playWhenReady = true
+            btnPauseResume.visibility = View.GONE
         }
 
         fun stopVideo() {

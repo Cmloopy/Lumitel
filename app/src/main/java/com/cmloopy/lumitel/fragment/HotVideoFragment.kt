@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.viewmodels.HotVideoViewModel
 import com.cmloopy.lumitel.R
+import com.cmloopy.lumitel.adapter.HotVideoAdapter
 import com.cmloopy.lumitel.adapter.ShortVideoAdapter
 import com.cmloopy.lumitel.databinding.FragmentHotVideoBinding
 
@@ -31,14 +32,23 @@ class HotVideoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = ShortVideoAdapter(requireContext(), emptyList())
+        //Short Video
+        val shortAdapter = ShortVideoAdapter(emptyList())
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewShortVideo.layoutManager = layoutManager
-        binding.recyclerViewShortVideo.adapter = adapter
+        binding.recyclerViewShortVideo.adapter = shortAdapter
         binding.recyclerViewShortVideo.isNestedScrollingEnabled = false
 
         viewModel.videos.observe(viewLifecycleOwner, Observer { videos ->
-            adapter.updateData(videos)
+            shortAdapter.updateData(videos)
+        })
+        //Length Video
+        val lengthAdapter = HotVideoAdapter(emptyList())
+        binding.recyclerViewHotVideo.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewHotVideo.adapter = lengthAdapter
+
+        viewModel.videol.observe(viewLifecycleOwner, Observer {videos ->
+            lengthAdapter.updateData(videos)
         })
     }
 }

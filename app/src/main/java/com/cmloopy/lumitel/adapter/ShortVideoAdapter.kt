@@ -12,7 +12,7 @@ import com.cmloopy.lumitel.views.ShortVideoActivity
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
-class ShortVideoAdapter(private val context: Context,private var shortVideoList : List<ShortVideo>)
+class ShortVideoAdapter(private var shortVideoList : List<ShortVideo>)
     : RecyclerView.Adapter<ShortVideoAdapter.ShortVideoViewHolder>() {
     inner class ShortVideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var thumb = itemView.findViewById<ShapeableImageView>(R.id.img_thumbnail)
