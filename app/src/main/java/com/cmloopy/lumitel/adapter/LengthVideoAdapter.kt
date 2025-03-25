@@ -9,7 +9,7 @@ import com.cmloopy.lumitel.data.models.Video
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
-class HotVideoAdapter(private var videoList: List<Video>): RecyclerView.Adapter<HotVideoAdapter.HotVideoViewHolder>() {
+class LengthVideoAdapter(private var videoList: List<Video>): RecyclerView.Adapter<LengthVideoAdapter.HotVideoViewHolder>() {
     inner class HotVideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var imgBiaVideo = itemView.findViewById<ShapeableImageView>(R.id.img_bia_video)
         var txtLengthVideo = itemView.findViewById<MaterialTextView>(R.id.txt_length_video)
