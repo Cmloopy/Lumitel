@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.Observer
 import com.cmloopy.lumitel.adapter.ShortAdapter
 import com.cmloopy.lumitel.databinding.ActivityShortVideoBinding
 import com.cmloopy.lumitel.viewmodels.ShortViewModel
