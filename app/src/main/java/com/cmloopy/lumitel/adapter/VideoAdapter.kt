@@ -15,7 +15,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
-class VideoAdapter(private val context: Context, private var videoList: List<Video>): RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
+class VideoAdapter(private val context: Context, private val recyclerView: RecyclerView, private var videoList: List<Video>): RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
     private var currentPlayingViewHolder: VideoAdapter.VideoViewHolder? = null
     private var allInforBoolean = false
@@ -26,6 +26,7 @@ class VideoAdapter(private val context: Context, private var videoList: List<Vid
         var numberVideo = itemView.findViewById<MaterialTextView>(R.id.txt_number_videos)
         var btnFollow = itemView.findViewById<MaterialButton>(R.id.btn_follow)
         var videoView = itemView.findViewById<PlayerView>(R.id.player_view_video)
+        //var imgQueue = itemView.findViewById<ShapeableImageView>(R.id.img_queue)
         var titleVide = itemView.findViewById<MaterialTextView>(R.id.txt_title_video_activity)
         var btnAllInfoVideo = itemView.findViewById<ShapeableImageView>(R.id.btn_all_info_video)
         //views
@@ -34,11 +35,12 @@ class VideoAdapter(private val context: Context, private var videoList: List<Vid
         //like
         //cmt
         //share
-        var player: ExoPlayer? = null
+        private var player: ExoPlayer? = null
         fun bind(context: Context, video: Video){
             imgAuthorVideoAct.setImageResource(R.drawable.nen3)
             nameAuthorVideoAct.text = "Orinn Deep"
             titleVide.text = video.title
+            //imgQueue.setImageResource(video.imgVideo)
 
             val uri = Uri.parse("android.resource://${context.packageName}/${video.urlVideo}")
 
@@ -98,13 +100,6 @@ class VideoAdapter(private val context: Context, private var videoList: List<Vid
         holder.bind(context, videoList[position])
     }
 
-    override fun onViewAttachedToWindow(holder: VideoAdapter.VideoViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        currentPlayingViewHolder?.stopVideo()  // Dừng video trước đó nếu có
-        currentPlayingViewHolder = holder
-        holder.playVideo()  // Chỉ phát video khi ViewHolder này được gắn vào màn hình
-    }
-
     override fun onViewDetachedFromWindow(holder: VideoAdapter.VideoViewHolder) {
         super.onViewDetachedFromWindow(holder)
         holder.stopVideo()  // Dừng phát video khi ViewHolder bị cuộn ra khỏi màn hình
@@ -124,4 +119,16 @@ class VideoAdapter(private val context: Context, private var videoList: List<Vid
     fun resumeVideo(){
         currentPlayingViewHolder?.playVideo()
     }
+    fun playVideoAtPosition(position: Int) {
+        if (position in 0 until videoList.size) {
+            currentPlayingViewHolder?.stopVideo()  // Dừng video trước đó nếu có
+
+            val newHolder = recyclerView.findViewHolderForAdapterPosition(position) as? VideoViewHolder
+            newHolder?.let {
+                currentPlayingViewHolder = it
+                it.playVideo()
+            }
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/black"
     android:paddingBottom="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -93,6 +93,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:use_controller="false"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_queue"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -182,7 +187,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_marginStart="15dp"
             android:id="@+id/btn_like_video_activity"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:src="@drawable/ic_heart"/>
@@ -194,7 +199,7 @@
             android:text="523"/>
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/btn_comment_video_activity"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:src="@drawable/ic_comment"/>
@@ -206,7 +211,7 @@
             android:text="121"/>
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/btn_share_video_activity"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:src="@drawable/ic_share"/>
