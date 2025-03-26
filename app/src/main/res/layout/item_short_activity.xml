@@ -99,13 +99,13 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:text="Yoonhee Official"/>
+                android:text="@string/yoonhee_official"/>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:text="Đăng ký "
+                android:text="@string/theo_d_i"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 android:backgroundTint="@color/blue_3"
@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_marginTop="8dp"
-            android:text="Thủ Tướng Chỉ Đạo 10 Tỉnh, Thành Phố Chuẩn Bị Sẵn Sàng Để Hỗ Trợ Hà Nội Phòng, Chống Dịch Covid-19 | Tin Nóng ANTV"/>
+            android:text="@string/test_text_1"/>
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView

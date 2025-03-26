@@ -1,11 +1,13 @@
 package com.cmloopy.lumitel.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.Video
+import com.cmloopy.lumitel.views.VideoActivity
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
@@ -24,6 +26,12 @@ class LengthVideoAdapter(private var videoList: List<Video>): RecyclerView.Adapt
             txtLengthVideo.text = "5:08"
             imgAuthor.setImageResource(R.drawable.nen1)
             txtTitleVideo.text = video.title
+
+            itemView.setOnClickListener {
+                val context = itemView.context
+                val intent = Intent(context, VideoActivity::class.java)
+                context.startActivity(intent)
+            }
         }
     }
 
