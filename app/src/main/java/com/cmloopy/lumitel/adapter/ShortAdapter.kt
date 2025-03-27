@@ -3,9 +3,12 @@ package com.cmloopy.lumitel.adapter
 import android.content.Context
 import android.graphics.Color
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
@@ -32,6 +35,9 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
         var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
         var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
         var player: ExoPlayer? = null
+        var seekBar = itemView.findViewById<SeekBar>(R.id.seekbar_short_video)
+
+        private val handler = Handler(Looper.getMainLooper())
 
         fun bind(context: Context, video: ShortVideo) {
             scLike.text = video.like.toString()
@@ -64,6 +70,25 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
                     }
                 }
             }
+
+            updateSeekBar()
+
+            seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    if (fromUser && player != null) {
+                        val duration = player!!.duration
+                        val newPosition = (progress * duration) / 100
+                        player!!.seekTo(newPosition)
+                    }
+                }
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                    player?.pause()
+                }
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    player?.play()
+                    btnPauseResume.visibility = View.GONE
+                }
+            })
         }
 
         fun playVideo() {
@@ -77,6 +102,23 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
         fun releasePlayer() {
             player?.release()
             player = null
+        }
+
+        private fun updateSeekBar() {
+            val runnable = object : Runnable {
+                override fun run() {
+                    player?.let {
+                        if (it.isPlaying) {
+                            val position = it.currentPosition
+                            val duration = it.duration
+                            val progress = ((position * 100) / duration).toInt()
+                            seekBar.progress = progress
+                        }
+                        handler.postDelayed(this, 100)
+                    }
+                }
+            }
+            handler.post(runnable)
         }
     }
 
@@ -92,6 +134,7 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
 
     override fun onBindViewHolder(holder: ShortViewHolder, position: Int) {
         holder.bind(context, shortList[position])
+
     }
 
     override fun onViewAttachedToWindow(holder: ShortViewHolder) {
