@@ -20,6 +20,7 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
     RecyclerView.Adapter<ShortAdapter.ShortViewHolder>() {
 
     private var currentPlayingViewHolder: ShortViewHolder? = null
+    private var viewHolders = mutableListOf<ShortAdapter.ShortViewHolder>()
 
     inner class ShortViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var playerView: PlayerView = itemView.findViewById(R.id.player_view_short_video)
@@ -82,7 +83,9 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShortViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_short_activity, parent, false)
-        return ShortViewHolder(view)
+        val holder = ShortViewHolder(view)
+        viewHolders.add(holder)
+        return holder
     }
 
     override fun getItemCount(): Int = shortList.size
@@ -108,7 +111,8 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
         notifyDataSetChanged()
     }
     fun releaseVideo() {
-        currentPlayingViewHolder?.releasePlayer()
+        viewHolders.forEach { it.releasePlayer() }
+        viewHolders.clear()
         currentPlayingViewHolder = null
     }
     fun pauseVideo(){

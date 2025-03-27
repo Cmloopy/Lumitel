@@ -1,9 +1,12 @@
 package com.cmloopy.lumitel.views
 
+import android.graphics.Color
+import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.adapter.VideoAdapter
@@ -18,6 +21,7 @@ class VideoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -26,13 +30,23 @@ class VideoActivity : AppCompatActivity() {
 
         binding.recycleViewVideo.adapter = adapter
 
+
+        val divider = ShapeDrawable().apply {
+            paint.color = Color.WHITE
+            intrinsicHeight = 2
+        }
+        val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
+            setDrawable(divider)
+        }
+        binding.recycleViewVideo.addItemDecoration(dividerItemDecoration)
+
         useViewModel()
 
         binding.recycleViewVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {  // Chỉ chạy khi cuộn dừng lại
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     val layoutManager = recyclerView.layoutManager as? LinearLayoutManager
                     layoutManager?.let {
                         val centerPosition = it.findFirstCompletelyVisibleItemPosition()
@@ -45,10 +59,8 @@ class VideoActivity : AppCompatActivity() {
         })
 
         binding.btnCloseActivityVideo.setOnClickListener {
-            onBackPressed()
             finish()
         }
-        setContentView(binding.root)
     }
 
     private fun useViewModel() {

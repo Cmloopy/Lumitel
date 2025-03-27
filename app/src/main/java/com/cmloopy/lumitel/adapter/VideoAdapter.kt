@@ -19,6 +19,7 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
 
     private var currentPlayingViewHolder: VideoAdapter.VideoViewHolder? = null
     private var allInforBoolean = false
+    private val viewHolders = mutableListOf<VideoViewHolder>()
     inner class VideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var imgAuthorVideoAct = itemView.findViewById<ShapeableImageView>(R.id.img_author_video_activity)
         var nameAuthorVideoAct = itemView.findViewById<MaterialTextView>(R.id.txt_name_author_video_act)
@@ -50,7 +51,7 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
                 playWhenReady = false
             }
             videoView.player = player
-            videoView.setOnClickListener{
+            /*videoView.setOnClickListener{
                 player?.let {
                     if(it.isPlaying){
                         it.pause()
@@ -59,7 +60,7 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
                         it.play()
                     }
                 }
-            }
+            }*/
 
             btnAllInfoVideo.setOnClickListener {
                 if(!allInforBoolean){
@@ -77,7 +78,6 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
         fun playVideo() {
             player?.playWhenReady = true
         }
-
         fun stopVideo() {
             player?.playWhenReady = false
         }
@@ -89,7 +89,9 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_video_length, parent, false)
-        return VideoViewHolder(view)
+        val holder = VideoViewHolder(view)
+        viewHolders.add(holder)
+        return holder
     }
 
     override fun getItemCount(): Int {
@@ -98,6 +100,9 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         holder.bind(context, videoList[position])
+        if(position == 0){
+            holder.playVideo()
+        }
     }
 
     override fun onViewDetachedFromWindow(holder: VideoAdapter.VideoViewHolder) {
@@ -110,7 +115,8 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
         notifyDataSetChanged()
     }
     fun releaseVideo() {
-        currentPlayingViewHolder?.releasePlayer()
+        viewHolders.forEach { it.releasePlayer() }
+        viewHolders.clear()
         currentPlayingViewHolder = null
     }
     fun pauseVideo(){
@@ -121,7 +127,7 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
     }
     fun playVideoAtPosition(position: Int) {
         if (position in 0 until videoList.size) {
-            currentPlayingViewHolder?.stopVideo()  // Dừng video trước đó nếu có
+            viewHolders.forEach { it.stopVideo() }  // Dừng video trước đó nếu có
 
             val newHolder = recyclerView.findViewHolderForAdapterPosition(position) as? VideoViewHolder
             newHolder?.let {
