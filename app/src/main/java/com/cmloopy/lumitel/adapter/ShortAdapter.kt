@@ -67,7 +67,7 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
             btnLike.setOnClickListener {
                 btnLike.setColorFilter(Color.parseColor("#FF3B30"))
             }
-
+            //Setting Visibility for Pause & Resume
             itemView.setOnClickListener {
                 player?.let {
                     if(it.isPlaying){
@@ -80,9 +80,10 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
                     }
                 }
             }
-
+            //Update process Seekbar
             updateSeekBar()
 
+            //Set defaute time to Seekbar
             var duration = 0L
 
             player!!.addListener(object : Player.Listener {
@@ -95,7 +96,7 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
                     }
                 }
             })
-
+            //Set curent time Seekbar
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     if (fromUser && player != null) {
@@ -178,16 +179,17 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
 
     }
 
+    //Setup new Video play if it's holder attaches to window
     override fun onViewAttachedToWindow(holder: ShortViewHolder) {
         super.onViewAttachedToWindow(holder)
         currentPlayingViewHolder?.stopVideo()  // Dừng video trước đó nếu có
         currentPlayingViewHolder = holder
         holder.playVideo()  // Chỉ phát video khi ViewHolder này được gắn vào màn hình
     }
-
+    //Stop play video when ViewHolder detaches from window
     override fun onViewDetachedFromWindow(holder: ShortViewHolder) {
         super.onViewDetachedFromWindow(holder)
-        holder.stopVideo()  // Dừng phát video khi ViewHolder bị cuộn ra khỏi màn hình
+        holder.stopVideo()
     }
 
     fun updateData(newList: List<ShortVideo>) {

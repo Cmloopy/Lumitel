@@ -15,4 +15,5 @@
     <string name="test_text">These are really commendable. The more you try to learn engineering, the more interesting it becomes. Sir I request you to make a detailed video on Ultra High</string>
     <string name="time_wall">  /  </string>
     <string name="defaute_time">00:00</string>
+    <string name="comments">Comments</string>
 </resources>
