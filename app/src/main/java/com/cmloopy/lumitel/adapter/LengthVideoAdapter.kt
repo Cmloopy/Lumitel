@@ -13,13 +13,13 @@ import com.google.android.material.textview.MaterialTextView
 
 class LengthVideoAdapter(private var videoList: List<Video>): RecyclerView.Adapter<LengthVideoAdapter.HotVideoViewHolder>() {
     inner class HotVideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var imgBiaVideo = itemView.findViewById<ShapeableImageView>(R.id.img_bia_video)
-        var txtLengthVideo = itemView.findViewById<MaterialTextView>(R.id.txt_length_video)
-        var imgAuthor = itemView.findViewById<ShapeableImageView>(R.id.img_author)
-        var txtTitleVideo = itemView.findViewById<MaterialTextView>(R.id.txt_title_video)
-        var txtNameAuthor = itemView.findViewById<MaterialTextView>(R.id.txt_name_author)
-        var txtViewVideo = itemView.findViewById<MaterialTextView>(R.id.txt_view_video)
-        var txtUpdatedAt = itemView.findViewById<MaterialTextView>(R.id.txt_updated_at)
+        private var imgBiaVideo: ShapeableImageView = itemView.findViewById(R.id.img_bia_video)
+        private var txtLengthVideo: MaterialTextView = itemView.findViewById(R.id.txt_length_video)
+        private var imgAuthor:ShapeableImageView = itemView.findViewById(R.id.img_author)
+        private var txtTitleVideo:MaterialTextView = itemView.findViewById(R.id.txt_title_video)
+        //var txtNameAuthor:MaterialTextView = itemView.findViewById(R.id.txt_name_author)
+        //var txtViewVideo:MaterialTextView = itemView.findViewById(R.id.txt_view_video)
+        //var txtUpdatedAt:MaterialTextView = itemView.findViewById(R.id.txt_updated_at)
 
         fun bind(video: Video){
             imgBiaVideo.setImageResource(video.imgVideo)

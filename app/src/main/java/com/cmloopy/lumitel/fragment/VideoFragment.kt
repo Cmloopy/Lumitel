@@ -20,9 +20,9 @@ class VideoFragment : Fragment() {
     private val binding get() = _binding
     private val viewModel: VideoFragmentViewModel by viewModels()
 
-    companion object {
+    /*companion object {
         fun newInstance() = VideoFragment()
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

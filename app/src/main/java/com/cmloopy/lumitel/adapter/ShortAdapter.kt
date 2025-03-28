@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -30,22 +29,22 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
     private var viewHolders = mutableListOf<ShortAdapter.ShortViewHolder>()
 
     inner class ShortViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var playerView: PlayerView = itemView.findViewById(R.id.player_view_short_video)
-        var scLike: MaterialTextView = itemView.findViewById(R.id.txt_number_like)
-        var btnLike: ShapeableImageView = itemView.findViewById(R.id.btn_like)
-        var scCmt: MaterialTextView = itemView.findViewById(R.id.txt_number_cmt)
-        var btnCmt: ShapeableImageView = itemView.findViewById(R.id.btn_comment)
-        var scShare: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
-        var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
+        private var playerView: PlayerView = itemView.findViewById(R.id.player_view_short_video)
+        private var scLike: MaterialTextView = itemView.findViewById(R.id.txt_number_like)
+        private var btnLike: ShapeableImageView = itemView.findViewById(R.id.btn_like)
+        private var scCmt: MaterialTextView = itemView.findViewById(R.id.txt_number_cmt)
+        private var btnCmt: ShapeableImageView = itemView.findViewById(R.id.btn_comment)
+        private var scShare: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
+        //var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
         var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
         var player: ExoPlayer? = null
-        var seekBar = itemView.findViewById<SeekBar>(R.id.seekbar_short_video)
-        var currentTime = itemView.findViewById<MaterialTextView>(R.id.txt_current_time_short_video)
-        var fullTime = itemView.findViewById<MaterialTextView>(R.id.txt_full_short_video)
+        var seekBar: SeekBar = itemView.findViewById(R.id.seekbar_short_video)
+        var currentTime: MaterialTextView = itemView.findViewById(R.id.txt_current_time_short_video)
+        var fullTime: MaterialTextView = itemView.findViewById(R.id.txt_full_short_video)
 
-        var linearLikeCmtShare = itemView.findViewById<LinearLayout>(R.id.linearLayout_like_cmt_share_short)
-        var linearTitile = itemView.findViewById<LinearLayout>(R.id.linearLayout_title_short)
-        var linearTimeShort = itemView.findViewById<LinearLayout>(R.id.linearLayout_timeShort)
+        var linearLikeCmtShare: LinearLayout = itemView.findViewById(R.id.linearLayout_like_cmt_share_short)
+        var linearTitile: LinearLayout = itemView.findViewById(R.id.linearLayout_title_short)
+        var linearTimeShort: LinearLayout = itemView.findViewById(R.id.linearLayout_timeShort)
 
         private val handler = Handler(Looper.getMainLooper())
 
@@ -66,6 +65,9 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
 
             btnLike.setOnClickListener {
                 btnLike.setColorFilter(Color.parseColor("#FF3B30"))
+            }
+            btnCmt.setOnClickListener {
+
             }
             //Setting Visibility for Pause & Resume
             itemView.setOnClickListener {
