@@ -13,4 +13,6 @@
     <string name="test_text_2">Available @ https://BLACKPINK.lnk.to/SQUAREONEFA\n\n#BLACKPINK #붐바야 #BOOMBAYAH #DEBUTSINGLE\n#SQUAREONE #DEBUT #YG\nMore about BLACKPINK\n@ http://blackpinkofficial.com\nhttps://www.facebook.com/BLACKPINKOFF...\nhttp://www.youtube.com/BLACKPINKOFFICIAL\nhttp://www.twitter.com/ygent_official\nhttp://www.instagram.com/BLACKPINKOFF...</string>
     <string name="add_a_public_comment">Add a public comment...</string>
     <string name="test_text">These are really commendable. The more you try to learn engineering, the more interesting it becomes. Sir I request you to make a detailed video on Ultra High</string>
+    <string name="time_wall">  /  </string>
+    <string name="defaute_time">00:00</string>
 </resources>

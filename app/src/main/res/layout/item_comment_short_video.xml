@@ -58,6 +58,7 @@
                 </LinearLayout>
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_comment_short_video"
                     android:layout_marginTop="7dp"
                     android:layout_marginStart="10dp"
                     android:layout_width="match_parent"

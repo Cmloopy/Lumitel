@@ -8,7 +8,11 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.SeekBar
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
@@ -36,6 +40,12 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
         var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
         var player: ExoPlayer? = null
         var seekBar = itemView.findViewById<SeekBar>(R.id.seekbar_short_video)
+        var currentTime = itemView.findViewById<MaterialTextView>(R.id.txt_current_time_short_video)
+        var fullTime = itemView.findViewById<MaterialTextView>(R.id.txt_full_short_video)
+
+        var linearLikeCmtShare = itemView.findViewById<LinearLayout>(R.id.linearLayout_like_cmt_share_short)
+        var linearTitile = itemView.findViewById<LinearLayout>(R.id.linearLayout_title_short)
+        var linearTimeShort = itemView.findViewById<LinearLayout>(R.id.linearLayout_timeShort)
 
         private val handler = Handler(Looper.getMainLooper())
 
@@ -73,21 +83,52 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
 
             updateSeekBar()
 
+            var duration = 0L
+
+            player!!.addListener(object : Player.Listener {
+                override fun onPlaybackStateChanged(state: Int) {
+                    if (state == Player.STATE_READY) {
+                        duration = player!!.duration
+                        if (duration != C.TIME_UNSET) {
+                            fullTime.text = formatTime(duration)
+                        }
+                    }
+                }
+            })
+
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     if (fromUser && player != null) {
-                        val duration = player!!.duration
                         val newPosition = (progress * duration) / 100
+                        currentTime.text = formatTime(newPosition)
                         player!!.seekTo(newPosition)
                     }
                 }
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
                     player?.pause()
+                    linearTitile.visibility = View.GONE
+                    linearLikeCmtShare.visibility = View.GONE
+                    linearTimeShort.visibility = View.VISIBLE
+                    seekBar?.setPadding(50,42,50,21)
+                    seekBar?.thumb = ContextCompat.getDrawable(context, R.drawable.custom_thumb_seekbar_2)
                 }
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                     player?.play()
+                    linearTitile.visibility = View.VISIBLE
+                    linearLikeCmtShare.visibility = View.VISIBLE
+                    linearTimeShort.visibility = View.GONE
                     btnPauseResume.visibility = View.GONE
+
+                    player?.let {
+                        currentTime.text = formatTime(it.currentPosition)
+                    }
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        seekBar?.setPadding(50, 51, 50, 25)
+                        seekBar?.thumb = ContextCompat.getDrawable(context, R.drawable.custom_thumb_seekbar)
+                    }, 3000)
                 }
+
             })
         }
 
@@ -164,5 +205,9 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
     fun resumeVideo(){
         currentPlayingViewHolder?.playVideo()
     }
-
+    private fun formatTime(milliseconds: Long): String {
+        val minutes = milliseconds / 1000 / 60
+        val seconds = milliseconds / 1000 % 60
+        return String.format("%02d:%02d", minutes, seconds)
+    }
 }
