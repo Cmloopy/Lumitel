@@ -1,5 +1,7 @@
 package com.cmloopy.lumitel.views
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.adapter.VideoAdapter
+import com.cmloopy.lumitel.data.models.Video
 import com.cmloopy.lumitel.databinding.ActivityVideoBinding
 import com.cmloopy.lumitel.viewmodels.VideoViewModel
 
@@ -25,7 +28,9 @@ class VideoActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        adapter = VideoAdapter(this,binding.recycleViewVideo, emptyList())
+        adapter = VideoAdapter(this,binding.recycleViewVideo, emptyList()) {video ->
+            rotateVideo(video)
+        }
         binding.recycleViewVideo.layoutManager = LinearLayoutManager(this)
 
         binding.recycleViewVideo.adapter = adapter
@@ -60,6 +65,16 @@ class VideoActivity : AppCompatActivity() {
 
         binding.btnCloseActivityVideo.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun rotateVideo(video: Video) {
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+        else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
     }
 

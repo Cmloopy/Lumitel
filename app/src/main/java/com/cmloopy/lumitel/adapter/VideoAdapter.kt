@@ -10,12 +10,13 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
+import com.cmloopy.lumitel.data.models.ShortVideo
 import com.cmloopy.lumitel.data.models.Video
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
-class VideoAdapter(private val context: Context, private val recyclerView: RecyclerView, private var videoList: List<Video>): RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
+class VideoAdapter(private val context: Context, private val recyclerView: RecyclerView, private var videoList: List<Video>, private val rotateOnClick: (Video) -> Unit): RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
     private var currentPlayingViewHolder: VideoAdapter.VideoViewHolder? = null
     private var allInforBoolean = false
@@ -30,6 +31,7 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
         //var imgQueue = itemView.findViewById<ShapeableImageView>(R.id.img_queue)
         var titleVide = itemView.findViewById<MaterialTextView>(R.id.txt_title_video_activity)
         var btnAllInfoVideo = itemView.findViewById<ShapeableImageView>(R.id.btn_all_info_video)
+        var btnRotate = itemView.findViewById<ShapeableImageView>(R.id.btn_fullscreen)
         //views
         //time
         var allInfoVideo = itemView.findViewById<MaterialTextView>(R.id.txt_all_info_video)
@@ -51,7 +53,7 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
                 playWhenReady = false
             }
             videoView.player = player
-            /*videoView.setOnClickListener{
+            videoView.setOnClickListener{
                 player?.let {
                     if(it.isPlaying){
                         it.pause()
@@ -60,7 +62,7 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
                         it.play()
                     }
                 }
-            }*/
+            }
 
             btnAllInfoVideo.setOnClickListener {
                 if(!allInforBoolean){
@@ -73,6 +75,9 @@ class VideoAdapter(private val context: Context, private val recyclerView: Recyc
                     btnAllInfoVideo.setImageResource(R.drawable.ic_triagnle_down)
                     allInforBoolean = false
                 }
+            }
+            btnRotate.setOnClickListener {
+                rotateOnClick(video)
             }
         }
         fun playVideo() {
