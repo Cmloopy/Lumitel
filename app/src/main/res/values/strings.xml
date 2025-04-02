@@ -16,4 +16,5 @@
     <string name="time_wall">  /  </string>
     <string name="defaute_time">00:00</string>
     <string name="comments">Comments</string>
+    <string name="fullScreen">Toàn màn hình</string>
 </resources>

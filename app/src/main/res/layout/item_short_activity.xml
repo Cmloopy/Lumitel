@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,178 +7,222 @@
 
     <androidx.media3.ui.PlayerView
         android:id="@+id/player_view_short_video"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:use_controller="false"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/btn_back_to_portrait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:visibility="gone"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_short_fullscreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fullScreen"
+        android:textAllCaps="false"
+        app:cornerRadius="20dp"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:backgroundTint="@color/non_gray"
+        android:drawableLeft="@drawable/ic_fullscreen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.725" />
 
     <LinearLayout
         android:id="@+id/linearLayout_timeShort"
-        android:visibility="gone"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="55dp"
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_marginStart="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/seekbar_short_video"
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_current_time_short_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/defaute_time"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:text="@string/defaute_time"/>
+            android:textSize="16sp" />
+
         <com.google.android.material.textview.MaterialTextView
-            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:textSize="18sp"
-            android:text="@string/time_wall"/>
+            android:text="@string/time_wall"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_full_short_video"
-            android:textColor="@color/gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="@string/defaute_time"/>
+            android:text="@string/defaute_time"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <SeekBar
         android:id="@+id/seekbar_short_video"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="15dp"
-        android:paddingTop="19dp"
-        android:paddingBottom="9dp"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:max="100"
+        android:layout_marginBottom="15dp"
+        android:paddingTop="19dp"
+        android:paddingBottom="9dp"
         android:progressDrawable="@drawable/custom_seekbar"
-        android:thumb="@drawable/custom_thumb_seekbar"/>
+        android:thumb="@drawable/custom_thumb_seekbar"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout_like_cmt_share_short"
-        android:visibility="visible"
-        android:gravity="center"
         android:layout_marginEnd="10dp"
-        android:layout_gravity="center|end"
-        android:layout_marginTop="200dp"
-        android:orientation="vertical"
+        android:layout_marginBottom="60dp"
+        android:id="@+id/linearLayout_like_cmt_share_short"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/seekbar_short_video"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/btn_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_heart"/>
+            android:src="@drawable/ic_heart" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_number_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="1234"/>
+            android:text="1234"
+            android:textColor="@color/white" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/btn_comment"
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_comment"/>
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_comment" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_number_cmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="723"/>
+            android:text="723"
+            android:textColor="@color/white" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/btn_share"
-            android:layout_marginTop="13dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_share"/>
+            android:layout_marginTop="13dp"
+            android:src="@drawable/ic_share" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_number_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="358"/>
+            android:text="358"
+            android:textColor="@color/white" />
 
         <FrameLayout
             android:id="@+id/btn_channel"
-            android:layout_marginTop="20dp"
             android:layout_width="40dp"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:layout_gravity="center"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
+                android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/RoundImage"
-                android:src="@drawable/nen1"/>
+                android:src="@drawable/nen1"
+                app:shapeAppearanceOverlay="@style/RoundImage" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_follow"
-                android:layout_gravity="bottom"/>
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_follow" />
         </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout_title_short"
-        android:visibility="visible"
-        android:orientation="vertical"
+        android:layout_width="0dp"
         android:layout_marginStart="15dp"
-        android:layout_marginBottom="50dp"
-        android:layout_gravity="bottom"
-        android:layout_width="300dp"
-        android:layout_height="120dp">
+        app:layout_constraintWidth_percent="0.77"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/seekbar_short_video"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/yoonhee_official"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:text="@string/yoonhee_official"/>
+                android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
-                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:text="@string/theo_d_i"
-                android:textSize="10sp"
-                android:textStyle="bold"
+                android:layout_marginStart="10dp"
                 android:backgroundTint="@color/blue_3"
                 android:drawableLeft="@drawable/ic_follow"
+                android:text="@string/theo_d_i"
                 android:textAllCaps="false"
-                app:cornerRadius="25dp"/>
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:cornerRadius="25dp" />
 
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_marginTop="8dp"
-            android:textSize="14sp"
-            android:text="@string/test_text_1"/>
+            android:text="@string/test_text_1"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/btn_pause_resume"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:src="@drawable/ic_pause"
-        android:visibility="gone"
-        android:layout_gravity="center"/>
-</FrameLayout>
+        android:visibility="gone" />
+</androidx.constraintlayout.widget.ConstraintLayout>

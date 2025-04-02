@@ -17,6 +17,7 @@
             android:exported="false" />
         <activity
             android:name=".views.ShortVideoActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="false" />
         <activity
             android:name=".views.MainActivity"

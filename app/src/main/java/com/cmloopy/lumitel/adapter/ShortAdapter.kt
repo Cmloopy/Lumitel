@@ -1,6 +1,7 @@
 package com.cmloopy.lumitel.adapter
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.net.Uri
 import android.os.Handler
@@ -14,19 +15,25 @@ import androidx.core.content.ContextCompat
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import androidx.media3.common.VideoSize
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.ShortVideo
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
-class ShortAdapter(private val context: Context, private var shortList: List<ShortVideo>, private val onCommentClick: (ShortVideo) -> Unit) :
+class ShortAdapter(private val context: Context,
+                   private var shortList: List<ShortVideo>,
+                   private val onCommentClick: (ShortVideo) -> Unit,
+                   private val onRotateClick: (Boolean) -> Unit) :
     RecyclerView.Adapter<ShortAdapter.ShortViewHolder>() {
 
     private var currentPlayingViewHolder: ShortViewHolder? = null
     private var viewHolders = mutableListOf<ShortAdapter.ShortViewHolder>()
+    private var isRotate = false
 
     inner class ShortViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var playerView: PlayerView = itemView.findViewById(R.id.player_view_short_video)
@@ -37,6 +44,8 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
         private var scShare: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
         //var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
         var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
+        var btnFullScreen: MaterialButton = itemView.findViewById(R.id.btn_short_fullscreen)
+        var btnBackToPortrait: ShapeableImageView = itemView.findViewById(R.id.btn_back_to_portrait)
         var player: ExoPlayer? = null
         var seekBar: SeekBar = itemView.findViewById(R.id.seekbar_short_video)
         var currentTime: MaterialTextView = itemView.findViewById(R.id.txt_current_time_short_video)
@@ -97,7 +106,28 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
                         }
                     }
                 }
+
+                override fun onVideoSizeChanged(videoSize: VideoSize) {
+                    super.onVideoSizeChanged(videoSize)
+                    val videoRatio = videoSize.width.toFloat() / videoSize.height.toFloat()
+                    if (videoRatio > 1.3) {
+                        if(!isRotate)
+                        btnFullScreen.visibility = View.VISIBLE
+                    } else {
+                        btnFullScreen.visibility = View.GONE
+                    }
+                }
             })
+
+            btnFullScreen.setOnClickListener {
+                onRotateClick(true)
+                isRotate = true
+                linearTimeShort.visibility = View.VISIBLE
+                btnFullScreen.visibility = View.GONE
+                linearLikeCmtShare.visibility = View.GONE
+                linearTitile.visibility = View.GONE
+                btnBackToPortrait.visibility = View.VISIBLE
+            }
             //Set curent time Seekbar
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -117,19 +147,30 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
                 }
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                     player?.play()
-                    linearTitile.visibility = View.VISIBLE
-                    linearLikeCmtShare.visibility = View.VISIBLE
-                    linearTimeShort.visibility = View.GONE
-                    btnPauseResume.visibility = View.GONE
+                    if (!isRotate) {
+                        linearTitile.visibility = View.VISIBLE
+                        linearLikeCmtShare.visibility = View.VISIBLE
+                        linearTimeShort.visibility = View.GONE
+                        btnPauseResume.visibility = View.GONE
 
-                    player?.let {
-                        currentTime.text = formatTime(it.currentPosition)
+                        player?.let {
+                            currentTime.text = formatTime(it.currentPosition)
+                        }
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            seekBar?.setPadding(50, 51, 50, 25)
+                            seekBar?.thumb =
+                                ContextCompat.getDrawable(context, R.drawable.custom_thumb_seekbar)
+                        }, 3000)
                     }
-
-                    Handler(Looper.getMainLooper()).postDelayed({
+                    else{
+                        player?.let {
+                            currentTime.text = formatTime(it.currentPosition)
+                        }
                         seekBar?.setPadding(50, 51, 50, 25)
-                        seekBar?.thumb = ContextCompat.getDrawable(context, R.drawable.custom_thumb_seekbar)
-                    }, 3000)
+                        seekBar?.thumb =
+                            ContextCompat.getDrawable(context, R.drawable.custom_thumb_seekbar)
+                    }
                 }
 
             })
@@ -157,8 +198,9 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
                             val duration = it.duration
                             val progress = ((position * 100) / duration).toInt()
                             seekBar.progress = progress
+                            currentTime.text = formatTime(position)
                         }
-                        handler.postDelayed(this, 100)
+                        handler.postDelayed(this, 50)
                     }
                 }
             }

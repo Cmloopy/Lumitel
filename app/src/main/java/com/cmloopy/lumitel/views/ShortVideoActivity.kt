@@ -1,6 +1,8 @@
 package com.cmloopy.lumitel.views
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -22,15 +24,26 @@ class ShortVideoActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        adapter = ShortAdapter(this, emptyList()) { video ->
+        adapter = ShortAdapter(this, emptyList(), { video ->
             showCommentDialog(video)
-        }
+        }, { isRotated ->
+            rotateVideo(isRotated)
+        })
+
         binding.vpgShortVideo.adapter = adapter
 
         observeViewModel()
 
         binding.btnDropBack.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun rotateVideo(b: Boolean) {
+        if(b){
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            binding.btnDropBack.visibility = View.GONE
+            binding.btnCreateNew.visibility = View.GONE
         }
     }
 
