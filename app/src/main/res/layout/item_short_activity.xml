@@ -224,6 +224,6 @@
         android:id="@+id/btn_pause_resume"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:src="@drawable/ic_pause"
+        android:src="@drawable/ic_play"
         android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

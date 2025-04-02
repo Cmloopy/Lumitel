@@ -12,6 +12,7 @@ import com.cmloopy.lumitel.databinding.ActivityShortVideoBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.ShortCommentBottomSheet
 import com.cmloopy.lumitel.viewmodels.ShortViewModel
 
+@Suppress("DEPRECATION")
 class ShortVideoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShortVideoBinding
     private val viewModel: ShortViewModel by viewModels()
@@ -32,11 +33,13 @@ class ShortVideoActivity : AppCompatActivity() {
             rotateVideo(isRotated)
         })
 
-        binding.vpgShortVideo.adapter = adapter
-
         observeViewModel()
 
+        binding.vpgShortVideo.adapter = adapter
+
         binding.btnDropBack.setOnClickListener {
+            binding.vpgShortVideo.adapter = null
+            viewModel.videos.removeObservers(this)
             finish()
         }
     }
@@ -51,7 +54,7 @@ class ShortVideoActivity : AppCompatActivity() {
         }
         else{
             showSystemUI()
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
             binding.btnDropBack.visibility = View.VISIBLE
             binding.btnCreateNew.visibility = View.VISIBLE
             binding.vpgShortVideo.isUserInputEnabled = true
@@ -82,6 +85,19 @@ class ShortVideoActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         adapter.resumeVideo()
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if(requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+            adapter.backToPortrait()
+        }
+        else {
+            binding.vpgShortVideo.adapter = null
+            viewModel.videos.removeObservers(this)
+            super.onBackPressed()
+            finish()
+        }
     }
     private fun hideSystemUI() {
         window.decorView.systemUiVisibility = (

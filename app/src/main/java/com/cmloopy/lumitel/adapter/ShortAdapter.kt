@@ -60,7 +60,11 @@ class ShortAdapter(private val context: Context,
         var linearTitile: LinearLayout = itemView.findViewById(R.id.linearLayout_title_short)
         var linearTimeShort: LinearLayout = itemView.findViewById(R.id.linearLayout_timeShort)
 
+        //Handler of Landscape
         private val handler = Handler(Looper.getMainLooper())
+
+        //Handler current Time
+        private val handlerCurrentTime = Handler(Looper.getMainLooper())
 
         fun bind(context: Context, video: ShortVideo) {
             scLike.text = video.like.toString()
@@ -88,20 +92,41 @@ class ShortAdapter(private val context: Context,
                 //Portrait
                 if(!isRotate) {
                     player?.let {
+                        seekBar.visibility = View.VISIBLE
                         if (it.isPlaying) {
                             it.pause()
                             btnPauseResume.visibility = View.VISIBLE
+                            btnPauseResume.setImageResource(R.drawable.ic_pause)
                         } else {
                             it.play()
                             btnPauseResume.visibility = View.GONE
+                            btnPauseResume.setImageResource(R.drawable.ic_play)
                         }
                     }
                 }
                 //Landscape
                 else {
-                    seekBar.visibility = View.VISIBLE
-                    linearTimeShort.visibility = View.VISIBLE
-                    btnBackToPortrait.visibility = View.VISIBLE
+                    if(btnPauseResume.visibility == View.GONE) {
+                        btnPauseResume.visibility = View.VISIBLE
+                        seekBar.visibility = View.VISIBLE
+                        linearTimeShort.visibility = View.VISIBLE
+                        btnBackToPortrait.visibility = View.VISIBLE
+                        if(player!!.isPlaying) {
+                            handler.postDelayed({
+                                btnPauseResume.visibility = View.GONE
+                                seekBar.visibility = View.GONE
+                                linearTimeShort.visibility = View.GONE
+                                btnBackToPortrait.visibility = View.GONE
+                            }, 3000)
+                        }
+                    }
+                    else {
+                        handler.removeCallbacksAndMessages(null)
+                        btnPauseResume.visibility = View.GONE
+                        seekBar.visibility = View.GONE
+                        linearTimeShort.visibility = View.GONE
+                        btnBackToPortrait.visibility = View.GONE
+                    }
                 }
             }
             //Update process Seekbar
@@ -139,15 +164,44 @@ class ShortAdapter(private val context: Context,
                 linearLikeCmtShare.visibility = View.GONE
                 linearTitile.visibility = View.GONE
             }
+
+            btnPauseResume.setOnClickListener {
+                if (isRotate) {
+                    handler.removeCallbacksAndMessages(null)
+                    player?.let {
+                        if (it.isPlaying) {
+                            it.pause()
+                            btnPauseResume.visibility = View.VISIBLE
+                            seekBar.visibility = View.VISIBLE
+                            linearTimeShort.visibility = View.VISIBLE
+                            btnBackToPortrait.visibility = View.VISIBLE
+                            btnPauseResume.setImageResource(R.drawable.ic_pause)
+                        } else {
+                            it.play()
+                            btnPauseResume.setImageResource(R.drawable.ic_play)
+                            handler.postDelayed({
+                                btnPauseResume.visibility = View.GONE
+                                seekBar.visibility = View.GONE
+                                linearTimeShort.visibility = View.GONE
+                                btnBackToPortrait.visibility = View.GONE },
+                                3000)
+                        }
+                    }
+                }
+                //else
+            }
+
             btnBackToPortrait.setOnClickListener {
                 onRotateClick(false)
                 isRotate = false
+                handler.removeCallbacksAndMessages(null)
                 seekBar.visibility = View.VISIBLE
                 linearTimeShort.visibility = View.GONE
                 btnFullScreen.visibility = View.VISIBLE
                 linearLikeCmtShare.visibility = View.VISIBLE
                 linearTitile.visibility = View.VISIBLE
                 btnBackToPortrait.visibility = View.GONE
+                btnPauseResume.visibility = View.GONE
             }
             //Set curent time Seekbar
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -160,6 +214,7 @@ class ShortAdapter(private val context: Context,
                 }
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
                     player?.pause()
+                    handler.removeCallbacksAndMessages(null)
                     linearTitile.visibility = View.GONE
                     linearLikeCmtShare.visibility = View.GONE
                     linearTimeShort.visibility = View.VISIBLE
@@ -178,19 +233,29 @@ class ShortAdapter(private val context: Context,
                             currentTime.text = formatTime(it.currentPosition)
                         }
 
-                        Handler(Looper.getMainLooper()).postDelayed({
+                        handlerCurrentTime.postDelayed({
                             seekBar?.setPadding(50, 51, 50, 25)
                             seekBar?.thumb =
                                 ContextCompat.getDrawable(context, R.drawable.custom_thumb_seekbar)
                         }, 3000)
                     }
                     else{
+                        btnPauseResume.apply {
+                            setImageResource(R.drawable.ic_play)
+                            visibility = View.VISIBLE
+                        }
                         player?.let {
                             currentTime.text = formatTime(it.currentPosition)
                         }
                         seekBar?.setPadding(50, 51, 50, 25)
                         seekBar?.thumb =
                             ContextCompat.getDrawable(context, R.drawable.custom_thumb_seekbar)
+                        handler.postDelayed({
+                            btnPauseResume.visibility = View.GONE
+                            seekBar?.visibility = View.GONE
+                            linearTimeShort.visibility = View.GONE
+                            btnBackToPortrait.visibility = View.GONE },
+                            3000)
                     }
                 }
 
@@ -221,11 +286,11 @@ class ShortAdapter(private val context: Context,
                             seekBar.progress = progress
                             currentTime.text = formatTime(position)
                         }
-                        handler.postDelayed(this, 50)
+                        handlerCurrentTime.postDelayed(this, 50)
                     }
                 }
             }
-            handler.post(runnable)
+            handlerCurrentTime.post(runnable)
         }
     }
 
@@ -255,6 +320,10 @@ class ShortAdapter(private val context: Context,
     override fun onViewDetachedFromWindow(holder: ShortViewHolder) {
         super.onViewDetachedFromWindow(holder)
         holder.stopVideo()
+    }
+
+    fun backToPortrait(){
+        currentPlayingViewHolder?.btnBackToPortrait?.performClick()
     }
 
     fun updateData(newList: List<ShortVideo>) {
