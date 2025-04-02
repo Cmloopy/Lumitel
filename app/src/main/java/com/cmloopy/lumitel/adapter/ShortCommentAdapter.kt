@@ -28,4 +28,9 @@ class ShortCommentAdapter(private var listShortCmt: List<Comment>): RecyclerView
     override fun onBindViewHolder(holder: ShortCommentViewHolder, position: Int) {
         holder.bind(listShortCmt[position])
     }
+
+    fun updateComment(newList: List<Comment>){
+        this.listShortCmt = newList
+        notifyDataSetChanged()
+    }
 }

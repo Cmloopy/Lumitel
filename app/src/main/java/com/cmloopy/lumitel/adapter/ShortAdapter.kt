@@ -22,7 +22,7 @@ import com.cmloopy.lumitel.data.models.ShortVideo
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
-class ShortAdapter(private val context: Context, private var shortList: List<ShortVideo>) :
+class ShortAdapter(private val context: Context, private var shortList: List<ShortVideo>, private val onCommentClick: (ShortVideo) -> Unit) :
     RecyclerView.Adapter<ShortAdapter.ShortViewHolder>() {
 
     private var currentPlayingViewHolder: ShortViewHolder? = null
@@ -67,7 +67,7 @@ class ShortAdapter(private val context: Context, private var shortList: List<Sho
                 btnLike.setColorFilter(Color.parseColor("#FF3B30"))
             }
             btnCmt.setOnClickListener {
-
+                onCommentClick(video)
             }
             //Setting Visibility for Pause & Resume
             itemView.setOnClickListener {

@@ -5,7 +5,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.cmloopy.lumitel.adapter.ShortAdapter
+import com.cmloopy.lumitel.data.models.ShortVideo
 import com.cmloopy.lumitel.databinding.ActivityShortVideoBinding
+import com.cmloopy.lumitel.fragment.bottomsheet.ShortCommentBottomSheet
 import com.cmloopy.lumitel.viewmodels.ShortViewModel
 
 class ShortVideoActivity : AppCompatActivity() {
@@ -20,7 +22,9 @@ class ShortVideoActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        adapter = ShortAdapter(this, emptyList())
+        adapter = ShortAdapter(this, emptyList()) { video ->
+            showCommentDialog(video)
+        }
         binding.vpgShortVideo.adapter = adapter
 
         observeViewModel()
@@ -34,6 +38,11 @@ class ShortVideoActivity : AppCompatActivity() {
         viewModel.videos.observe(this) { videos ->
             adapter.updateData(videos)
         }
+    }
+
+    private fun showCommentDialog(video: ShortVideo){
+        val dialog = ShortCommentBottomSheet()
+        dialog.show(supportFragmentManager, "ShortCommentBottomSheet")
     }
 
     override fun onDestroy() {
