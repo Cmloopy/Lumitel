@@ -17,11 +17,12 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/btn_back_to_portrait"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:padding="5dp"
+        android:layout_marginStart="5dp"
         android:visibility="gone"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/ic_close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,11 +30,11 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_short_fullscreen"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="43dp"
         android:text="@string/fullScreen"
         android:textAllCaps="false"
         app:cornerRadius="20dp"
-        android:textSize="12sp"
+        android:textSize="10sp"
         android:visibility="gone"
         android:backgroundTint="@color/non_gray"
         android:drawableLeft="@drawable/ic_fullscreen"

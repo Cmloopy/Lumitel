@@ -33,6 +33,8 @@ class ShortAdapter(private val context: Context,
 
     private var currentPlayingViewHolder: ShortViewHolder? = null
     private var viewHolders = mutableListOf<ShortAdapter.ShortViewHolder>()
+
+    //Portrait = false; Landscape = true
     private var isRotate = false
 
     inner class ShortViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -45,11 +47,14 @@ class ShortAdapter(private val context: Context,
         //var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
         var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
         var btnFullScreen: MaterialButton = itemView.findViewById(R.id.btn_short_fullscreen)
-        var btnBackToPortrait: ShapeableImageView = itemView.findViewById(R.id.btn_back_to_portrait)
+
         var player: ExoPlayer? = null
         var seekBar: SeekBar = itemView.findViewById(R.id.seekbar_short_video)
         var currentTime: MaterialTextView = itemView.findViewById(R.id.txt_current_time_short_video)
         var fullTime: MaterialTextView = itemView.findViewById(R.id.txt_full_short_video)
+
+        //Variable Landscape Screen
+        var btnBackToPortrait: ShapeableImageView = itemView.findViewById(R.id.btn_back_to_portrait)
 
         var linearLikeCmtShare: LinearLayout = itemView.findViewById(R.id.linearLayout_like_cmt_share_short)
         var linearTitile: LinearLayout = itemView.findViewById(R.id.linearLayout_title_short)
@@ -80,15 +85,23 @@ class ShortAdapter(private val context: Context,
             }
             //Setting Visibility for Pause & Resume
             itemView.setOnClickListener {
-                player?.let {
-                    if(it.isPlaying){
-                        it.pause()
-                        btnPauseResume.visibility = View.VISIBLE
+                //Portrait
+                if(!isRotate) {
+                    player?.let {
+                        if (it.isPlaying) {
+                            it.pause()
+                            btnPauseResume.visibility = View.VISIBLE
+                        } else {
+                            it.play()
+                            btnPauseResume.visibility = View.GONE
+                        }
                     }
-                    else {
-                        it.play()
-                        btnPauseResume.visibility = View.GONE
-                    }
+                }
+                //Landscape
+                else {
+                    seekBar.visibility = View.VISIBLE
+                    linearTimeShort.visibility = View.VISIBLE
+                    btnBackToPortrait.visibility = View.VISIBLE
                 }
             }
             //Update process Seekbar
@@ -111,8 +124,7 @@ class ShortAdapter(private val context: Context,
                     super.onVideoSizeChanged(videoSize)
                     val videoRatio = videoSize.width.toFloat() / videoSize.height.toFloat()
                     if (videoRatio > 1.3) {
-                        if(!isRotate)
-                        btnFullScreen.visibility = View.VISIBLE
+                        if(!isRotate) btnFullScreen.visibility = View.VISIBLE
                     } else {
                         btnFullScreen.visibility = View.GONE
                     }
@@ -122,11 +134,20 @@ class ShortAdapter(private val context: Context,
             btnFullScreen.setOnClickListener {
                 onRotateClick(true)
                 isRotate = true
-                linearTimeShort.visibility = View.VISIBLE
+                seekBar.visibility = View.GONE
                 btnFullScreen.visibility = View.GONE
                 linearLikeCmtShare.visibility = View.GONE
                 linearTitile.visibility = View.GONE
-                btnBackToPortrait.visibility = View.VISIBLE
+            }
+            btnBackToPortrait.setOnClickListener {
+                onRotateClick(false)
+                isRotate = false
+                seekBar.visibility = View.VISIBLE
+                linearTimeShort.visibility = View.GONE
+                btnFullScreen.visibility = View.VISIBLE
+                linearLikeCmtShare.visibility = View.VISIBLE
+                linearTitile.visibility = View.VISIBLE
+                btnBackToPortrait.visibility = View.GONE
             }
             //Set curent time Seekbar
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

@@ -24,9 +24,11 @@ class ShortVideoActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        adapter = ShortAdapter(this, emptyList(), { video ->
+        adapter = ShortAdapter(this, emptyList(),
+            { video ->
             showCommentDialog(video)
-        }, { isRotated ->
+        },
+            { isRotated ->
             rotateVideo(isRotated)
         })
 
@@ -41,9 +43,18 @@ class ShortVideoActivity : AppCompatActivity() {
 
     private fun rotateVideo(b: Boolean) {
         if(b){
+            hideSystemUI()
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             binding.btnDropBack.visibility = View.GONE
             binding.btnCreateNew.visibility = View.GONE
+            binding.vpgShortVideo.isUserInputEnabled = false
+        }
+        else{
+            showSystemUI()
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            binding.btnDropBack.visibility = View.VISIBLE
+            binding.btnCreateNew.visibility = View.VISIBLE
+            binding.vpgShortVideo.isUserInputEnabled = true
         }
     }
 
@@ -72,4 +83,23 @@ class ShortVideoActivity : AppCompatActivity() {
         super.onResume()
         adapter.resumeVideo()
     }
+    private fun hideSystemUI() {
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                )
+    }
+
+    private fun showSystemUI() {
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                )
+    }
+
 }
