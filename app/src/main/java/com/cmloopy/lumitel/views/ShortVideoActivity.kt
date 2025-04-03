@@ -7,9 +7,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.cmloopy.lumitel.adapter.ShortAdapter
-import com.cmloopy.lumitel.data.models.ShortVideo
+import com.cmloopy.lumitel.data.models.Video
 import com.cmloopy.lumitel.databinding.ActivityShortVideoBinding
-import com.cmloopy.lumitel.fragment.bottomsheet.ShortCommentBottomSheet
+import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
 import com.cmloopy.lumitel.viewmodels.ShortViewModel
 
 @Suppress("DEPRECATION")
@@ -17,11 +17,14 @@ class ShortVideoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShortVideoBinding
     private val viewModel: ShortViewModel by viewModels()
     private lateinit var adapter: ShortAdapter
+    private var isShort = -1;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShortVideoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        isShort = intent.getIntExtra("isShort",-0)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -33,7 +36,7 @@ class ShortVideoActivity : AppCompatActivity() {
             rotateVideo(isRotated)
         })
 
-        observeViewModel()
+        observeViewModel(isShort)
 
         binding.vpgShortVideo.adapter = adapter
 
@@ -61,15 +64,22 @@ class ShortVideoActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeViewModel() {
-        viewModel.videos.observe(this) { videos ->
-            adapter.updateData(videos)
+    private fun observeViewModel(isShort: Int) {
+        if(isShort == 1) {
+            viewModel.videos.observe(this) { videos ->
+                adapter.updateData(videos)
+            }
+        }
+        else {
+            viewModel.videol.observe(this){videol ->
+                adapter.updateData(videol)
+            }
         }
     }
 
-    private fun showCommentDialog(video: ShortVideo){
-        val dialog = ShortCommentBottomSheet()
-        dialog.show(supportFragmentManager, "ShortCommentBottomSheet")
+    private fun showCommentDialog(video: Video){
+        val dialog = BottomSheetComment()
+        dialog.show(supportFragmentManager, "BottomSheetComment")
     }
 
     override fun onDestroy() {

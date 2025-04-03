@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
-import com.cmloopy.lumitel.data.models.ShortVideo
+import com.cmloopy.lumitel.data.models.Video
 import com.cmloopy.lumitel.views.ShortVideoActivity
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
-class ShortVideoAdapter(private var shortVideoList : List<ShortVideo>)
+class ShortVideoAdapter(private var shortVideoList : List<Video>)
     : RecyclerView.Adapter<ShortVideoAdapter.ShortVideoViewHolder>() {
     inner class ShortVideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var thumb = itemView.findViewById<ShapeableImageView>(R.id.img_thumbnail)
         var title = itemView.findViewById<MaterialTextView>(R.id.txt_title_short_video)
         var view = itemView.findViewById<MaterialTextView>(R.id.txt_view_short_video)
-        fun bind(video: ShortVideo){
+        fun bind(video: Video){
             title.text = video.title
 
             thumb.setImageResource(video.img)
@@ -27,6 +27,7 @@ class ShortVideoAdapter(private var shortVideoList : List<ShortVideo>)
             itemView.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, ShortVideoActivity::class.java)
+                intent.putExtra("isShort",1)
                 context.startActivity(intent)
             }
         }
@@ -46,7 +47,7 @@ class ShortVideoAdapter(private var shortVideoList : List<ShortVideo>)
         holder.bind(video)
     }
 
-    fun updateData(newList: List<ShortVideo>) {
+    fun updateData(newList: List<Video>) {
         shortVideoList = newList
         notifyDataSetChanged()
     }

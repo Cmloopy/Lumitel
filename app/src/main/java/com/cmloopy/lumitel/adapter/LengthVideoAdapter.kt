@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.Video
-import com.cmloopy.lumitel.views.VideoActivity
+import com.cmloopy.lumitel.views.ShortVideoActivity
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
@@ -22,21 +22,22 @@ class LengthVideoAdapter(private var videoList: List<Video>): RecyclerView.Adapt
         //var txtUpdatedAt:MaterialTextView = itemView.findViewById(R.id.txt_updated_at)
 
         fun bind(video: Video){
-            imgBiaVideo.setImageResource(video.imgVideo)
+            imgBiaVideo.setImageResource(video.img)
             txtLengthVideo.text = "5:08"
             imgAuthor.setImageResource(R.drawable.nen1)
             txtTitleVideo.text = video.title
 
             itemView.setOnClickListener {
                 val context = itemView.context
-                val intent = Intent(context, VideoActivity::class.java)
+                val intent = Intent(context, ShortVideoActivity::class.java)
+                intent.putExtra("isShort",0)
                 context.startActivity(intent)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotVideoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_hot_video, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_length_video, parent, false)
         return HotVideoViewHolder(view)
     }
 
