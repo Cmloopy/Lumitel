@@ -197,6 +197,7 @@ class ShortAdapter(private val context: Context,
                             btnPauseResume.setImageResource(R.drawable.ic_play)
                             handler.postDelayed(
                                 {
+                                    linearSettingVideoPlay.visibility = View.GONE
                                     btnPauseResume.visibility = View.GONE
                                     seekBar.visibility = View.GONE
                                     linearTimeShort.visibility = View.GONE
