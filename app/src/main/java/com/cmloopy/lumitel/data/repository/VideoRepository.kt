@@ -1,7 +1,7 @@
 package com.cmloopy.lumitel.data.repository
 
 import com.cmloopy.lumitel.R
-import com.cmloopy.lumitel.data.models.Video
+import com.cmloopy.lumitel.data.models.video.Video
 
 class VideoRepository {
     fun getShortExample(): List<Video>{

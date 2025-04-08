@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.cmloopy.lumitel.adapter.ShortAdapter
-import com.cmloopy.lumitel.data.models.Video
+import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.databinding.ActivityShortVideoBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
 import com.cmloopy.lumitel.viewmodels.ShortViewModel

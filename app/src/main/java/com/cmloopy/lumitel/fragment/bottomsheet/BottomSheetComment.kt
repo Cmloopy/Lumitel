@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cmloopy.lumitel.adapter.ShortCommentAdapter
-import com.cmloopy.lumitel.data.models.Video
+import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.databinding.BottomSheetCommentBinding
 import com.cmloopy.lumitel.viewmodels.ShortViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

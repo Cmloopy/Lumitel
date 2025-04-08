@@ -1,4 +1,4 @@
 package com.cmloopy.lumitel.data.api
 
-interface ShortVideoApi {
+interface LengthVideoApi {
 }

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
-import com.cmloopy.lumitel.data.models.Video
+import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.views.ShortVideoActivity
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView

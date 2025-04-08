@@ -19,7 +19,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.RecyclerView
 import com.cmloopy.lumitel.R
-import com.cmloopy.lumitel.data.models.Video
+import com.cmloopy.lumitel.data.models.video.Video
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
