@@ -45,21 +45,19 @@ class ShortAdapter(private val context: Context,
         private var btnCmt: ShapeableImageView = itemView.findViewById(R.id.btn_comment)
         private var scShare: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
         //var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
-        var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
-        var btnBackward: ShapeableImageView = itemView.findViewById(R.id.btn_back_10s)
-        var btnForward: ShapeableImageView = itemView.findViewById(R.id.btn_next_10s)
-        var btnFullScreen: MaterialButton = itemView.findViewById(R.id.btn_short_fullscreen)
-
-        var player: ExoPlayer? = null
-        var duration = 0L
-        var seekBar: SeekBar = itemView.findViewById(R.id.seekbar_short_video)
-        var currentTime: MaterialTextView = itemView.findViewById(R.id.txt_current_time_short_video)
-        var fullTime: MaterialTextView = itemView.findViewById(R.id.txt_full_short_video)
+        private var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
+        private var btnBackward: ShapeableImageView = itemView.findViewById(R.id.btn_back_10s)
+        private var btnForward: ShapeableImageView = itemView.findViewById(R.id.btn_next_10s)
+        private var btnFullScreen: MaterialButton = itemView.findViewById(R.id.btn_short_fullscreen)
+        private var player: ExoPlayer? = null
+        private var duration = 0L
+        private var seekBar: SeekBar = itemView.findViewById(R.id.seekbar_short_video)
+        private var currentTime: MaterialTextView = itemView.findViewById(R.id.txt_current_time_short_video)
+        private var fullTime: MaterialTextView = itemView.findViewById(R.id.txt_full_short_video)
 
         var btnBackToPortrait: ShapeableImageView = itemView.findViewById(R.id.btn_back_to_portrait)
         var btnMuteUnmute: ShapeableImageView = itemView.findViewById(R.id.btn_mute_unmute)
         //var btnSettingVideoPlay: ShapeableImageView = itemView.findViewById(R.id.btn_setting_video_play)
-
         var linearLikeCmtShare: LinearLayout = itemView.findViewById(R.id.linearLayout_like_cmt_share_short)
         var linearTitile: LinearLayout = itemView.findViewById(R.id.linearLayout_title_short)
         var linearTimeShort: LinearLayout = itemView.findViewById(R.id.linearLayout_timeShort)
@@ -99,12 +97,13 @@ class ShortAdapter(private val context: Context,
                             btnPauseResume.visibility = View.VISIBLE
                             linearTimeShort.visibility = View.VISIBLE
                             linearSettingVideoPlay.visibility = View.VISIBLE
+                            btnForward.visibility = View.VISIBLE
+                            btnBackward.visibility = View.VISIBLE
                             btnPauseResume.setImageResource(R.drawable.ic_pause)
                         } else {
                             it.play()
-                            linearTimeShort.visibility = View.GONE
-                            linearSettingVideoPlay.visibility = View.GONE
-                            btnPauseResume.visibility = View.GONE
+                            hideControl()
+                            seekBar.visibility = View.VISIBLE
                             btnPauseResume.setImageResource(R.drawable.ic_play)
                         }
                     }
@@ -196,7 +195,9 @@ class ShortAdapter(private val context: Context,
                         }
                         else{
                             it.play()
-                            btnPauseResume.visibility = View.GONE
+                            hideControl()
+                            seekBar.visibility = View.VISIBLE
+                            btnPauseResume.setImageResource(R.drawable.ic_play)
                         }
                     }
                 }
