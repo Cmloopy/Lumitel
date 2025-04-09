@@ -4,7 +4,7 @@ import com.cmloopy.lumitel.data.models.Channel
 import com.google.gson.annotations.SerializedName
 
 data class Video(
-    /*@SerializedName("id") val id: Int,
+    @SerializedName("id") val id: Int,
     @SerializedName("cateId") val cateId: Int,
     @SerializedName("channelId") val channelId: Int,
     @SerializedName("videoTitle") val videoTitle: String,
@@ -35,12 +35,5 @@ data class Video(
     @SerializedName("is_paid") val isPaid: Int,
     @SerializedName("is_vip") val isVip: Int,
     @SerializedName("is_allow") val isAllow: Int,
-    @SerializedName("list_resolution") val listResolution: List<Resolution>?*/
-    val urlShort: Int,
-    val title: String,
-    val view: Int,
-    val like: Int,
-    val cmt: Int,
-    val share: Int,
-    val img: Int
+    @SerializedName("list_resolution") val listResolution: List<Resolution>?
 )

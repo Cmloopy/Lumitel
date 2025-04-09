@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.views.ShortVideoActivity
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
+import com.squareup.picasso.Picasso
 
 class LengthVideoAdapter(private var videoList: List<Video>): RecyclerView.Adapter<LengthVideoAdapter.HotVideoViewHolder>() {
     inner class HotVideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -17,22 +19,24 @@ class LengthVideoAdapter(private var videoList: List<Video>): RecyclerView.Adapt
         private var txtLengthVideo: MaterialTextView = itemView.findViewById(R.id.txt_length_video)
         private var imgAuthor:ShapeableImageView = itemView.findViewById(R.id.img_author)
         private var txtTitleVideo:MaterialTextView = itemView.findViewById(R.id.txt_title_video)
-        //var txtNameAuthor:MaterialTextView = itemView.findViewById(R.id.txt_name_author)
-        //var txtViewVideo:MaterialTextView = itemView.findViewById(R.id.txt_view_video)
+        var txtNameAuthor:MaterialTextView = itemView.findViewById(R.id.txt_name_author)
+        var txtViewVideo:MaterialTextView = itemView.findViewById(R.id.txt_view_video)
         //var txtUpdatedAt:MaterialTextView = itemView.findViewById(R.id.txt_updated_at)
 
         fun bind(video: Video){
-            imgBiaVideo.setImageResource(video.img)
-            txtLengthVideo.text = "5:08"
-            imgAuthor.setImageResource(R.drawable.nen1)
-            txtTitleVideo.text = video.title
+            Glide.with(itemView.context).load(video.videoImage).into(imgBiaVideo)
+            txtLengthVideo.text = formatTime(video.videoTime)
+            Glide.with(itemView.context).load(video.channel.channelAvatar).into(imgAuthor)
+            txtTitleVideo.text = video.videoTitle
+            txtNameAuthor.text = video.channel.channelName
+            txtViewVideo.text = "${video.totalViews} Views"
 
-            itemView.setOnClickListener {
+            /*itemView.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, ShortVideoActivity::class.java)
                 intent.putExtra("isShort",0)
                 context.startActivity(intent)
-            }
+            }*/
         }
     }
 
@@ -51,5 +55,11 @@ class LengthVideoAdapter(private var videoList: List<Video>): RecyclerView.Adapt
     fun updateData(newList: List<Video>){
         videoList = newList
         notifyDataSetChanged()
+    }
+    fun formatTime(time: String): String{
+        val timee = time.toInt()
+        val minute = timee / 60
+        val sec = timee % 60
+        return "$minute:$sec"
     }
 }

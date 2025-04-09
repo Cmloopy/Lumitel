@@ -66,7 +66,7 @@ class ShortAdapter(private val context: Context,
         private val handler = Handler(Looper.getMainLooper())
         //Handler current Time
         private val handlerCurrentTime = Handler(Looper.getMainLooper())
-        fun bind(context: Context, video: Video) {
+        /*fun bind(context: Context, video: Video) {
             scLike.text = video.like.toString()
             scCmt.text = video.cmt.toString()
             scShare.text = video.share.toString()
@@ -317,7 +317,7 @@ class ShortAdapter(private val context: Context,
                     }
                 }
             })
-        }
+        }*/
         fun hideControl() {
             linearSettingVideoPlay.visibility = View.GONE
             btnBackward.visibility = View.GONE
@@ -368,7 +368,7 @@ class ShortAdapter(private val context: Context,
     }
     override fun getItemCount(): Int = shortList.size
     override fun onBindViewHolder(holder: ShortViewHolder, position: Int) {
-        holder.bind(context, shortList[position])
+        //holder.bind(context, shortList[position])
     }
     //Setup new Video play if it's holder attaches to window
     override fun onViewAttachedToWindow(holder: ShortViewHolder) {

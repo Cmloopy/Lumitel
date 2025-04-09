@@ -24,7 +24,7 @@ class ShortViewModel: ViewModel() {
     }
 
     private fun loadVideol() {
-        _videol.value = repository.getVideoExample()
+        //_videol.value = repository.getVideoExample()
     }
 
     private fun loadComment() {
@@ -32,6 +32,6 @@ class ShortViewModel: ViewModel() {
     }
 
     private fun loadVideos() {
-        _videos.value = repository.getShort()
+        //_videos.value = repository.getShort()
     }
 }

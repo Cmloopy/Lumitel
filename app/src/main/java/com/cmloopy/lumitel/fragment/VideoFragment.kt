@@ -2,11 +2,14 @@ package com.cmloopy.lumitel.fragment
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.VideoCategoryAdapter
@@ -76,5 +79,19 @@ class VideoFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            reloadData()
+        }
+    }
+
+    private fun reloadData() {
+        viewModel.getCategory()
+        Handler(Looper.getMainLooper()).postDelayed({
+            binding.swipeRefreshLayout.isRefreshing = false
+        }, 500)
     }
 }

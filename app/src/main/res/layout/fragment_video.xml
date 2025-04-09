@@ -1,70 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.VideoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ln_tab"
         android:layout_width="match_parent"
-        android:layout_height="105dp"
-        android:background="@drawable/subtract"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_category"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ln_tab"
+            android:layout_width="match_parent"
+            android:layout_height="105dp"
+            android:background="@drawable/subtract"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tabIndicatorHeight="0dp"
+                android:layout_marginBottom="3dp"
+                app:tabMode="scrollable"
+                app:tabTextColor="@color/tab_video_selector" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/btn_video_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_bell" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/btn_video_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:src="@drawable/ic_group" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/btn_video_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:src="@drawable/ic_more" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vpg_tab_category"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:tabIndicatorHeight="0dp"
-            android:layout_marginBottom="3dp"
-            app:tabMode="scrollable"
-            app:tabTextColor="@color/tab_video_selector" />
+            app:layout_constraintTop_toBottomOf="@+id/ln_tab" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:layout_marginBottom="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/btn_video_notification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_bell" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/btn_video_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:src="@drawable/ic_group" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/btn_video_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.2"
-                android:src="@drawable/ic_more" />
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vpg_tab_category"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ln_tab" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
