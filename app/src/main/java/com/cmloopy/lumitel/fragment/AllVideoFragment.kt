@@ -1,5 +1,6 @@
 package com.cmloopy.lumitel.fragment
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.cmloopy.lumitel.viewmodels.AllVideoViewModel
 import com.cmloopy.lumitel.adapter.LengthVideoAdapter
 import com.cmloopy.lumitel.adapter.ShortVideoAdapter
 import com.cmloopy.lumitel.databinding.FragmentAllVideoBinding
+import com.cmloopy.lumitel.views.VideoViewActivity
 
 class AllVideoFragment : Fragment() {
     private lateinit var binding: FragmentAllVideoBinding
@@ -23,10 +25,12 @@ class AllVideoFragment : Fragment() {
     private lateinit var shortAdapter: ShortVideoAdapter
     private lateinit var lengthAdapter: LengthVideoAdapter
 
+    private var idCategory: Int = -1
+
     override fun onResume() {
         super.onResume()
         if (!isLoaded && isVisible) {
-            val idCategory = arguments?.getInt("idCategory", -1) ?: -1
+            idCategory = arguments?.getInt("idCategory", -1) ?: -1
             viewModel.setCategory(idCategory)
             isLoaded = true
         }
@@ -49,13 +53,17 @@ class AllVideoFragment : Fragment() {
 
     private fun setupRecyclerViews() {
         // Short Video
-        shortAdapter = ShortVideoAdapter(emptyList())
+        shortAdapter = ShortVideoAdapter(emptyList()) {idVideo ->
+            viewModel.onItemClicked(idVideo)
+        }
         binding.recyclerViewShortVideo.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = shortAdapter
         }
         // Length Video
-        lengthAdapter = LengthVideoAdapter(emptyList())
+        lengthAdapter = LengthVideoAdapter(emptyList()) {idVideo ->
+            viewModel.onItemClicked(idVideo)
+        }
         binding.recyclerViewHotVideo.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = lengthAdapter
@@ -102,6 +110,12 @@ class AllVideoFragment : Fragment() {
                 if(viewModel.isEmptyL.value!!) binding.materialTextView2.visibility = View.GONE
                     else binding.materialTextView2.visibility = View.VISIBLE
             }
+        }
+        viewModel.idVideo.observe(viewLifecycleOwner) {idVideo ->
+            val intent = Intent(requireContext(), VideoViewActivity::class.java)
+            intent.putExtra("idVideo", idVideo)
+            intent.putExtra("idCategory", idCategory)
+            startActivity(intent)
         }
     }
 }

@@ -178,6 +178,7 @@
             android:layout_marginTop="20dp">
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_channel"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:layout_gravity="center"
@@ -211,6 +212,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_name_channel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -234,6 +236,7 @@
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txt_video_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

@@ -1,14 +1,15 @@
 package com.cmloopy.lumitel.adapter
 
 import android.content.Context
-import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -18,6 +19,7 @@ import androidx.media3.common.VideoSize
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.video.Video
 import com.google.android.material.button.MaterialButton
@@ -28,7 +30,8 @@ import kotlin.math.*
 class ShortAdapter(private val context: Context,
                    private var shortList: List<Video>,
                    private val onCommentClick: (Video) -> Unit,
-                   private val onRotateClick: (Boolean) -> Unit) :
+                   private val onRotateClick: (Boolean) -> Unit,
+                   private val infoChannelClick: (Video) -> Unit) :
     RecyclerView.Adapter<ShortAdapter.ShortViewHolder>() {
 
     private var currentPlayingViewHolder: ShortViewHolder? = null
@@ -38,54 +41,71 @@ class ShortAdapter(private val context: Context,
     private var isMute = false
 
     inner class ShortViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        //videoView
         private var playerView: PlayerView = itemView.findViewById(R.id.player_view_short_video)
+        //linearLikeCmtShare
+        var linearLikeCmtShare: LinearLayout = itemView.findViewById(R.id.linearLayout_like_cmt_share_short)
         private var scLike: MaterialTextView = itemView.findViewById(R.id.txt_number_like)
         private var btnLike: ShapeableImageView = itemView.findViewById(R.id.btn_like)
         private var scCmt: MaterialTextView = itemView.findViewById(R.id.txt_number_cmt)
         private var btnCmt: ShapeableImageView = itemView.findViewById(R.id.btn_comment)
         private var scShare: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
-        //var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
+        private var imgChannel: ShapeableImageView = itemView.findViewById(R.id.img_channel)
+        var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
+        //nut pause giua man hinh
         private var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
         private var btnBackward: ShapeableImageView = itemView.findViewById(R.id.btn_back_10s)
         private var btnForward: ShapeableImageView = itemView.findViewById(R.id.btn_next_10s)
         private var btnFullScreen: MaterialButton = itemView.findViewById(R.id.btn_short_fullscreen)
+
+        //exoplayer
         private var player: ExoPlayer? = null
         private var duration = 0L
         private var seekBar: SeekBar = itemView.findViewById(R.id.seekbar_short_video)
         private var currentTime: MaterialTextView = itemView.findViewById(R.id.txt_current_time_short_video)
         private var fullTime: MaterialTextView = itemView.findViewById(R.id.txt_full_short_video)
-
+        //btn ve man hinh doc
         var btnBackToPortrait: ShapeableImageView = itemView.findViewById(R.id.btn_back_to_portrait)
         var btnMuteUnmute: ShapeableImageView = itemView.findViewById(R.id.btn_mute_unmute)
-        //var btnSettingVideoPlay: ShapeableImageView = itemView.findViewById(R.id.btn_setting_video_play)
-        var linearLikeCmtShare: LinearLayout = itemView.findViewById(R.id.linearLayout_like_cmt_share_short)
+        //btn set chat luong
+        var btnSettingVideoPlay: ShapeableImageView = itemView.findViewById(R.id.btn_setting_video_play)
+        //linear chua thong tin video
         var linearTitile: LinearLayout = itemView.findViewById(R.id.linearLayout_title_short)
+        var txtNameChannel: MaterialTextView = itemView.findViewById(R.id.txt_name_channel)
+        var txtVideoDesc: MaterialTextView = itemView.findViewById(R.id.txt_video_desc)
+
         var linearTimeShort: LinearLayout = itemView.findViewById(R.id.linearLayout_timeShort)
         var linearSettingVideoPlay: LinearLayout = itemView.findViewById(R.id.ln_setting_video_play)
         //Handler of Landscape
         private val handler = Handler(Looper.getMainLooper())
         //Handler current Time
         private val handlerCurrentTime = Handler(Looper.getMainLooper())
-        /*fun bind(context: Context, video: Video) {
-            scLike.text = video.like.toString()
-            scCmt.text = video.cmt.toString()
-            scShare.text = video.share.toString()
-
-            val uri = Uri.parse("android.resource://${context.packageName}/${video.urlShort}")
+        fun bind(context: Context, video: Video) {
+            scLike.text = video.totalLikes.toString()
+            scCmt.text = video.totalComments.toString()
+            scShare.text = video.totalShares.toString()
+            Glide.with(context).load(video.channel.channelAvatar).into(imgChannel)
+            txtNameChannel.text = video.channel.channelName
+            txtVideoDesc.text = "${video.videoTitle}\n${video.videoDesc}"
 
             player = ExoPlayer.Builder(itemView.context).build().apply {
-                setMediaItem(MediaItem.fromUri(uri))
+                setMediaItem(MediaItem.fromUri(video.videoMedia))
                 repeatMode = Player.REPEAT_MODE_ALL
                 prepare()
                 playWhenReady = false
             }
             playerView.player = player
 
-            btnLike.setOnClickListener {
+            Log.e("errrrrr", "${video.videoMedia}")
 
-            }
             btnCmt.setOnClickListener {
                 onCommentClick(video)
+            }
+            imgChannel.setOnClickListener {
+                infoChannelClick(video)
+            }
+            txtNameChannel.setOnClickListener {
+                infoChannelClick(video)
             }
             //Set button Pause & Resume
             itemView.setOnClickListener {
@@ -281,6 +301,8 @@ class ShortAdapter(private val context: Context,
                         linearTitile.visibility = View.VISIBLE
                         linearLikeCmtShare.visibility = View.VISIBLE
                         btnPauseResume.visibility = View.GONE
+                        btnBackward.visibility = View.GONE
+                        btnForward.visibility = View.GONE
                         btnPauseResume.setImageResource(R.drawable.ic_play)
                         player?.let {
                             currentTime.text = formatTime(it.currentPosition)
@@ -317,7 +339,7 @@ class ShortAdapter(private val context: Context,
                     }
                 }
             })
-        }*/
+        }
         fun hideControl() {
             linearSettingVideoPlay.visibility = View.GONE
             btnBackward.visibility = View.GONE
@@ -361,14 +383,14 @@ class ShortAdapter(private val context: Context,
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShortViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_short_activity, parent, false)
+            .inflate(R.layout.item_video_activity, parent, false)
         val holder = ShortViewHolder(view)
         viewHolders.add(holder)
         return holder
     }
     override fun getItemCount(): Int = shortList.size
     override fun onBindViewHolder(holder: ShortViewHolder, position: Int) {
-        //holder.bind(context, shortList[position])
+        holder.bind(context, shortList[position])
     }
     //Setup new Video play if it's holder attaches to window
     override fun onViewAttachedToWindow(holder: ShortViewHolder) {

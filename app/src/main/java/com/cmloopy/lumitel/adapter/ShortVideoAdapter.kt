@@ -1,20 +1,16 @@
 package com.cmloopy.lumitel.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.video.Video
-import com.cmloopy.lumitel.views.ShortVideoActivity
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
-import com.squareup.picasso.Picasso
 
-class ShortVideoAdapter(private var shortVideoList : List<Video>)
+class ShortVideoAdapter(private var shortVideoList : List<Video>, private val onItemClick: (Int) -> Unit)
     : RecyclerView.Adapter<ShortVideoAdapter.ShortVideoViewHolder>() {
     inner class ShortVideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var thumb = itemView.findViewById<ShapeableImageView>(R.id.img_thumbnail)
@@ -22,16 +18,10 @@ class ShortVideoAdapter(private var shortVideoList : List<Video>)
         var view = itemView.findViewById<MaterialTextView>(R.id.txt_view_short_video)
         fun bind(video: Video){
             title.text = video.videoTitle
-
             Glide.with(itemView.context).load(video.videoImage).into(thumb)
-
             view.text = "${video.totalViews} lượt xem"
-
             itemView.setOnClickListener {
-                /*val context = itemView.context
-                val intent = Intent(context, ShortVideoActivity::class.java)
-                intent.putExtra("isShort",1)
-                context.startActivity(intent)*/
+                onItemClick(video.id)
             }
         }
     }

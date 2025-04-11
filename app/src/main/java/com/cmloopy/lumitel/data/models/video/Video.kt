@@ -1,6 +1,6 @@
 package com.cmloopy.lumitel.data.models.video
 
-import com.cmloopy.lumitel.data.models.Channel
+import com.cmloopy.lumitel.data.models.channel.Channel
 import com.google.gson.annotations.SerializedName
 
 data class Video(

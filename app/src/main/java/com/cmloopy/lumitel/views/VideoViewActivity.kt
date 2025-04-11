@@ -1,32 +1,39 @@
 package com.cmloopy.lumitel.views
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.cmloopy.lumitel.adapter.ShortAdapter
 import com.cmloopy.lumitel.data.models.video.Video
-import com.cmloopy.lumitel.databinding.ActivityShortVideoBinding
+import com.cmloopy.lumitel.databinding.ActivityVideoViewBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
-import com.cmloopy.lumitel.viewmodels.ShortViewModel
+import com.cmloopy.lumitel.viewmodels.AllVideoViewModel
+import com.cmloopy.lumitel.viewmodels.VideoViewModel
 
 @Suppress("DEPRECATION")
-class ShortVideoActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityShortVideoBinding
-    private val viewModel: ShortViewModel by viewModels()
+class VideoViewActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityVideoViewBinding
+    private val viewModel: VideoViewModel by viewModels()
     private lateinit var adapter: ShortAdapter
-    private var isShort = -1;
+    private var idCategory = -1
+    private var idVideo = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityShortVideoBinding.inflate(layoutInflater)
+        binding = ActivityVideoViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        isShort = intent.getIntExtra("isShort",-0)
-
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        idCategory = intent.getIntExtra("idCategory", -1)
+        idVideo = intent.getIntExtra("idVideo", -1)
+        viewModel.updateId(idCategory, idVideo)
 
         adapter = ShortAdapter(this, emptyList(),
             { video ->
@@ -34,17 +41,26 @@ class ShortVideoActivity : AppCompatActivity() {
         },
             { isRotated ->
             rotateVideo(isRotated)
-        })
+        },
+            { video ->
+                showChannel(video)
+            })
 
-        observeViewModel(isShort)
+        observeViewModel()
 
         binding.vpgShortVideo.adapter = adapter
 
         binding.btnDropBack.setOnClickListener {
+            finish()
             binding.vpgShortVideo.adapter = null
             viewModel.videos.removeObservers(this)
-            finish()
         }
+    }
+
+    private fun showChannel(video: Video) {
+        val intent = Intent(this, ChannelActivity::class.java)
+        intent.putExtra("idChannel", video.channelId)
+        startActivity(intent)
     }
 
     private fun rotateVideo(b: Boolean) {
@@ -64,16 +80,11 @@ class ShortVideoActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeViewModel(isShort: Int) {
-        if(isShort == 1) {
-            viewModel.videos.observe(this) { videos ->
-                adapter.updateData(videos)
-            }
-        }
-        else {
-            viewModel.videol.observe(this){videol ->
-                adapter.updateData(videol)
-            }
+    private fun observeViewModel() {
+        viewModel.videos.observe(this) { videos ->
+            adapter.updateData(videos)
+            Log.e("errrr", "${videos[0].videoMedia}")
+            Log.e("errrr", "${videos[0].channel.channelName}")
         }
     }
 

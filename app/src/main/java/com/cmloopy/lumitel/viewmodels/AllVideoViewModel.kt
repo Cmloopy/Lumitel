@@ -20,12 +20,14 @@ class AllVideoViewModel : ViewModel() {
     private val _isLoadingS = MutableLiveData<Boolean>()
     private val _isLoadingL = MutableLiveData<Boolean>()
     private val _isLoading = MutableLiveData<Boolean>()
+    private val _idVideo = MutableLiveData<Int>()
     val videos: LiveData<List<Video>> get() = _videos
     val videol: LiveData<List<Video>> get() = _videol
     val resultList: LiveData<List<Video>> get() = _resultList
     val isLoading: LiveData<Boolean> get() = _isLoading
     val isEmptyS: LiveData<Boolean> get() = _isEmptyS
     val isEmptyL: LiveData<Boolean> get() = _isEmptyL
+    val idVideo: LiveData<Int> get() = _idVideo
     init{
         _isLoadingS.value = true
         _isLoadingL.value = true
@@ -89,4 +91,10 @@ class AllVideoViewModel : ViewModel() {
             _isLoading.value = false
         } else _isLoading.value = true
     }
+    fun onItemClicked(idVideo: Int){
+        _idVideo.value = idVideo
+    }
+    /*fun resetIdVideo(){
+        _idVideo.value = null
+    }*/
 }

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cmloopy.lumitel.adapter.ShortCommentAdapter
 import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.databinding.BottomSheetCommentBinding
-import com.cmloopy.lumitel.viewmodels.ShortViewModel
+import com.cmloopy.lumitel.viewmodels.VideoViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetComment: BottomSheetDialogFragment() {
@@ -18,7 +18,7 @@ class BottomSheetComment: BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetCommentBinding
     //private lateinit var video: ShortVideo
     private lateinit var shortCommentAdapter: ShortCommentAdapter
-    private val viewModel: ShortViewModel by viewModels()
+    private val viewModel: VideoViewModel by viewModels()
 
     companion object {
         fun newInstance(video: Video) { }

@@ -13,4 +13,8 @@
     <style name="RoundImage" >
         <item name="cornerSize">17dp</item>
     </style>
+
+    <style name="RoundImage2" >
+        <item name="cornerSize">30dp</item>
+    </style>
 </resources>

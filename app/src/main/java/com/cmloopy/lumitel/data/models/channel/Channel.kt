@@ -1,4 +1,4 @@
-package com.cmloopy.lumitel.data.models
+package com.cmloopy.lumitel.data.models.channel
 
 import com.google.gson.annotations.SerializedName
 data class Channel(
