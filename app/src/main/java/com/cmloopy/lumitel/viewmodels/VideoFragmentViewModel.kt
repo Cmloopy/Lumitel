@@ -16,8 +16,13 @@ class VideoFragmentViewModel : ViewModel() {
 
     fun getCategory() {
         viewModelScope.launch {
-            val resultList = categoryRepository.getAllCategory()
-            _categories.value = resultList
+            try {
+                val resultList = categoryRepository.getAllCategory()
+                _categories.value = resultList
+            } catch (e:Exception){
+                e.printStackTrace()
+                _categories.value = emptyList()
+            }
         }
     }
 }

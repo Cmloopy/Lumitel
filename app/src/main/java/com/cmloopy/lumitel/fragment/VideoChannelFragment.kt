@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cmloopy.lumitel.R
+import com.cmloopy.lumitel.adapter.VideoChannelAdapter
+import com.cmloopy.lumitel.databinding.FragmentVideoChannelBinding
 import com.cmloopy.lumitel.viewmodels.VideoChannelViewModel
 
 class VideoChannelFragment : Fragment() {
+    private lateinit var binding: FragmentVideoChannelBinding
 
     companion object {
         fun newInstance() = VideoChannelFragment()
@@ -17,16 +21,18 @@ class VideoChannelFragment : Fragment() {
 
     private val viewModel: VideoChannelViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_video_channel, container, false)
+        binding = FragmentVideoChannelBinding.inflate(inflater,container,false)
+
+        viewModel.videol.observe(viewLifecycleOwner) { videol ->
+            val adapter = VideoChannelAdapter(videol)
+            binding.recycleViewVideoChannel.layoutManager = LinearLayoutManager(requireContext())
+            binding.recycleViewVideoChannel.adapter = adapter
+        }
+
+        return binding.root
     }
 }

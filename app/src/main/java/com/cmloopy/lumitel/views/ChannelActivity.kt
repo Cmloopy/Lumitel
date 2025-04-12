@@ -1,7 +1,10 @@
 package com.cmloopy.lumitel.views
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,14 +25,27 @@ class ChannelActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        binding.swipeRefreshLayoutChannel.setOnRefreshListener {
+            reloadData()
+        }
+
         val channelID = intent.getIntExtra("idChannel", -1)
 
         val adapter = ChannelAdapter(this)
         binding.viewpagerChannel.adapter = adapter
 
-        val listName = listOf("Video", "Short")
+        val listName = listOf("Video", "Short", "Infomation")
         TabLayoutMediator(binding.tabLayoutChannel, binding.viewpagerChannel) {tab, position ->
-            tab.text = listName[position]
-        }
+            val customView = LayoutInflater.from(this).inflate(R.layout.item_tab_video, null)
+            val textView = customView.findViewById<TextView>(R.id.tabText)
+            textView.text = listName[position]
+            tab.customView = customView
+        }.attach()
+    }
+
+    private fun reloadData() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            binding.swipeRefreshLayoutChannel.isRefreshing = false
+        }, 500)
     }
 }

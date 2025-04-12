@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_video_length_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.4"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/RoundImage1"
+        app:layout_constraintDimensionRatio="15:9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/img_ksea" />
+    <TextView
+        android:id="@+id/textDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5:08"
+        android:textColor="@android:color/white"
+        android:background="@drawable/custom_text_time_video"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="2dp"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_video_length_image"
+        app:layout_constraintEnd_toEndOf="@id/img_video_length_image"
+        android:layout_margin="4dp"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_video_length_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.46">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:text="100 ngày đạp bẫy trong Terraria (Master Mode)" />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="10sp"
+            android:textColor="@color/non_gray"
+            android:text="33N lượt xem - 6 giờ trước"/>
+    </LinearLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_more_if_video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

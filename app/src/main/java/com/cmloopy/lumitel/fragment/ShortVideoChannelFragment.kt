@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import com.cmloopy.lumitel.R
+import com.cmloopy.lumitel.adapter.ShortChannelAdapter
+import com.cmloopy.lumitel.databinding.FragmentShortVideoChannelBinding
 import com.cmloopy.lumitel.viewmodels.ShortVideoChannelViewModel
 
 class ShortVideoChannelFragment : Fragment() {
+    private lateinit var binding: FragmentShortVideoChannelBinding
 
     companion object {
         fun newInstance() = ShortVideoChannelFragment()
@@ -20,13 +24,20 @@ class ShortVideoChannelFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_short_video_channel, container, false)
+        binding = FragmentShortVideoChannelBinding.inflate(inflater, container, false)
+
+        viewModel.videos.observe(viewLifecycleOwner){videos ->
+            val adapter = ShortChannelAdapter(videos)
+            binding.recyclerViewShortChannel.layoutManager = GridLayoutManager(requireContext(),3)
+            binding.recyclerViewShortChannel.adapter = adapter
+        }
+
+        return binding.root
     }
 }
