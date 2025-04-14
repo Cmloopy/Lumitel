@@ -8,24 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import com.cmloopy.lumitel.viewmodels.InfoChannelViewModel
 import com.cmloopy.lumitel.R
+import com.cmloopy.lumitel.databinding.FragmentInfoChannelBinding
 
 class InfoChannelFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = InfoChannelFragment()
-    }
+    private lateinit var binding: FragmentInfoChannelBinding
 
     private val viewModel: InfoChannelViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private var channelId: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_info_channel, container, false)
+        binding = FragmentInfoChannelBinding.inflate(inflater, container, false)
+
+        channelId = arguments?.getInt("channelId", -1) ?: -1
+
+        return binding.root
     }
 }

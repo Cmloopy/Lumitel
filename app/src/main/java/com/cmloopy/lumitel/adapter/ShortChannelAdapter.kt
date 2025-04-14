@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.video.Video
 import com.google.android.material.imageview.ShapeableImageView
@@ -11,12 +12,10 @@ import com.google.android.material.textview.MaterialTextView
 
 class ShortChannelAdapter(private var listShort:List<Video>):RecyclerView.Adapter<ShortChannelAdapter.ShortChannelViewHolder>() {
     inner class ShortChannelViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val imgAvatarChannel = itemView.findViewById<ShapeableImageView>(R.id.img_video_image)
+        val imgVideoImage = itemView.findViewById<ShapeableImageView>(R.id.img_video_image)
         val totalView = itemView.findViewById<MaterialTextView>(R.id.txt_total_view)
         fun bind(video: Video){
-            //Glide.with(itemView.context).load(video.videoImage).into(imgAvatarChannel)
-            val resId: Int = itemView.context.getResources().getIdentifier(video.videoImage, "drawable", itemView.context.getPackageName())
-            imgAvatarChannel.setImageResource(resId)
+            Glide.with(itemView.context).load(video.videoImage).into(imgVideoImage)
             totalView.text = "${video.totalViews} lượt xem"
         }
     }

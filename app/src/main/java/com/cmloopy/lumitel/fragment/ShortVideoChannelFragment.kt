@@ -14,23 +14,19 @@ import com.cmloopy.lumitel.viewmodels.ShortVideoChannelViewModel
 
 class ShortVideoChannelFragment : Fragment() {
     private lateinit var binding: FragmentShortVideoChannelBinding
-
-    companion object {
-        fun newInstance() = ShortVideoChannelFragment()
-    }
+    private var channelId: Int = -1
 
     private val viewModel: ShortVideoChannelViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentShortVideoChannelBinding.inflate(inflater, container, false)
+        channelId = arguments?.getInt("channelId", -1) ?: -1
+
+        viewModel.setChannelId(channelId = channelId)
 
         viewModel.videos.observe(viewLifecycleOwner){videos ->
             val adapter = ShortChannelAdapter(videos)

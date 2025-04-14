@@ -10,11 +10,10 @@ class CategoryRepository {
     private val msisdn = "+84338363931"
     private val timestamp = System.currentTimeMillis().toString()
 
-    private val listCate = mutableListOf<Category>()
-
     private var apiCategoryService = RetrofitClient.instance.create(CategoryApi::class.java)
 
     suspend fun getAllCategory(): List<Category>{
+        val listCate = mutableListOf<Category>()
         listCate.add(Category(-1,"Hot","", "",""))
         val result = apiCategoryService.getAllCategory(msisdn,"", timestamp, "")
         result.data.forEach{

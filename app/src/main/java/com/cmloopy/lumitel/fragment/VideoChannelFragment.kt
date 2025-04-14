@@ -15,17 +15,17 @@ import com.cmloopy.lumitel.viewmodels.VideoChannelViewModel
 class VideoChannelFragment : Fragment() {
     private lateinit var binding: FragmentVideoChannelBinding
 
-    companion object {
-        fun newInstance() = VideoChannelFragment()
-    }
-
     private val viewModel: VideoChannelViewModel by viewModels()
+    private var channelId: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentVideoChannelBinding.inflate(inflater,container,false)
+
+        channelId = arguments?.getInt("channelId", -1) ?: -1
+        viewModel.setChannelId(channelId = channelId)
 
         viewModel.videol.observe(viewLifecycleOwner) { videol ->
             val adapter = VideoChannelAdapter(videol)

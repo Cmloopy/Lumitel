@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 data class ChannelResponse(
     @SerializedName("data") val data: Channel,
     @SerializedName("code") val code: Int,
-    @SerializedName("code") val desc: String
+    @SerializedName("desc") val desc: String
 )

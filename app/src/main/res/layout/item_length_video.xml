@@ -24,7 +24,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/img_eok"
-            app:shapeAppearanceOverlay="@style/RoundImage" />
+            app:shapeAppearanceOverlay="@style/RoundImageVideo" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_length_video"
