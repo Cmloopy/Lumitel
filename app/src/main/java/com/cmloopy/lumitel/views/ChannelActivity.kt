@@ -31,29 +31,43 @@ class ChannelActivity : AppCompatActivity() {
 
         val channelID = intent.getIntExtra("idChannel", -1)
         viewModel.setChannelId(channelID)
+        binding.constraintLayout.visibility = View.GONE
+        binding.constraintLayout2.visibility = View.GONE
+        binding.imgBiaChannel.visibility = View.GONE
 
         binding.swipeRefreshLayoutChannel.setOnRefreshListener {
             reloadData()
         }
 
         viewModel.channel.observe(this){ channel ->
-            binding.txtNameChannelActivity.text = channel.channelName
-            binding.txtNameChannelActivity1.text = channel.channelName
-            Glide.with(this).load(channel.channelAvatar).into(binding.imgAvatarChannel)
-            if(channel.headerBanner != null && channel.headerBanner != ""){
-                Glide.with(this).load(channel.headerBanner).into(binding.imgBiaChannel)
+            if(channel != null) {
+                binding.progressBarLoadingChannel.visibility = View.GONE
+                binding.constraintLayout.visibility = View.VISIBLE
+                binding.constraintLayout2.visibility = View.VISIBLE
+                binding.imgBiaChannel.visibility = View.VISIBLE
+
+                binding.txtNameChannelActivity.text = channel.channelName
+                binding.txtNameChannelActivity1.text = channel.channelName
+                Glide.with(this).load(channel.channelAvatar).into(binding.imgAvatarChannel)
+                if (channel.headerBanner != null && channel.headerBanner != "") {
+                    Glide.with(this).load(channel.headerBanner).into(binding.imgBiaChannel)
+                }
+                binding.txtTotalVideoChannel.text = "kakaokeapitest - ${channel.numVideos} Videos"
+                val adapter = ChannelAdapter(this, channelId = channelID)
+                binding.viewpagerChannel.adapter = adapter
+                binding.viewpagerChannel.isUserInputEnabled = false
+                val listName = listOf("Video", "Short", "Infomation")
+                TabLayoutMediator(
+                    binding.tabLayoutChannel,
+                    binding.viewpagerChannel
+                ) { tab, position ->
+                    val customView =
+                        LayoutInflater.from(this).inflate(R.layout.item_tab_video, null)
+                    val textView = customView.findViewById<TextView>(R.id.tabText)
+                    textView.text = listName[position]
+                    tab.customView = customView
+                }.attach()
             }
-            binding.txtTotalVideoChannel.text = "kakaokeapitest - ${channel.numVideos} Videos"
-            val adapter = ChannelAdapter(this, channelId = channelID)
-            binding.viewpagerChannel.adapter = adapter
-            binding.viewpagerChannel.isUserInputEnabled = false
-            val listName = listOf("Video", "Short", "Infomation")
-            TabLayoutMediator(binding.tabLayoutChannel, binding.viewpagerChannel) {tab, position ->
-                val customView = LayoutInflater.from(this).inflate(R.layout.item_tab_video, null)
-                val textView = customView.findViewById<TextView>(R.id.tabText)
-                textView.text = listName[position]
-                tab.customView = customView
-            }.attach()
         }
     }
     private fun reloadData() {
