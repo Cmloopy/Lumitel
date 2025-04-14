@@ -8,38 +8,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.cmloopy.lumitel.viewmodels.AllVideoViewModel
+import com.cmloopy.lumitel.viewmodels.VideoCateViewModel
 import com.cmloopy.lumitel.adapter.LengthVideoAdapter
 import com.cmloopy.lumitel.adapter.ShortVideoAdapter
-import com.cmloopy.lumitel.databinding.FragmentAllVideoBinding
+import com.cmloopy.lumitel.databinding.FragmentVideoCateBinding
 import com.cmloopy.lumitel.views.VideoViewActivity
 
-class AllVideoFragment : Fragment() {
-    private lateinit var binding: FragmentAllVideoBinding
-    private val viewModel: AllVideoViewModel by viewModels()
-    private var isLoaded = false
+class VideoCateFragment : Fragment() {
+    private lateinit var binding: FragmentVideoCateBinding
+    private val viewModel: VideoCateViewModel by viewModels()
 
     private lateinit var shortAdapter: ShortVideoAdapter
     private lateinit var lengthAdapter: LengthVideoAdapter
+    private var isLoading = false
 
     private var idCategory: Int = -1
 
     override fun onResume() {
         super.onResume()
-        if (!isLoaded && isVisible) {
+        if (!isLoading && isVisible) {
             idCategory = arguments?.getInt("idCategory", -1) ?: -1
             viewModel.setCategory(idCategory)
-            isLoaded = true
+            isLoading = true
         }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAllVideoBinding.inflate(inflater, container, false)
+        binding = FragmentVideoCateBinding.inflate(inflater, container, false)
         return binding.root
     }
 

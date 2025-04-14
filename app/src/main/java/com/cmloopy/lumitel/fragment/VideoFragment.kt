@@ -35,47 +35,56 @@ class VideoFragment : Fragment() {
         _binding = FragmentVideoBinding.inflate(inflater, container,false)
 
         viewModel.getCategory()
+        binding.lnTab.visibility = View.GONE
 
         viewModel.categories.observe(viewLifecycleOwner) {categories ->
-            //Gán adapter cho ViewPager2
-            val adapter = VideoCategoryAdapter(this, categories = categories)
-            binding.vpgTabCategory.adapter = adapter
-            binding.vpgTabCategory.isUserInputEnabled = false
+            if(categories.isNotEmpty()){
+                binding.lnTab.visibility = View.VISIBLE
+                binding.progressBarLoadingVideoFragment.visibility = View.GONE
 
-            //Gán fragment với tab
-            TabLayoutMediator(binding.tabCategory, binding.vpgTabCategory) { tab, position ->
-                val customView = LayoutInflater.from(requireContext()).inflate(R.layout.item_tab_video, null)
-                val textView = customView.findViewById<TextView>(R.id.tabText)
-                textView.text = categories[position].cateName
-                tab.customView = customView
-            }.attach()
+                //Gán adapter cho ViewPager2
+                val adapter = VideoCategoryAdapter(this, categories = categories)
+                binding.vpgTabCategory.adapter = adapter
+                binding.vpgTabCategory.isUserInputEnabled = false
 
-            //Set hiệu ứng khi chọn tab & kéo đến tab
-            binding.tabCategory.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-                override fun onTabSelected(p0: TabLayout.Tab?) {
-                    val customView = p0?.customView
-                    customView?.findViewById<TextView>(R.id.tabText)?.apply {
+                //Gán fragment với tab
+                TabLayoutMediator(binding.tabCategory, binding.vpgTabCategory) { tab, position ->
+                    val customView = LayoutInflater.from(requireContext()).inflate(R.layout.item_tab_video, null)
+                    val textView = customView.findViewById<TextView>(R.id.tabText)
+                    textView.text = categories[position].cateName
+                    tab.customView = customView
+                }.attach()
+
+                //Set hiệu ứng khi chọn tab & kéo đến tab
+                binding.tabCategory.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+                    override fun onTabSelected(p0: TabLayout.Tab?) {
+                        val customView = p0?.customView
+                        customView?.findViewById<TextView>(R.id.tabText)?.apply {
+                            textSize = 25f
+                        }
+                    }
+                    override fun onTabUnselected(p0: TabLayout.Tab?) {
+                        val customView = p0?.customView
+                        customView?.findViewById<TextView>(R.id.tabText)?.apply {
+                            textSize = 15f
+                        }
+                    }
+                    override fun onTabReselected(p0: TabLayout.Tab?) {}
+                })
+
+                //Set hiệu ứng cho tab đầu tiên
+                binding.tabCategory.post {
+                    val firstTab = binding.tabCategory.getTabAt(0)
+                    firstTab?.customView?.findViewById<TextView>(R.id.tabText)?.apply {
                         textSize = 25f
-                        setTextColor(ContextCompat.getColor(context, R.color.blue_3))
                     }
                 }
-                override fun onTabUnselected(p0: TabLayout.Tab?) {
-                    val customView = p0?.customView
-                    customView?.findViewById<TextView>(R.id.tabText)?.apply {
-                        textSize = 15f
-                        setTextColor(ContextCompat.getColor(context, R.color.blue_4))
-                    }
-                }
-                override fun onTabReselected(p0: TabLayout.Tab?) {}
-            })
-
-            //Set hiệu ứng cho tab đầu tiên
-            binding.tabCategory.post {
-                val firstTab = binding.tabCategory.getTabAt(0)
-                firstTab?.customView?.findViewById<TextView>(R.id.tabText)?.apply {
-                    textSize = 25f
-                    setTextColor(ContextCompat.getColor(requireContext(), R.color.blue_3))
-                }
+            }
+            else {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    //binding.progressBarLoadingVideoFragment.visibility = View.GONE
+                    Toast.makeText(requireContext(),"Kết nối không ổn định!", Toast.LENGTH_SHORT).show()
+                }, 1000)
             }
         }
         return binding.root

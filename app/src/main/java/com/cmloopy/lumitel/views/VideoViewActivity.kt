@@ -3,9 +3,7 @@ package com.cmloopy.lumitel.views
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -13,7 +11,6 @@ import com.cmloopy.lumitel.adapter.ShortAdapter
 import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.databinding.ActivityVideoViewBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
-import com.cmloopy.lumitel.viewmodels.AllVideoViewModel
 import com.cmloopy.lumitel.viewmodels.VideoViewModel
 
 @Suppress("DEPRECATION")
@@ -83,8 +80,6 @@ class VideoViewActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.videos.observe(this) { videos ->
             adapter.updateData(videos)
-            Log.e("errrr", "${videos[0].videoMedia}")
-            Log.e("errrr", "${videos[0].channel.channelName}")
         }
     }
 

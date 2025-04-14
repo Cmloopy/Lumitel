@@ -1,16 +1,14 @@
 package com.cmloopy.lumitel.viewmodels
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.data.repository.VideoRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class AllVideoViewModel : ViewModel() {
+class VideoCateViewModel : ViewModel() {
     private val videoRepository = VideoRepository()
     private val _videos = MutableLiveData<List<Video>>()
     private val _videol = MutableLiveData<List<Video>>()
@@ -94,7 +92,4 @@ class AllVideoViewModel : ViewModel() {
     fun onItemClicked(idVideo: Int){
         _idVideo.value = idVideo
     }
-    /*fun resetIdVideo(){
-        _idVideo.value = null
-    }*/
 }
