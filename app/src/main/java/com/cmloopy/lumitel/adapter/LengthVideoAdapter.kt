@@ -53,6 +53,10 @@ class LengthVideoAdapter(private var videoList: List<Video>, private val onItemC
         val timee = time.toInt()
         val minute = timee / 60
         val sec = timee % 60
-        return "$minute:$sec"
+        return if(sec > 9) {
+            "$minute:$sec"
+        } else {
+            "$minute:0$sec"
+        }
     }
 }

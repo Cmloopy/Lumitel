@@ -29,17 +29,18 @@
                 tools:layout_editor_absoluteX="0dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/btn_back"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_back_button" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_name_channel_activity"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5.2"
                     android:gravity="center"
-                    android:text="GauTV"
+                    android:text="@string/gautv"
                     android:textColor="@color/blue"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -110,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="7dp"
-                    android:text="GauTV"
+                    android:text="@string/gautv"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 

@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.video.Video
+import com.cmloopy.lumitel.utils.TimeFormat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
@@ -157,14 +158,14 @@ class ShortAdapter(private val context: Context,
                 override fun onTimelineChanged(timeline: Timeline, reason: Int) {
                     duration = player!!.duration
                     if (duration != C.TIME_UNSET) {
-                        fullTime.text = formatTime(duration)
+                        fullTime.text = TimeFormat.formatTimeDuration(duration)
                     }
                 }
                 override fun onPlaybackStateChanged(state: Int) {
                     if (state == Player.STATE_READY) {
                         duration = player!!.duration
                         if (duration != C.TIME_UNSET) {
-                            fullTime.text = formatTime(duration)
+                            fullTime.text = TimeFormat.formatTimeDuration(duration)
                         }
                     }
                 }
@@ -278,7 +279,7 @@ class ShortAdapter(private val context: Context,
                 ) {
                     if (fromUser && player != null) {
                         val newPosition = (progress * duration) / 100
-                        currentTime.text = formatTime(newPosition)
+                        currentTime.text = TimeFormat.formatTimeDuration(newPosition)
                         player!!.seekTo(newPosition)
                     }
                 }
@@ -305,7 +306,7 @@ class ShortAdapter(private val context: Context,
                         btnForward.visibility = View.GONE
                         btnPauseResume.setImageResource(R.drawable.ic_play)
                         player?.let {
-                            currentTime.text = formatTime(it.currentPosition)
+                            currentTime.text = TimeFormat.formatTimeDuration(it.currentPosition)
                         }
                         handlerCurrentTime.postDelayed({
                             linearTimeShort.visibility = View.GONE
@@ -325,7 +326,7 @@ class ShortAdapter(private val context: Context,
                         btnBackward.visibility = View.VISIBLE
                         btnForward.visibility = View.VISIBLE
                         player?.let {
-                            currentTime.text = formatTime(it.currentPosition)
+                            currentTime.text = TimeFormat.formatTimeDuration(it.currentPosition)
                         }
                         seekBar?.setPadding(50, 51, 50, 25)
                         seekBar?.thumb =
@@ -378,7 +379,7 @@ class ShortAdapter(private val context: Context,
         fun updateSeekbarProgress(position: Long){
             val progress = ((position * 100) / duration).toInt()
             seekBar.progress = progress
-            currentTime.text = formatTime(position)
+            currentTime.text = TimeFormat.formatTimeDuration(position)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShortViewHolder {
@@ -421,10 +422,5 @@ class ShortAdapter(private val context: Context,
     }
     fun resumeVideo(){
         currentPlayingViewHolder?.playVideo()
-    }
-    private fun formatTime(milliseconds: Long): String {
-        val minutes = milliseconds / 1000 / 60
-        val seconds = milliseconds / 1000 % 60
-        return String.format("%02d:%02d", minutes, seconds)
     }
 }

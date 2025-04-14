@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.video.Video
+import com.cmloopy.lumitel.utils.TimeFormat
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
@@ -18,7 +19,7 @@ class VideoChannelAdapter(private var listVideo: List<Video>): RecyclerView.Adap
         fun bind(video:Video){
             videoText.text = video.videoTitle
             Glide.with(itemView.context).load(video.videoImage).into(img)
-            duration.text = formatTime(video.videoTime)
+            duration.text = TimeFormat.formatTime(video.videoTime)
         }
     }
 
@@ -33,11 +34,5 @@ class VideoChannelAdapter(private var listVideo: List<Video>): RecyclerView.Adap
 
     override fun onBindViewHolder(holder: VideoChannelViewHolder, position: Int) {
         holder.bind(listVideo[position])
-    }
-    fun formatTime(time: String): String{
-        val timee = time.toInt()
-        val minute = timee / 60
-        val sec = timee % 60
-        return "$minute:$sec"
     }
 }
