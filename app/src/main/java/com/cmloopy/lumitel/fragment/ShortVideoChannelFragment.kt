@@ -1,5 +1,6 @@
 package com.cmloopy.lumitel.fragment
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.ShortChannelAdapter
 import com.cmloopy.lumitel.databinding.FragmentShortVideoChannelBinding
 import com.cmloopy.lumitel.viewmodels.ShortVideoChannelViewModel
+import com.cmloopy.lumitel.views.VideoViewActivity
 
 class ShortVideoChannelFragment : Fragment() {
     private lateinit var binding: FragmentShortVideoChannelBinding
@@ -29,9 +31,18 @@ class ShortVideoChannelFragment : Fragment() {
         viewModel.setChannelId(channelId = channelId)
 
         viewModel.videos.observe(viewLifecycleOwner){videos ->
-            val adapter = ShortChannelAdapter(videos)
+            val adapter = ShortChannelAdapter(videos) {idVideo ->
+                val intent = Intent(requireContext(),VideoViewActivity::class.java)
+                intent.putExtra("idVideo",idVideo)
+                intent.putExtra("idChannel",channelId)
+                intent.putExtra("isFromChannel", true)
+                startActivity(intent)
+            }
             binding.recyclerViewShortChannel.layoutManager = GridLayoutManager(requireContext(),3)
             binding.recyclerViewShortChannel.adapter = adapter
+
+            if(videos.isEmpty()) binding.txtEmptyDataShortChannel.visibility = View.VISIBLE
+            else binding.txtEmptyDataShortChannel.visibility = View.GONE
         }
 
         return binding.root

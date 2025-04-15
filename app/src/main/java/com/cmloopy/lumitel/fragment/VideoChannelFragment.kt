@@ -1,5 +1,6 @@
 package com.cmloopy.lumitel.fragment
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.VideoChannelAdapter
 import com.cmloopy.lumitel.databinding.FragmentVideoChannelBinding
 import com.cmloopy.lumitel.viewmodels.VideoChannelViewModel
+import com.cmloopy.lumitel.views.VideoViewActivity
 
 class VideoChannelFragment : Fragment() {
     private lateinit var binding: FragmentVideoChannelBinding
@@ -28,9 +30,17 @@ class VideoChannelFragment : Fragment() {
         viewModel.setChannelId(channelId = channelId)
 
         viewModel.videol.observe(viewLifecycleOwner) { videol ->
-            val adapter = VideoChannelAdapter(videol)
+            val adapter = VideoChannelAdapter(videol) {idVideo ->
+                val intent = Intent(requireContext(),VideoViewActivity::class.java)
+                intent.putExtra("idVideo", idVideo)
+                intent.putExtra("isFromChannel", true)
+                intent.putExtra("idChannel", channelId)
+                startActivity(intent)
+            }
             binding.recycleViewVideoChannel.layoutManager = LinearLayoutManager(requireContext())
             binding.recycleViewVideoChannel.adapter = adapter
+
+            if(videol.isEmpty()) binding.txtEmptyDataVideoChannel.visibility = View.VISIBLE else binding.txtEmptyDataVideoChannel.visibility = View.GONE
         }
 
         return binding.root

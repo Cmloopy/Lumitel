@@ -75,10 +75,15 @@ class ShortCateFragment : Fragment() {
             }
         }
 
+        viewModel.resultList.observe(viewLifecycleOwner) {list ->
+            if(list.isEmpty()) binding.txtEmptyDataShortCate.visibility = View.VISIBLE else binding.txtEmptyDataShortCate.visibility = View.GONE
+        }
+
         viewModel.idVideo.observe(viewLifecycleOwner) {idVideo ->
             val intent = Intent(requireContext(), VideoViewActivity::class.java)
             intent.putExtra("idVideo", idVideo)
             intent.putExtra("idCategory", idCategory)
+            intent.putExtra("isFromChannel",false)
             startActivity(intent)
         }
     }

@@ -15,17 +15,20 @@ class VideoViewModel: ViewModel() {
     private val commentRepo = CommentRepository()
     private val _videos = MutableLiveData<List<Video>>()
     private val _comments = MutableLiveData<List<Comment>>()
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String> get() = _error
 
     val videos: LiveData<List<Video>> get() = _videos
     val comments: LiveData<List<Comment>> get() = _comments
-    fun updateId(idCate: Int, idVideo: Int){
-        if(idCate == -1){
-            loadVideoHot(idVideo)
+    fun updateId(idCate: Int, idVideo: Int, isFromChannel: Boolean, idChannel: Int){
+        if(!isFromChannel){
+            if(idCate == -1){
+                loadVideoHot(idVideo)
+            }
+            else{
+                loadVideos(idVideo, idCate)
+            }
         }
-        else{
-            loadVideos(idVideo, idCate)
+        else {
+            loadVideoFromChannel(idVideo, idChannel)
         }
     }
 
@@ -60,6 +63,34 @@ class VideoViewModel: ViewModel() {
                 }
                 _videos.value = finalList
             } catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+    fun loadVideoFromChannel(idVideo: Int, idChannel: Int){
+        viewModelScope.launch {
+            try {
+                val finalList = mutableListOf<Video>()
+                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo)
+                finalList.add(firstVideo)
+                if (firstVideo.aspecRatio.toFloat() > 1f) {
+                    val result = videoRepo.getVideoByChannel(channelId =  idChannel)
+                    val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
+                    safeList.forEach {
+                        finalList.add(it)
+                    }
+                    _videos.value = finalList
+                } else {
+                    val result = videoRepo.getShortByChannel(channelId =  idChannel)
+                    val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
+                    safeList.forEach {
+                        finalList.add(it)
+                    }
+                    _videos.value = finalList
+                }
+
+            } catch (e: Exception){
+                _videos.value = emptyList()
                 e.printStackTrace()
             }
         }

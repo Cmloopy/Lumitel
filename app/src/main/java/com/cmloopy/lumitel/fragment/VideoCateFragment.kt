@@ -109,10 +109,15 @@ class VideoCateFragment : Fragment() {
                     else binding.materialTextView2.visibility = View.VISIBLE
             }
         }
+        viewModel.resultList.observe(viewLifecycleOwner) {list ->
+            if(list.isEmpty()) binding.txtEmptyDataVideoCate.visibility = View.VISIBLE else binding.txtEmptyDataVideoCate.visibility = View.GONE
+        }
+
         viewModel.idVideo.observe(viewLifecycleOwner) {idVideo ->
             val intent = Intent(requireContext(), VideoViewActivity::class.java)
             intent.putExtra("idVideo", idVideo)
             intent.putExtra("idCategory", idCategory)
+            intent.putExtra("isFromChannel", false)
             startActivity(intent)
         }
     }

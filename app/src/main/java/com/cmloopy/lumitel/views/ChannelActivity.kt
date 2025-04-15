@@ -69,6 +69,9 @@ class ChannelActivity : AppCompatActivity() {
                 }.attach()
             }
         }
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
     private fun reloadData() {
         val channelID = intent.getIntExtra("idChannel", -1)

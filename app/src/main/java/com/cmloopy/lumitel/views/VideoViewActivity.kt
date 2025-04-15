@@ -20,6 +20,8 @@ class VideoViewActivity : AppCompatActivity() {
     private lateinit var adapter: ShortAdapter
     private var idCategory = -1
     private var idVideo = -1
+    private var isFromChannel = false
+    private var idChannel = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +32,9 @@ class VideoViewActivity : AppCompatActivity() {
 
         idCategory = intent.getIntExtra("idCategory", -1)
         idVideo = intent.getIntExtra("idVideo", -1)
-        viewModel.updateId(idCategory, idVideo)
+        isFromChannel = intent.getBooleanExtra("isFromChannel", false)
+        idChannel = intent.getIntExtra("idChannel", -1)
+        viewModel.updateId(idCategory, idVideo, isFromChannel, idChannel)
 
         adapter = ShortAdapter(this, emptyList(),
             { video ->
