@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.VideoChannelAdapter
 import com.cmloopy.lumitel.databinding.FragmentVideoChannelBinding
 import com.cmloopy.lumitel.viewmodels.VideoChannelViewModel

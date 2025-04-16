@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.ShortChannelAdapter
 import com.cmloopy.lumitel.databinding.FragmentShortVideoChannelBinding
 import com.cmloopy.lumitel.viewmodels.ShortVideoChannelViewModel

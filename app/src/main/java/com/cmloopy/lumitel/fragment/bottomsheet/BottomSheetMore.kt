@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.databinding.BottomSheetMoreBinding
-import com.cmloopy.lumitel.fragment.VideoFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

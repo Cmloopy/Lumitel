@@ -3,7 +3,6 @@ package com.cmloopy.lumitel.data.repository
 import com.cmloopy.lumitel.data.api.ChannelApi
 import com.cmloopy.lumitel.data.api.retrofit.RetrofitClient
 import com.cmloopy.lumitel.data.models.channel.Channel
-import retrofit2.create
 
 class ChannelRepository {
     private val timestamp = System.currentTimeMillis().toString()

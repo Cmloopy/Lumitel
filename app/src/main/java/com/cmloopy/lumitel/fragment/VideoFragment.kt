@@ -10,10 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.VideoCategoryAdapter
-import com.cmloopy.lumitel.data.models.category.CategoryResponse
 import com.cmloopy.lumitel.databinding.FragmentVideoBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetMore
 import com.cmloopy.lumitel.viewmodels.VideoFragmentViewModel

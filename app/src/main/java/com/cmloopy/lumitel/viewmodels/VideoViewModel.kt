@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cmloopy.lumitel.data.models.Comment
 import com.cmloopy.lumitel.data.models.video.Video
-import com.cmloopy.lumitel.data.repository.CommentRepository
 import com.cmloopy.lumitel.data.repository.VideoRepository
 import kotlinx.coroutines.launch
 

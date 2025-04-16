@@ -1,12 +1,8 @@
 package com.cmloopy.lumitel.data.repository
 
-import android.util.Log
-import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.api.VideoApi
 import com.cmloopy.lumitel.data.api.retrofit.RetrofitClient
-import com.cmloopy.lumitel.data.models.channel.Channel
 import com.cmloopy.lumitel.data.models.video.Video
-import com.google.gson.Gson
 
 class VideoRepository {
 

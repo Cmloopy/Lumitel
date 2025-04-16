@@ -12,10 +12,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.ShortCommentAdapter
-import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.databinding.BottomSheetCommentBinding
 import com.cmloopy.lumitel.viewmodels.BottomSheetCommentViewModel
-import com.cmloopy.lumitel.viewmodels.VideoViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
