@@ -24,11 +24,16 @@ class VideoCateFragment : Fragment() {
     private var isLoading = false
 
     private var idCategory: Int = -1
+    private var msisdn = ""
 
     override fun onResume() {
         super.onResume()
         if (!isLoading && isVisible) {
             idCategory = arguments?.getInt("idCategory", -1) ?: -1
+            val msisdns = arguments?.getString("msisdn")
+            if(msisdns != null){
+                msisdn = msisdns
+            }
             viewModel.setCategory(idCategory)
             isLoading = true
         }

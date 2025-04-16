@@ -22,6 +22,7 @@ class VideoViewActivity : AppCompatActivity() {
     private var idVideo = -1
     private var isFromChannel = false
     private var idChannel = -1
+    private var isShort = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,8 @@ class VideoViewActivity : AppCompatActivity() {
         idVideo = intent.getIntExtra("idVideo", -1)
         isFromChannel = intent.getBooleanExtra("isFromChannel", false)
         idChannel = intent.getIntExtra("idChannel", -1)
-        viewModel.updateId(idCategory, idVideo, isFromChannel, idChannel)
+        isShort = intent.getBooleanExtra("isShort", false)
+        viewModel.updateId(idCategory, idVideo, isFromChannel, idChannel, isShort)
 
         adapter = ShortAdapter(this, emptyList(),
             { video ->
@@ -55,6 +57,9 @@ class VideoViewActivity : AppCompatActivity() {
             finish()
             binding.vpgShortVideo.adapter = null
             viewModel.videos.removeObservers(this)
+        }
+        binding.btnCreateNew.setOnClickListener {
+
         }
     }
 

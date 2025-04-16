@@ -10,7 +10,7 @@ import com.google.gson.Gson
 
 class VideoRepository {
 
-    private val msisdn = "+84338363931"
+    private val msisdn = ""
     private val timestamp = System.currentTimeMillis().toString()
 
     private val listVideoHot = mutableListOf<Video>()

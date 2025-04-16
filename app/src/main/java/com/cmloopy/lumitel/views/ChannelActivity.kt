@@ -72,6 +72,9 @@ class ChannelActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
+        binding.btnCreateVideo.setOnClickListener {
+
+        }
     }
     private fun reloadData() {
         val channelID = intent.getIntExtra("idChannel", -1)

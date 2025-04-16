@@ -15,6 +15,7 @@ import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.VideoCategoryAdapter
 import com.cmloopy.lumitel.data.models.category.CategoryResponse
 import com.cmloopy.lumitel.databinding.FragmentVideoBinding
+import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetMore
 import com.cmloopy.lumitel.viewmodels.VideoFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -24,9 +25,15 @@ class VideoFragment : Fragment() {
     private val binding get() = _binding
     private val viewModel: VideoFragmentViewModel by viewModels()
 
-    /*companion object {
-        fun newInstance() = VideoFragment()
-    }*/
+    companion object {
+        fun newInstance(msisdn: String): VideoFragment {
+            val fragment = VideoFragment()
+            val args = Bundle()
+            args.putString("msisdn", msisdn)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +41,7 @@ class VideoFragment : Fragment() {
     ): View {
         _binding = FragmentVideoBinding.inflate(inflater, container,false)
 
+        val msisdnRes = arguments?.getString("msisdn")
         viewModel.getCategory()
         binding.lnTab.visibility = View.GONE
 
@@ -43,7 +51,7 @@ class VideoFragment : Fragment() {
                 binding.progressBarLoadingVideoFragment.visibility = View.GONE
 
                 //Gán adapter cho ViewPager2
-                val adapter = VideoCategoryAdapter(this, categories = categories)
+                val adapter = VideoCategoryAdapter(this, categories = categories, msisdn = msisdnRes.toString())
                 binding.vpgTabCategory.adapter = adapter
                 binding.vpgTabCategory.isUserInputEnabled = false
 
@@ -86,6 +94,10 @@ class VideoFragment : Fragment() {
                     Toast.makeText(requireContext(),"Kết nối không ổn định!", Toast.LENGTH_SHORT).show()
                 }, 1000)
             }
+        }
+        binding.btnVideoMore.setOnClickListener {
+            val bottomSheet = BottomSheetMore()
+            bottomSheet.show(parentFragmentManager, "")
         }
         return binding.root
     }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/btn_show_my_channel"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/my_channel"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_my_channel"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/non_non_gray"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/turn_on_off_video_autoplay"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_turn_on_off"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/non_non_gray"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/btn_show_my_library"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/library"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_library"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/non_non_gray"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/btn_show_my_following"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/following"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_channel_follow"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/non_non_gray"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/btn_cancel_bottom_sheet_more"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_cancel_bottom"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/non_non_gray"/>
+</LinearLayout>

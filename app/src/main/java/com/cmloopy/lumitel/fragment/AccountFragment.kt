@@ -12,7 +12,13 @@ import com.cmloopy.lumitel.R
 class AccountFragment : Fragment() {
 
     companion object {
-        fun newInstance() = AccountFragment()
+        fun newInstance(msisdn: String): AccountFragment {
+            val fragment = AccountFragment()
+            val args = Bundle()
+            args.putString("msisdn", msisdn)
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     private val viewModel: AccountFragmentViewModel by viewModels()

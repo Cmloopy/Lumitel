@@ -34,6 +34,7 @@ class VideoChannelFragment : Fragment() {
                 val intent = Intent(requireContext(),VideoViewActivity::class.java)
                 intent.putExtra("idVideo", idVideo)
                 intent.putExtra("isFromChannel", true)
+                intent.putExtra("isShort", false)
                 intent.putExtra("idChannel", channelId)
                 startActivity(intent)
             }

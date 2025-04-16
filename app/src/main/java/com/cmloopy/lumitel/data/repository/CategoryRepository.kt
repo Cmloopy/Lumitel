@@ -7,7 +7,7 @@ import com.cmloopy.lumitel.data.models.category.CategoryResponse
 
 class CategoryRepository {
 
-    private val msisdn = "+84338363931"
+    private val msisdn = ""
     private val timestamp = System.currentTimeMillis().toString()
 
     private var apiCategoryService = RetrofitClient.instance.create(CategoryApi::class.java)

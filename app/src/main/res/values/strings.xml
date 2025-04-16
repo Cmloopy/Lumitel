@@ -20,4 +20,9 @@
     <string name="xu_t">Đề xuất</string>
     <string name="gautv">GauTV</string>
     <string name="kh_ng_c_d_li_u">Không có dữ liệu...</string>
+    <string name="my_channel">My Channel</string>
+    <string name="turn_on_off_video_autoplay">Turn On/Off video autoplay</string>
+    <string name="library">Library</string>
+    <string name="following">Following</string>
+    <string name="cancel">Cancel</string>
 </resources>

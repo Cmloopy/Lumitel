@@ -18,7 +18,7 @@ class VideoViewModel: ViewModel() {
 
     val videos: LiveData<List<Video>> get() = _videos
     val comments: LiveData<List<Comment>> get() = _comments
-    fun updateId(idCate: Int, idVideo: Int, isFromChannel: Boolean, idChannel: Int){
+    fun updateId(idCate: Int, idVideo: Int, isFromChannel: Boolean, idChannel: Int, isShort: Boolean){
         if(!isFromChannel){
             if(idCate == -1){
                 loadVideoHot(idVideo)
@@ -28,7 +28,7 @@ class VideoViewModel: ViewModel() {
             }
         }
         else {
-            loadVideoFromChannel(idVideo, idChannel)
+            loadVideoFromChannel(idVideo, idChannel, isShort)
         }
     }
 
@@ -50,7 +50,7 @@ class VideoViewModel: ViewModel() {
         }
     }
 
-    fun loadVideos(idVideo: Int, idCate: Int) {
+    private fun loadVideos(idVideo: Int, idCate: Int) {
         viewModelScope.launch {
             try {
                 val finalList = mutableListOf<Video>()
@@ -67,13 +67,13 @@ class VideoViewModel: ViewModel() {
             }
         }
     }
-    fun loadVideoFromChannel(idVideo: Int, idChannel: Int){
+    private fun loadVideoFromChannel(idVideo: Int, idChannel: Int, isShort: Boolean){
         viewModelScope.launch {
             try {
                 val finalList = mutableListOf<Video>()
                 val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo)
                 finalList.add(firstVideo)
-                if (firstVideo.aspecRatio.toFloat() > 1f) {
+                if (!isShort) {
                     val result = videoRepo.getVideoByChannel(channelId =  idChannel)
                     val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
                     safeList.forEach {

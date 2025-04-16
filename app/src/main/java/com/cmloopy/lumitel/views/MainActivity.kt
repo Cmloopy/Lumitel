@@ -11,6 +11,7 @@ import com.cmloopy.lumitel.fragment.VideoFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private var msisdn = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -19,18 +20,18 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         binding.bottomNavigationView.selectedItemId = R.id.frg_video
-        val mainFragment = VideoFragment()
+        val mainFragment = VideoFragment.newInstance(msisdn)
         replaceFragment(mainFragment)
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId){
                 R.id.frg_video -> {
-                    val fragment = VideoFragment()
+                    val fragment = VideoFragment.newInstance(msisdn)
                     replaceFragment(fragment)
                     true
                 }
                 R.id.frg_account -> {
-                    val fragment = AccountFragment()
+                    val fragment = AccountFragment.newInstance(msisdn)
                     replaceFragment(fragment)
                     true
                 }

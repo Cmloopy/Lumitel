@@ -23,10 +23,13 @@ class ShortCateFragment : Fragment() {
 
     private lateinit var adapter: ShortCateAdapter
     private var idCategory: Int = -1
+    private var msisdn = ""
     override fun onResume() {
         super.onResume()
         if (!isLoading && isVisible) {
             idCategory = arguments?.getInt("idCategory", -1) ?: -1
+            val msisdns = arguments?.getString("msisdn")
+            if(msisdns!=null) msisdn = msisdns
             viewModel.setCategory(idCategory)
             isLoading = true
         }
@@ -76,7 +79,13 @@ class ShortCateFragment : Fragment() {
         }
 
         viewModel.resultList.observe(viewLifecycleOwner) {list ->
-            if(list.isEmpty()) binding.txtEmptyDataShortCate.visibility = View.VISIBLE else binding.txtEmptyDataShortCate.visibility = View.GONE
+            if(list.isEmpty()) {
+                binding.txtEmptyDataShortCate.visibility = View.VISIBLE
+                binding.progressBarLoading2.visibility = View.GONE
+            }
+            else {
+                binding.txtEmptyDataShortCate.visibility = View.GONE
+            }
         }
 
         viewModel.idVideo.observe(viewLifecycleOwner) {idVideo ->

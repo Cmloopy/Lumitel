@@ -36,6 +36,7 @@ class ShortVideoChannelFragment : Fragment() {
                 intent.putExtra("idVideo",idVideo)
                 intent.putExtra("idChannel",channelId)
                 intent.putExtra("isFromChannel", true)
+                intent.putExtra("isShort", true)
                 startActivity(intent)
             }
             binding.recyclerViewShortChannel.layoutManager = GridLayoutManager(requireContext(),3)
