@@ -12,4 +12,9 @@ class ChannelRepository {
         val result = channelApi.getChannelInfo(channelId = channelId, msisdn, timestamp, "")
         return result.data
     }
+
+    suspend fun getInfoMyChannel(msisdn: String): Channel{
+        val result = channelApi.getMyChannelInfo(msisdn, timestamp)
+        return result.data
+    }
 }
