@@ -48,6 +48,7 @@ class VideoChannelFragment : Fragment() {
                 intent.putExtra("isFromChannel", true)
                 intent.putExtra("isShort", false)
                 intent.putExtra("idChannel", channelId)
+                intent.putExtra("msisdn", msisdn)
                 startActivity(intent)
             }
             binding.recycleViewVideoChannel.layoutManager = LinearLayoutManager(requireContext())
