@@ -30,7 +30,10 @@ class ChannelActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         val channelID = intent.getIntExtra("idChannel", -1)
-        viewModel.setChannelId(channelID)
+        val msisdn = intent.getStringExtra("msisdn")?: "0"
+        //Xử lý suscribe//
+
+        viewModel.setChannelId(channelID, msisdn)
         binding.constraintLayout.visibility = View.GONE
         binding.constraintLayout2.visibility = View.GONE
         binding.imgBiaChannel.visibility = View.GONE
@@ -53,7 +56,7 @@ class ChannelActivity : AppCompatActivity() {
                     Glide.with(this).load(channel.headerBanner).into(binding.imgBiaChannel)
                 }
                 binding.txtTotalVideoChannel.text = "kakaokeapitest - ${channel.numVideos} Videos"
-                val adapter = ChannelAdapter(this, channelId = channelID)
+                val adapter = ChannelAdapter(this, channelId = channelID, msisdn)
                 binding.viewpagerChannel.adapter = adapter
                 binding.viewpagerChannel.isUserInputEnabled = false
                 val listName = listOf("Video", "Short", "Infomation")
@@ -78,7 +81,8 @@ class ChannelActivity : AppCompatActivity() {
     }
     private fun reloadData() {
         val channelID = intent.getIntExtra("idChannel", -1)
-        viewModel.setChannelId(channelId = channelID)
+        val msisdn = intent.getStringExtra("msisdn")?:"0"
+        viewModel.setChannelId(channelId = channelID, msisdn)
         Handler(Looper.getMainLooper()).postDelayed({
             binding.swipeRefreshLayoutChannel.isRefreshing = false
         }, 500)

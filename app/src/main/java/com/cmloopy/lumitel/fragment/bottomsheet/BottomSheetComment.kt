@@ -14,6 +14,7 @@ import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.ShortCommentAdapter
 import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.databinding.BottomSheetCommentBinding
+import com.cmloopy.lumitel.viewmodels.BottomSheetCommentViewModel
 import com.cmloopy.lumitel.viewmodels.VideoViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -24,16 +25,31 @@ class BottomSheetComment: BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetCommentBinding
     //private lateinit var video: ShortVideo
     private lateinit var shortCommentAdapter: ShortCommentAdapter
-    private val viewModel: VideoViewModel by viewModels()
+    private val viewModel: BottomSheetCommentViewModel by viewModels()
+
+    private var idVideo = -1
+    private var msisdn: String? = null
 
     companion object {
-        fun newInstance(video: Video) { }
+        fun newInstance(idVideo: Int, msisdn: String?): BottomSheetComment {
+            val fragment = BottomSheetComment()
+            fragment.arguments = Bundle().apply {
+                putInt("idVideo", idVideo)
+                putString("msisdn", msisdn)
+            }
+            return fragment
+        }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = BottomSheetCommentBinding.inflate(inflater, container, false)
+        idVideo = arguments?.getInt("idVideo", -1) ?: -1
+        msisdn = arguments?.getString("msisdn")
+
+        //XỬ LÝ CMT
+
         return binding.root
     }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -66,8 +82,6 @@ class BottomSheetComment: BottomSheetDialogFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.comments.observe(viewLifecycleOwner) {comments ->
-            shortCommentAdapter.updateComment(comments)
-        }
+
     }
 }

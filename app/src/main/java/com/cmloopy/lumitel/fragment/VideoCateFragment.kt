@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cmloopy.lumitel.viewmodels.VideoCateViewModel
 import com.cmloopy.lumitel.adapter.LengthVideoAdapter
@@ -24,17 +25,24 @@ class VideoCateFragment : Fragment() {
     private var isLoading = false
 
     private var idCategory: Int = -1
-    private var msisdn = ""
+    private var msisdn : String? = null
+
+    companion object {
+        fun newInstance(idCategory: Int, msisdn: String?): VideoCateFragment {
+            val fragment = VideoCateFragment()
+            fragment.arguments = Bundle().apply {
+                putInt("idCategory", idCategory)
+                putString("msisdn", msisdn)
+            }
+            return fragment
+        }
+    }
 
     override fun onResume() {
         super.onResume()
         if (!isLoading && isVisible) {
             idCategory = arguments?.getInt("idCategory", -1) ?: -1
-            val msisdns = arguments?.getString("msisdn")
-            if(msisdns != null){
-                msisdn = msisdns
-            }
-            viewModel.setCategory(idCategory)
+            viewModel.setCategory(idCategory, msisdn!!)
             isLoading = true
         }
     }
@@ -43,6 +51,7 @@ class VideoCateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentVideoCateBinding.inflate(inflater, container, false)
+        msisdn = arguments?.getString("msisdn")?: "0"
         return binding.root
     }
 
@@ -123,6 +132,7 @@ class VideoCateFragment : Fragment() {
             intent.putExtra("idVideo", idVideo)
             intent.putExtra("idCategory", idCategory)
             intent.putExtra("isFromChannel", false)
+            intent.putExtra("msisdn", msisdn)
             startActivity(intent)
         }
     }

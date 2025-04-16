@@ -13,6 +13,8 @@ import com.cmloopy.lumitel.databinding.ActivityVideoViewBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
 import com.cmloopy.lumitel.viewmodels.VideoViewModel
 
+//XỬ LÝ LIKE SHARE
+
 @Suppress("DEPRECATION")
 class VideoViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVideoViewBinding
@@ -23,6 +25,7 @@ class VideoViewActivity : AppCompatActivity() {
     private var isFromChannel = false
     private var idChannel = -1
     private var isShort = false
+    private var msisdn: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +39,9 @@ class VideoViewActivity : AppCompatActivity() {
         isFromChannel = intent.getBooleanExtra("isFromChannel", false)
         idChannel = intent.getIntExtra("idChannel", -1)
         isShort = intent.getBooleanExtra("isShort", false)
-        viewModel.updateId(idCategory, idVideo, isFromChannel, idChannel, isShort)
+        msisdn = intent.getStringExtra("msisdn")?:"0"
+
+        viewModel.updateId(idCategory, idVideo, isFromChannel, idChannel, isShort, msisdn!!)
 
         adapter = ShortAdapter(this, emptyList(),
             { video ->
@@ -66,6 +71,7 @@ class VideoViewActivity : AppCompatActivity() {
     private fun showChannel(video: Video) {
         val intent = Intent(this, ChannelActivity::class.java)
         intent.putExtra("idChannel", video.channelId)
+        intent.putExtra("msisdn",msisdn)
         startActivity(intent)
     }
 
@@ -93,7 +99,8 @@ class VideoViewActivity : AppCompatActivity() {
     }
 
     private fun showCommentDialog(video: Video){
-        val dialog = BottomSheetComment()
+        //msisdn & idvideo?
+        val dialog = BottomSheetComment.newInstance(video.id, msisdn)
         dialog.show(supportFragmentManager, "BottomSheetComment")
     }
 

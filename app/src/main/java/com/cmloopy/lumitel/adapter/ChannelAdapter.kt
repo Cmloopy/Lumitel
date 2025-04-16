@@ -8,11 +8,11 @@ import com.cmloopy.lumitel.fragment.InfoChannelFragment
 import com.cmloopy.lumitel.fragment.ShortVideoChannelFragment
 import com.cmloopy.lumitel.fragment.VideoChannelFragment
 
-class ChannelAdapter(fragmentActivity: FragmentActivity, private val channelId: Int): FragmentStateAdapter(fragmentActivity) {
+class ChannelAdapter(fragmentActivity: FragmentActivity, channelId: Int, msisdn: String): FragmentStateAdapter(fragmentActivity) {
     private val list = listOf(
-        VideoChannelFragment(),
-        ShortVideoChannelFragment(),
-        InfoChannelFragment()
+        VideoChannelFragment.newInstance(channelId,msisdn),
+        ShortVideoChannelFragment.newInstance(channelId,msisdn),
+        InfoChannelFragment.newInstance(channelId, msisdn)
     )
 
     override fun getItemCount(): Int {
@@ -20,13 +20,6 @@ class ChannelAdapter(fragmentActivity: FragmentActivity, private val channelId: 
     }
 
     override fun createFragment(position: Int): Fragment {
-        return sendIdChannel(channelId,list[position])
-    }
-    private fun sendIdChannel(channelId: Int, fragment: Fragment): Fragment{
-        val setupFragment = fragment
-        setupFragment.arguments = Bundle().apply {
-            putInt("channelId", channelId)
-        }
-        return fragment
+        return list[position]
     }
 }

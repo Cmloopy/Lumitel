@@ -14,10 +14,10 @@ class VideoFragmentViewModel : ViewModel() {
     private val _categories = MutableLiveData<List<Category>>()
     val categories: LiveData<List<Category>> = _categories
 
-    fun getCategory() {
+    fun getCategory(msisdn: String) {
         viewModelScope.launch {
             try {
-                val resultList = categoryRepository.getAllCategory()
+                val resultList = categoryRepository.getAllCategory(msisdn = msisdn)
                 _categories.value = resultList
             } catch (e:Exception){
                 e.printStackTrace()

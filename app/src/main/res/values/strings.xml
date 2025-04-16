@@ -25,4 +25,5 @@
     <string name="library">Library</string>
     <string name="following">Following</string>
     <string name="cancel">Cancel</string>
+    <string name="mychannel">MyChannel</string>
 </resources>

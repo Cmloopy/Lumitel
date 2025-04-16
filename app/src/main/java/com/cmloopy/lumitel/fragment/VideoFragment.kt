@@ -24,6 +24,7 @@ class VideoFragment : Fragment() {
     private lateinit var _binding: FragmentVideoBinding
     private val binding get() = _binding
     private val viewModel: VideoFragmentViewModel by viewModels()
+    private var msisdn: String? = null
 
     companion object {
         fun newInstance(msisdn: String): VideoFragment {
@@ -41,8 +42,8 @@ class VideoFragment : Fragment() {
     ): View {
         _binding = FragmentVideoBinding.inflate(inflater, container,false)
 
-        val msisdnRes = arguments?.getString("msisdn")
-        viewModel.getCategory()
+        msisdn = arguments?.getString("msisdn")?:"0"
+        viewModel.getCategory(msisdn!!)
         binding.lnTab.visibility = View.GONE
 
         viewModel.categories.observe(viewLifecycleOwner) {categories ->
@@ -51,7 +52,7 @@ class VideoFragment : Fragment() {
                 binding.progressBarLoadingVideoFragment.visibility = View.GONE
 
                 //Gán adapter cho ViewPager2
-                val adapter = VideoCategoryAdapter(this, categories = categories, msisdn = msisdnRes.toString())
+                val adapter = VideoCategoryAdapter(this, categories = categories, msisdn = msisdn)
                 binding.vpgTabCategory.adapter = adapter
                 binding.vpgTabCategory.isUserInputEnabled = false
 
@@ -95,22 +96,23 @@ class VideoFragment : Fragment() {
                 }, 1000)
             }
         }
-        binding.btnVideoMore.setOnClickListener {
-            val bottomSheet = BottomSheetMore()
-            bottomSheet.show(parentFragmentManager, "")
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnVideoMore.setOnClickListener {
+            val bottomSheet = BottomSheetMore.newInstance(msisdn = msisdn)
+            bottomSheet.show(parentFragmentManager, "")
+        }
         binding.swipeRefreshLayout.setOnRefreshListener {
             reloadData()
         }
     }
 
     private fun reloadData() {
-        viewModel.getCategory()
+        msisdn = arguments?.getString("msisdn")?: "0"
+        viewModel.getCategory(msisdn!!)
         Handler(Looper.getMainLooper()).postDelayed({
             binding.swipeRefreshLayout.isRefreshing = false
         }, 500)

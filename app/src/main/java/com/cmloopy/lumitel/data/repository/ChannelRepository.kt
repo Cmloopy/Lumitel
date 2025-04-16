@@ -6,11 +6,10 @@ import com.cmloopy.lumitel.data.models.channel.Channel
 import retrofit2.create
 
 class ChannelRepository {
-    private val msisdn = ""
     private val timestamp = System.currentTimeMillis().toString()
 
     private val channelApi = RetrofitClient.instance.create(ChannelApi::class.java)
-    suspend fun getInfoChannel(channelId: Int): Channel {
+    suspend fun getInfoChannel(channelId: Int, msisdn: String): Channel {
         val result = channelApi.getChannelInfo(channelId = channelId, msisdn, timestamp, "")
         return result.data
     }

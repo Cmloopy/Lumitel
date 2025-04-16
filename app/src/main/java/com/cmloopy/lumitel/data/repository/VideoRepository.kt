@@ -10,7 +10,6 @@ import com.google.gson.Gson
 
 class VideoRepository {
 
-    private val msisdn = ""
     private val timestamp = System.currentTimeMillis().toString()
 
     private val listVideoHot = mutableListOf<Video>()
@@ -20,7 +19,7 @@ class VideoRepository {
 
     private val apiVideoService = RetrofitClient.instance.create(VideoApi::class.java)
 
-    suspend fun getVideoHot(): List<Video>{
+    suspend fun getVideoHot(msisdn: String): List<Video>{
         val result = apiVideoService.getVideoHot(msisdn, "", timestamp, "", 0, 20)
         if(result.data.isNotEmpty()) {
             result.data.forEach {
@@ -29,7 +28,7 @@ class VideoRepository {
         }
         return listVideoHot
     }
-    suspend fun getVideoByCategory(idCategory: Int): List<Video>{
+    suspend fun getVideoByCategory(idCategory: Int, msisdn: String): List<Video>{
         val result = apiVideoService.getVideoByCategory(idCategory = idCategory, msisdn, "", timestamp, "", 0, 20)
         if(result.data.isNotEmpty()) {
             result.data.forEach {
@@ -38,12 +37,12 @@ class VideoRepository {
         }
         return listVideoByCategory
     }
-    suspend fun getInfoVideo(idVideo: Int) : Video {
+    suspend fun getInfoVideo(idVideo: Int, msisdn:String) : Video {
         val result = apiVideoService.getInfoVideo(idVideo = idVideo, msisdn, timestamp, "")
         return result.data
     }
 
-    suspend fun getVideoByChannel(channelId: Int): List<Video>{
+    suspend fun getVideoByChannel(channelId: Int, msisdn: String): List<Video>{
         val result = apiVideoService.getVideoByChannel(channelId = channelId, msisdn, "", 0, 20, timestamp,"")
         if(result.data.isNotEmpty()) {
             result.data.forEach {
@@ -53,7 +52,7 @@ class VideoRepository {
         return listVideoByChannel
 
     }
-    suspend fun getShortByChannel(channelId: Int): List<Video>{
+    suspend fun getShortByChannel(channelId: Int, msisdn: String): List<Video>{
         val result = apiVideoService.getShortByChannel(channelId, msisdn,"", 0, 20, timestamp, "")
         if(result.data.isNotEmpty()) {
             result.data.forEach {

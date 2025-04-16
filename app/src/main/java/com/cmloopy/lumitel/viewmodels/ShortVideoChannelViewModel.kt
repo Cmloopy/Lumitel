@@ -12,14 +12,14 @@ class ShortVideoChannelViewModel : ViewModel() {
     private val videoRepo = VideoRepository()
     private val _videos = MutableLiveData<List<Video>>()
     val videos: LiveData<List<Video>> get() = _videos
-    fun setChannelId(channelId: Int){
-        getShortByChannel(channelId)
+    fun setChannelId(channelId: Int, msisdn: String){
+        getShortByChannel(channelId, msisdn = msisdn)
     }
 
-    private fun getShortByChannel(channelId: Int) {
+    private fun getShortByChannel(channelId: Int, msisdn: String) {
         viewModelScope.launch {
             try {
-                val resultList = videoRepo.getShortByChannel(channelId = channelId)
+                val resultList = videoRepo.getShortByChannel(channelId = channelId, msisdn = msisdn)
                 val safeList = resultList.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
                 _videos.value = safeList
             } catch (e:Exception){

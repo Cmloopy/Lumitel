@@ -19,6 +19,18 @@ class VideoChannelFragment : Fragment() {
 
     private val viewModel: VideoChannelViewModel by viewModels()
     private var channelId: Int = -1
+    private var msisdn: String? = null
+
+    companion object{
+        fun newInstance(channelId: Int, msisdn: String?): VideoChannelFragment {
+            val fragment = VideoChannelFragment()
+            fragment.arguments = Bundle().apply {
+                putInt("channelId", channelId)
+                putString("msisdn", msisdn)
+            }
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +39,8 @@ class VideoChannelFragment : Fragment() {
         binding = FragmentVideoChannelBinding.inflate(inflater,container,false)
 
         channelId = arguments?.getInt("channelId", -1) ?: -1
-        viewModel.setChannelId(channelId = channelId)
+        msisdn = arguments?.getString("msisdn")?: "0"
+        viewModel.setChannelId(channelId = channelId, msisdn!!)
 
         viewModel.videol.observe(viewLifecycleOwner) { videol ->
             val adapter = VideoChannelAdapter(videol) {idVideo ->

@@ -17,4 +17,16 @@ interface ChannelApi {
         @Header("Client-Type") clientType: String = "Android",
         @Header("sec-api") secApi: String = "123"
     ): ChannelResponse
+
+    @GET("v1/user/channel/mine")
+    suspend fun getMyChannelInfo(
+        @Query("msisdn") msisdn: String,
+        @Query("timestamp") timestamp: String,
+        @Query("security") security: String = "",
+        @Query("clientType") client_Type: String = "Android",
+        @Query("revision") revision: String = "",
+        @Header("Accept-language") language: String = "en",
+        @Header("Client-Type") clientType: String = "Android",
+        @Header("sec-api") secApi: String = "123"
+    ): ChannelResponse
 }

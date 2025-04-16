@@ -81,12 +81,12 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <View
+        <!--<View
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/gray"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_short_comment"
@@ -95,6 +95,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view2" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

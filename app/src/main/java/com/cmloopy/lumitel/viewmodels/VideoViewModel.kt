@@ -12,33 +12,29 @@ import kotlinx.coroutines.launch
 
 class VideoViewModel: ViewModel() {
     private val videoRepo = VideoRepository()
-    private val commentRepo = CommentRepository()
     private val _videos = MutableLiveData<List<Video>>()
-    private val _comments = MutableLiveData<List<Comment>>()
-
     val videos: LiveData<List<Video>> get() = _videos
-    val comments: LiveData<List<Comment>> get() = _comments
-    fun updateId(idCate: Int, idVideo: Int, isFromChannel: Boolean, idChannel: Int, isShort: Boolean){
+    fun updateId(idCate: Int, idVideo: Int, isFromChannel: Boolean, idChannel: Int, isShort: Boolean, msisdn: String){
         if(!isFromChannel){
             if(idCate == -1){
-                loadVideoHot(idVideo)
+                loadVideoHot(idVideo, msisdn)
             }
             else{
-                loadVideos(idVideo, idCate)
+                loadVideos(idVideo, idCate, msisdn)
             }
         }
         else {
-            loadVideoFromChannel(idVideo, idChannel, isShort)
+            loadVideoFromChannel(idVideo, idChannel, isShort, msisdn)
         }
     }
 
-    private fun loadVideoHot(idVideo: Int) {
+    private fun loadVideoHot(idVideo: Int, msisdn: String) {
         viewModelScope.launch {
             try {
                 val finalList = mutableListOf<Video>()
-                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo)
+                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo, msisdn)
                 finalList.add(firstVideo)
-                val result = videoRepo.getVideoHot()
+                val result = videoRepo.getVideoHot(msisdn)
                 val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
                 safeList.forEach {
                     finalList.add(it)
@@ -50,13 +46,13 @@ class VideoViewModel: ViewModel() {
         }
     }
 
-    private fun loadVideos(idVideo: Int, idCate: Int) {
+    private fun loadVideos(idVideo: Int, idCate: Int, msisdn: String) {
         viewModelScope.launch {
             try {
                 val finalList = mutableListOf<Video>()
-                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo)
+                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo, msisdn)
                 finalList.add(firstVideo)
-                val result = videoRepo.getVideoByCategory(idCategory = idCate)
+                val result = videoRepo.getVideoByCategory(idCategory = idCate, msisdn)
                 val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
                 safeList.forEach {
                     finalList.add(it)
@@ -67,21 +63,21 @@ class VideoViewModel: ViewModel() {
             }
         }
     }
-    private fun loadVideoFromChannel(idVideo: Int, idChannel: Int, isShort: Boolean){
+    private fun loadVideoFromChannel(idVideo: Int, idChannel: Int, isShort: Boolean, msisdn: String){
         viewModelScope.launch {
             try {
                 val finalList = mutableListOf<Video>()
-                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo)
+                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo, msisdn)
                 finalList.add(firstVideo)
                 if (!isShort) {
-                    val result = videoRepo.getVideoByChannel(channelId =  idChannel)
+                    val result = videoRepo.getVideoByChannel(channelId =  idChannel, msisdn)
                     val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
                     safeList.forEach {
                         finalList.add(it)
                     }
                     _videos.value = finalList
                 } else {
-                    val result = videoRepo.getShortByChannel(channelId =  idChannel)
+                    val result = videoRepo.getShortByChannel(channelId =  idChannel, msisdn)
                     val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
                     safeList.forEach {
                         finalList.add(it)

@@ -10,16 +10,21 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.databinding.BottomSheetMoreBinding
+import com.cmloopy.lumitel.fragment.VideoFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetMore: BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetMoreBinding
-
+    private var msisdn: String? = null
     companion object {
-        fun newInstance(msisdn: String) {
-
+        fun newInstance(msisdn: String?): BottomSheetMore {
+            val fragment = BottomSheetMore()
+            val args = Bundle()
+            args.putString("msisdn", msisdn)
+            fragment.arguments = args
+            return fragment
         }
     }
     override fun onCreateView(
@@ -28,6 +33,8 @@ class BottomSheetMore: BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = BottomSheetMoreBinding.inflate(inflater,container,false)
+        msisdn = arguments?.getString("msisdn")
+
         return binding.root
     }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

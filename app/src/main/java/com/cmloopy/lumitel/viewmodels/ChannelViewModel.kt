@@ -13,13 +13,13 @@ class ChannelViewModel: ViewModel() {
     private val _channel = MutableLiveData<Channel>()
     val channel : LiveData<Channel> get() = _channel
 
-    fun setChannelId(channelId: Int){
-        getInfoChannel(channelId)
+    fun setChannelId(channelId: Int, msisdn:String){
+        getInfoChannel(channelId, msisdn)
     }
-    private fun getInfoChannel(channelId: Int){
+    private fun getInfoChannel(channelId: Int, msisdn: String){
         viewModelScope.launch {
             try {
-                val resultList = channelRepository.getInfoChannel(channelId = channelId)
+                val resultList = channelRepository.getInfoChannel(channelId = channelId, msisdn = msisdn)
                 _channel.value = resultList
             } catch (e:Exception){
                 e.printStackTrace()

@@ -33,17 +33,17 @@ class VideoCateViewModel : ViewModel() {
         _isEmptyL.value = true
         _isLoading.value = true
     }
-    fun setCategory(idCategory: Int) {
+    fun setCategory(idCategory: Int, msisdn: String) {
         if (idCategory == -1) {
-            loadHotVideos()
+            loadHotVideos(msisdn)
         } else {
-            loadVideoByCategory(idCategory)
+            loadVideoByCategory(idCategory, msisdn)
         }
     }
-    private fun loadHotVideos() {
+    private fun loadHotVideos(msisdn: String) {
         viewModelScope.launch {
             try {
-                val resultList = videoRepository.getVideoHot()
+                val resultList = videoRepository.getVideoHot(msisdn = msisdn)
                 val safeList = resultList.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
                 _videos.value = safeList.filter { it.aspecRatio.toFloat() >= 1.0f }
                 _videol.value = safeList.filter { it.aspecRatio.toFloat() < 1.0f }
@@ -58,10 +58,10 @@ class VideoCateViewModel : ViewModel() {
         }
     }
 
-    private fun loadVideoByCategory(idCategory: Int) {
+    private fun loadVideoByCategory(idCategory: Int, msisdn: String) {
         viewModelScope.launch {
             try {
-                val resultList = videoRepository.getVideoByCategory(idCategory)
+                val resultList = videoRepository.getVideoByCategory(idCategory, msisdn)
                 val safeList = resultList.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
 
                 _videos.value = safeList.filter { it.aspecRatio.toFloat() >= 1.0f }

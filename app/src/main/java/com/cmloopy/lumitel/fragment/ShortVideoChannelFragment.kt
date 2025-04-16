@@ -17,18 +17,29 @@ import com.cmloopy.lumitel.views.VideoViewActivity
 class ShortVideoChannelFragment : Fragment() {
     private lateinit var binding: FragmentShortVideoChannelBinding
     private var channelId: Int = -1
+    private var msisdn: String? = null
 
     private val viewModel: ShortVideoChannelViewModel by viewModels()
 
-
+    companion object{
+        fun newInstance(channelId: Int, msisdn: String?): ShortVideoChannelFragment {
+            val fragment = ShortVideoChannelFragment()
+            fragment.arguments = Bundle().apply {
+                putInt("channelId", channelId)
+                putString("msisdn", msisdn)
+            }
+            return fragment
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentShortVideoChannelBinding.inflate(inflater, container, false)
         channelId = arguments?.getInt("channelId", -1) ?: -1
+        msisdn = arguments?.getString("msisdn")?: "0"
 
-        viewModel.setChannelId(channelId = channelId)
+        viewModel.setChannelId(channelId = channelId, msisdn = msisdn!!)
 
         viewModel.videos.observe(viewLifecycleOwner){videos ->
             val adapter = ShortChannelAdapter(videos) {idVideo ->

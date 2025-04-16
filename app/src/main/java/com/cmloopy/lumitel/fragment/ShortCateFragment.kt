@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.ShortCateAdapter
@@ -23,14 +24,23 @@ class ShortCateFragment : Fragment() {
 
     private lateinit var adapter: ShortCateAdapter
     private var idCategory: Int = -1
-    private var msisdn = ""
+    private var msisdn : String? = null
+
+    companion object {
+        fun newInstance(idCategory: Int, msisdn: String?): ShortCateFragment {
+            val fragment = ShortCateFragment()
+            fragment.arguments = Bundle().apply {
+                putInt("idCategory", idCategory)
+                putString("msisdn", msisdn)
+            }
+            return fragment
+        }
+    }
     override fun onResume() {
         super.onResume()
         if (!isLoading && isVisible) {
             idCategory = arguments?.getInt("idCategory", -1) ?: -1
-            val msisdns = arguments?.getString("msisdn")
-            if(msisdns!=null) msisdn = msisdns
-            viewModel.setCategory(idCategory)
+            viewModel.setCategory(idCategory, msisdn!!)
             isLoading = true
         }
     }
@@ -39,6 +49,7 @@ class ShortCateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentShortCateBinding.inflate(inflater, container,false)
+        msisdn = arguments?.getString("msisdn")?: "0"
         return binding.root
     }
 
@@ -93,6 +104,7 @@ class ShortCateFragment : Fragment() {
             intent.putExtra("idVideo", idVideo)
             intent.putExtra("idCategory", idCategory)
             intent.putExtra("isFromChannel",false)
+            intent.putExtra("msisdn", msisdn)
             startActivity(intent)
         }
     }
