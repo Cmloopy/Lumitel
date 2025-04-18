@@ -18,9 +18,6 @@
             android:name=".views.CreateVideoActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MyChannelActivity"
-            android:exported="false" />
-        <activity
             android:name=".views.ChannelActivity"
             android:exported="false" />
         <activity
