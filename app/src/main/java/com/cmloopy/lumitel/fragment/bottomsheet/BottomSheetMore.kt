@@ -1,15 +1,21 @@
 package com.cmloopy.lumitel.fragment.bottomsheet
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.databinding.BottomSheetMoreBinding
+import com.cmloopy.lumitel.viewmodels.BottomSheetMoreViewModel
+import com.cmloopy.lumitel.views.ChannelActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -17,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class BottomSheetMore: BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetMoreBinding
     private var msisdn: String? = null
+    private val viewModel: BottomSheetMoreViewModel by viewModels()
     companion object {
         fun newInstance(msisdn: String?): BottomSheetMore {
             val fragment = BottomSheetMore()
@@ -33,6 +40,8 @@ class BottomSheetMore: BottomSheetDialogFragment() {
     ): View {
         binding = BottomSheetMoreBinding.inflate(inflater,container,false)
         msisdn = arguments?.getString("msisdn")
+
+        viewModel.setIdUser(msisdn!!)
 
         return binding.root
     }
@@ -55,16 +64,39 @@ class BottomSheetMore: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnShowMyChannel.setOnClickListener {
-            Toast.makeText(requireContext(), "Show Channel or Create if it nos exist", Toast.LENGTH_SHORT).show()
+            viewModel.existChannel.observe(viewLifecycleOwner){
+                Log.e("err", "$it")
+                if(it){
+                    val intent = Intent(requireContext(), ChannelActivity::class.java)
+                    intent.putExtra("msisdn", msisdn)
+                    startActivity(intent)
+                } else {
+                    channelIsNotExistDialog(msisdn)
+                }
+            }
         }
         binding.btnShowMyLibrary.setOnClickListener {
-            Toast.makeText(requireContext(), "Show Library or Create if it nos exist", Toast.LENGTH_SHORT).show()
+
         }
         binding.btnShowMyFollowing.setOnClickListener {
-            Toast.makeText(requireContext(), "Show Following or Create if it nos exist", Toast.LENGTH_SHORT).show()
+
         }
         binding.btnCancelBottomSheetMore.setOnClickListener {
             dismiss()
         }
+    }
+
+    private fun channelIsNotExistDialog(msisdn: String?) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Notification")
+            .setMessage("You don't have channel, create now?")
+            .setPositiveButton("Create") { _, _ ->
+                Toast.makeText(requireContext(), "Tao kenh", Toast.LENGTH_SHORT).show()
+                dismiss()
+            }
+            .setNegativeButton("Cancel") { _, _ ->
+                dismiss()
+            }
+            .show()
     }
 }

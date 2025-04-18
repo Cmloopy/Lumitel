@@ -14,13 +14,28 @@ class ChannelViewModel: ViewModel() {
     val channel : LiveData<Channel> get() = _channel
 
     fun setChannelId(channelId: Int, msisdn:String){
-        getInfoChannel(channelId, msisdn)
+        if(channelId >= 0) {
+            getInfoChannel(channelId, msisdn)
+        } else {
+            getInfoMyChannel(msisdn)
+        }
     }
     private fun getInfoChannel(channelId: Int, msisdn: String){
         viewModelScope.launch {
             try {
                 val resultList = channelRepository.getInfoChannel(channelId = channelId, msisdn = msisdn)
                 _channel.value = resultList
+            } catch (e:Exception){
+                e.printStackTrace()
+                _channel.value = Channel(-1,"","","","",null, "", 0,0,0,0L,0,0,"", "")
+            }
+        }
+    }
+    private fun getInfoMyChannel(msisdn: String){
+        viewModelScope.launch {
+            try {
+                val resultList = channelRepository.getInfoMyChannel(msisdn = msisdn)
+                _channel.value = resultList.data
             } catch (e:Exception){
                 e.printStackTrace()
                 _channel.value = Channel(-1,"","","","",null, "", 0,0,0,0L,0,0,"", "")

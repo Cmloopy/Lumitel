@@ -24,7 +24,7 @@ interface ChannelApi {
         @Query("timestamp") timestamp: String,
         @Query("security") security: String = "",
         @Query("clientType") client_Type: String = "Android",
-        @Query("revision") revision: String = "",
+        @Query("revision") revision: String = "1.0",
         @Header("Accept-language") language: String = "en",
         @Header("Client-Type") clientType: String = "Android",
         @Header("sec-api") secApi: String = "123"

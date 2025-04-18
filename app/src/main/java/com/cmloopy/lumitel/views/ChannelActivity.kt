@@ -1,5 +1,6 @@
 package com.cmloopy.lumitel.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -26,7 +27,7 @@ class ChannelActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val channelID = intent.getIntExtra("idChannel", -1)
+        var channelID = intent.getIntExtra("idChannel", -1)
         val msisdn = intent.getStringExtra("msisdn")?: "0"
         //Xử lý suscribe//
 
@@ -34,6 +35,9 @@ class ChannelActivity : AppCompatActivity() {
         binding.constraintLayout.visibility = View.GONE
         binding.constraintLayout2.visibility = View.GONE
         binding.imgBiaChannel.visibility = View.GONE
+        binding.btnSubscribe.visibility = View.GONE
+        if(channelID == -1) binding.btnSubscribe.visibility = View.GONE
+        else binding.btnSubscribe.visibility = View.VISIBLE
 
         binding.swipeRefreshLayoutChannel.setOnRefreshListener {
             reloadData()
@@ -41,6 +45,7 @@ class ChannelActivity : AppCompatActivity() {
 
         viewModel.channel.observe(this){ channel ->
             if(channel != null) {
+                channelID = channel.id
                 binding.progressBarLoadingChannel.visibility = View.GONE
                 binding.constraintLayout.visibility = View.VISIBLE
                 binding.constraintLayout2.visibility = View.VISIBLE
@@ -73,7 +78,9 @@ class ChannelActivity : AppCompatActivity() {
             finish()
         }
         binding.btnCreateVideo.setOnClickListener {
-
+            val intent = Intent(this, CreateVideoActivity::class.java)
+            intent.putExtra("msisdn", msisdn)
+            startActivity(intent)
         }
     }
     private fun reloadData() {
