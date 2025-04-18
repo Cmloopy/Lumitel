@@ -27,4 +27,16 @@
     <string name="cancel">Cancel</string>
     <string name="mychannel">MyChannel</string>
     <string name="upload_video">Upload video</string>
+    <string name="select_video_file">Select video file</string>
+    <string name="only_support_video_under_200mb">Only support video under 200MB</string>
+    <string name="choose_file">Choose file</string>
+    <string name="video_infomation">Video Infomation</string>
+    <string name="enter_video_description">Enter video description</string>
+    <string name="enter_video_title">Enter video title</string>
+    <string name="select_category">Select category</string>
+    <string name="by_uploading_you_agree_to">By uploading, you agree to</string>
+    <string name="terms_of_uploader_earnings_program">Terms of Uploader earnings program</string>
+    <string name="upload">Upload</string>
+    <string name="select_video_image">Select video image</string>
+    <string name="only_support_video_under_2mb">Only support video under 2MB</string>
 </resources>

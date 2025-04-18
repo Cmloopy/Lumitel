@@ -64,7 +64,9 @@ class VideoViewActivity : AppCompatActivity() {
             viewModel.videos.removeObservers(this)
         }
         binding.btnCreateNew.setOnClickListener {
-
+            val intent = Intent(this, CreateVideoActivity::class.java)
+            intent.putExtra("msisdn", msisdn)
+            startActivity(intent)
         }
     }
 

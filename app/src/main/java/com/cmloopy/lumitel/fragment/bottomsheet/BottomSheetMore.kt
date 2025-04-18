@@ -74,6 +74,7 @@ class BottomSheetMore: BottomSheetDialogFragment() {
                     channelIsNotExistDialog(msisdn)
                 }
             }
+            dismiss()
         }
         binding.btnShowMyLibrary.setOnClickListener {
 
