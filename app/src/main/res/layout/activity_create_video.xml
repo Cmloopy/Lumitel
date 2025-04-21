@@ -74,6 +74,7 @@
             tools:layout_editor_absoluteX="15dp">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_name_file"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.18"
@@ -116,6 +117,7 @@
             tools:layout_editor_absoluteX="15dp">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_name_image_file"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.18"
@@ -152,9 +154,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            app:hintTextColor="@color/black"
             android:hint="@string/enter_video_title"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/gray"
+            android:textCursorDrawable="@drawable/custom_cursor"
             app:boxStrokeWidth="1dp"
             app:counterEnabled="true"
             app:counterMaxLength="50"
@@ -180,6 +184,8 @@
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/gray"
             app:boxStrokeWidth="1dp"
+            app:hintTextColor="@color/black"
+            android:textCursorDrawable="@drawable/custom_cursor"
             app:counterEnabled="true"
             app:counterMaxLength="200"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
@@ -246,11 +252,11 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:text="@string/upload"
-            android:backgroundTint="@color/grayduant"
+            android:backgroundTint="@color/blue"
             android:textAllCaps="false"
             android:textStyle="bold"
             app:cornerRadius="30dp"
-            android:textColor="@color/gray"
+            android:textColor="@color/yellow"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
     </androidx.constraintlayout.widget.ConstraintLayout>

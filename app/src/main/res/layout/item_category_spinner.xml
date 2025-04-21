@@ -1,23 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvSpinnerItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingVertical="12dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:gravity="center_vertical"
-    android:background="?attr/selectableItemBackground">
-
-    <TextView
-        android:id="@+id/tvCategoryItem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Category name"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:ellipsize="end" />
-
-</LinearLayout>
+    android:padding="12dp"
+    android:textColor="@android:color/black"
+    android:textSize="14sp" />

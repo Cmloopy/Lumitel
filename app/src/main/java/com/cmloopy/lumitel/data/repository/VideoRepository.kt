@@ -2,11 +2,19 @@ package com.cmloopy.lumitel.data.repository
 
 import com.cmloopy.lumitel.data.api.VideoApi
 import com.cmloopy.lumitel.data.api.retrofit.RetrofitClient
+import com.cmloopy.lumitel.data.models.video.UploadVideoResponse
 import com.cmloopy.lumitel.data.models.video.Video
+import com.cmloopy.lumitel.data.models.video.VideoAllInfo
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class VideoRepository {
 
     private val timestamp = System.currentTimeMillis().toString()
+    private val mpw = "9EBB7AE993E7FCDFA600E108CC21A259"
+    private val security = ""
 
     private val listVideoHot = mutableListOf<Video>()
     private val listVideoByCategory = mutableListOf<Video>()
@@ -56,5 +64,32 @@ class VideoRepository {
             }
         }
         return listShortByChannel
+    }
+    suspend fun uploadVideo(msisdn: String, fName: String, uFile: MultipartBody.Part): UploadVideoResponse {
+        return apiVideoService.uploadVideo(
+            msisdn.toPlainRequestBody(),
+            timestamp.toPlainRequestBody(),
+            security.toPlainRequestBody(),
+            mpw.toPlainRequestBody(),
+            fName.toPlainRequestBody(),
+            uFile)
+    }
+
+    suspend fun uploadImage(msisdn: String, fName: String, uFile: MultipartBody.Part): UploadVideoResponse {
+        return apiVideoService.uploadVideo(
+            msisdn.toPlainRequestBody(),
+            timestamp.toPlainRequestBody(),
+            security.toPlainRequestBody(),
+            mpw.toPlainRequestBody(),
+            fName.toPlainRequestBody(),
+            uFile)
+    }
+
+    suspend fun createVideo(msisdn: String, categoryId: Int, videoTitle: String, videoDesc: String, imageUrl: String, videoUrl: String): VideoAllInfo {
+        return apiVideoService.createVideo(msisdn, timestamp, categoryId, videoTitle, videoDesc, imageUrl, videoUrl, security)
+    }
+    //RequestBody
+    fun String.toPlainRequestBody(): RequestBody {
+        return this.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 }

@@ -38,5 +38,5 @@
     <string name="terms_of_uploader_earnings_program">Terms of Uploader earnings program</string>
     <string name="upload">Upload</string>
     <string name="select_video_image">Select video image</string>
-    <string name="only_support_video_under_2mb">Only support video under 2MB</string>
+    <string name="only_support_video_under_2mb">Only support image under 2MB</string>
 </resources>
