@@ -1,19 +1,15 @@
 package com.cmloopy.lumitel.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.databinding.ActivityCreateVideoBinding
 import com.cmloopy.lumitel.viewmodels.CreateVideoViewModel
