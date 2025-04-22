@@ -5,6 +5,7 @@ import com.cmloopy.lumitel.data.api.retrofit.RetrofitClient
 import com.cmloopy.lumitel.data.models.video.UploadVideoResponse
 import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.data.models.video.VideoAllInfo
+import com.cmloopy.lumitel.utils.Encode
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -88,7 +89,6 @@ class VideoRepository {
     suspend fun createVideo(msisdn: String, categoryId: Int, videoTitle: String, videoDesc: String, imageUrl: String, videoUrl: String): VideoAllInfo {
         return apiVideoService.createVideo(msisdn, timestamp, categoryId, videoTitle, videoDesc, imageUrl, videoUrl, security)
     }
-    //RequestBody
     fun String.toPlainRequestBody(): RequestBody {
         return this.toRequestBody("text/plain".toMediaTypeOrNull())
     }

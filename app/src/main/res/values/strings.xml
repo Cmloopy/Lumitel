@@ -43,4 +43,8 @@
     <string name="enter_channel_name">Enter channel name</string>
     <string name="enter_channel_description">Enter channel description</string>
     <string name="create">Create</string>
+    <string name="you_don_t_have_channel_create_now">You don\'t have channel, create now?</string>
+    <string name="ok">OK</string>
+    <string name="your_channel_was_created_succesfully">Your Channel was created succesfully!</string>
+    <string name="your_channel_is_waiting_approval">Your Channel is waiting approval!</string>
 </resources>

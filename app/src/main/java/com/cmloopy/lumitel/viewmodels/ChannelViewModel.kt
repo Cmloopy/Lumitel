@@ -1,5 +1,6 @@
 package com.cmloopy.lumitel.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +12,8 @@ import kotlinx.coroutines.launch
 class ChannelViewModel: ViewModel() {
     private val channelRepository = ChannelRepository()
     private val _channel = MutableLiveData<Channel>()
+    private val _isOfficial = MutableLiveData<Int>()
     val channel : LiveData<Channel> get() = _channel
-
     fun setChannelId(channelId: Int, msisdn:String){
         if(channelId >= 0) {
             getInfoChannel(channelId, msisdn)

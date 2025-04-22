@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cmloopy.lumitel.data.repository.ChannelRepository
 import com.cmloopy.lumitel.data.repository.VideoRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -31,6 +32,8 @@ class CreateChannelViewmodel: ViewModel() {
 
     val imageData : LiveData<Pair<String, MultipartBody.Part>> get() = _imageData
     val statusCreateChannel : LiveData<Boolean> get() = _statusCreateChannel
+
+    var createJob : Job? = null
 
     fun setChannelName(s:String){
         _channelName.value = s
@@ -90,7 +93,7 @@ class CreateChannelViewmodel: ViewModel() {
         }
     }
     fun createChannel(msisdn: String){
-        viewModelScope.launch {
+        createJob = viewModelScope.launch {
             val imageUploadDeferred = async { uploadImage(msisdn) }
             val imageUploadSuccess = imageUploadDeferred.await()
             if(imageUploadSuccess){
@@ -108,5 +111,9 @@ class CreateChannelViewmodel: ViewModel() {
                 }
             } else _statusCreateChannel.value = false
         }
+    }
+    fun cancelCreateChannel(){
+        createJob?.cancel()
+        Log.e("Message", "Cancel create channel!")
     }
 }

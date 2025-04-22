@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.databinding.ActivityCreateVideoBinding
+import com.cmloopy.lumitel.utils.DialogUtils
 import com.cmloopy.lumitel.viewmodels.CreateVideoViewModel
 
 class CreateVideoActivity : AppCompatActivity() {
@@ -60,12 +61,15 @@ class CreateVideoActivity : AppCompatActivity() {
 
             if (title.isEmpty() || desc.isEmpty() || title == "" || desc == "") {
                 Toast.makeText(this, "Please enter infomation!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
             }
-
-            viewModel.setVideoTitle(title)
-            viewModel.setVideoDesc(desc)
-            viewModel.createVideo(msisdn = msisdn!!)
+            else{
+                DialogUtils.showProgressDialog(this) {
+                    viewModel.cancelUpload()
+                }
+                viewModel.setVideoTitle(title)
+                viewModel.setVideoDesc(desc)
+                viewModel.createVideo(msisdn = msisdn!!)
+            }
         }
     }
     private fun obserViewModel() {
@@ -84,7 +88,13 @@ class CreateVideoActivity : AppCompatActivity() {
             })
         }
         viewModel.statusCreate.observe(this) {
-            showSuccessDialog(it)
+            DialogUtils.dismissProgressDialog()
+            if(it){
+                DialogUtils.showSuccessDialog(this, "Your Video was created successfully!") {finish()}
+            }
+            else {
+                DialogUtils.showFailDialog(this, "Failed to create Video!")
+            }
         }
     }
     fun openGalleryToPickVideo() {
@@ -92,15 +102,5 @@ class CreateVideoActivity : AppCompatActivity() {
     }
     fun openGalleryToPickImage() {
         pickImageLauncher.launch("image/*")
-    }
-    private fun showSuccessDialog(b: Boolean) {
-        var title = ""
-        title = if(b) "Your video was uploaded successfully!"
-        else "Your video was uploaded error"
-        AlertDialog.Builder(this)
-            .setTitle("Upload Status")
-            .setMessage(title)
-            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-            .show()
     }
 }

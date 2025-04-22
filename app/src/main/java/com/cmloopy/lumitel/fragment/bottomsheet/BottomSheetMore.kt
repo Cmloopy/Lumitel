@@ -8,12 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.databinding.BottomSheetMoreBinding
+import com.cmloopy.lumitel.utils.DialogUtils
 import com.cmloopy.lumitel.viewmodels.BottomSheetMoreViewModel
 import com.cmloopy.lumitel.views.ChannelActivity
 import com.cmloopy.lumitel.views.CreateChannelActivity
@@ -73,7 +75,8 @@ class BottomSheetMore: BottomSheetDialogFragment() {
                     startActivity(intent)
                     dismiss()
                 } else {
-                    channelIsNotExistDialog(msisdn)
+                    DialogUtils.channelIsNotExistDialog(requireContext(),msisdn)
+                    dismiss()
                 }
             }
         }
@@ -81,26 +84,21 @@ class BottomSheetMore: BottomSheetDialogFragment() {
 
         }
         binding.btnShowMyFollowing.setOnClickListener {
-
+            viewModel.existChannel.observe(viewLifecycleOwner){
+                Log.e("err", "$it")
+                if(it){
+                    val intent = Intent(requireContext(), ChannelActivity::class.java)
+                    intent.putExtra("msisdn", msisdn)
+                    startActivity(intent)
+                    dismiss()
+                } else {
+                    DialogUtils.channelIsNotExistDialog(requireContext(),msisdn)
+                    dismiss()
+                }
+            }
         }
         binding.btnCancelBottomSheetMore.setOnClickListener {
             dismiss()
         }
-    }
-
-    private fun channelIsNotExistDialog(msisdn: String?) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Notification")
-            .setMessage("You don't have channel, create now?")
-            .setPositiveButton("Create") { _, _ ->
-                val intent = Intent(requireContext(), CreateChannelActivity::class.java)
-                intent.putExtra("msisdn", msisdn)
-                startActivity(intent)
-                dismiss()
-            }
-            .setNegativeButton("Cancel") { _, _ ->
-                dismiss()
-            }
-            .show()
     }
 }

@@ -3,6 +3,7 @@ package com.cmloopy.lumitel.data.repository
 import com.cmloopy.lumitel.data.api.CategoryApi
 import com.cmloopy.lumitel.data.api.retrofit.RetrofitClient
 import com.cmloopy.lumitel.data.models.category.Category
+import com.cmloopy.lumitel.utils.Encode
 
 class CategoryRepository {
 

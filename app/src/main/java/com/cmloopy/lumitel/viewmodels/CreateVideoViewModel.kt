@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.cmloopy.lumitel.data.models.category.Category
 import com.cmloopy.lumitel.data.repository.CategoryRepository
 import com.cmloopy.lumitel.data.repository.VideoRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -41,6 +42,9 @@ class CreateVideoViewModel: ViewModel() {
     val videoData: LiveData<Pair<String, MultipartBody.Part>> get() = _videoData
     val imageData: LiveData<Pair<String, MultipartBody.Part>> get() = _imageData
     val statusCreate : LiveData<Boolean> get() = _statusCreate
+
+    private var uploadJob: Job? = null
+
     fun setIdUser(msisdn: String){
         getAllRepo(msisdn)
     }
@@ -147,7 +151,7 @@ class CreateVideoViewModel: ViewModel() {
         }
     }
     fun createVideo(msisdn: String) {
-        viewModelScope.launch {
+        uploadJob = viewModelScope.launch {
             // Dùng async để chạy song song
             val videoUploadDeferred = async { uploadVideo(msisdn) }
             val imageUploadDeferred = async { uploadImage(msisdn) }
@@ -179,5 +183,8 @@ class CreateVideoViewModel: ViewModel() {
             }
         }
     }
-
+    fun cancelUpload(){
+        uploadJob?.cancel()
+        Log.e("Message", "Cancel upload!")
+    }
 }

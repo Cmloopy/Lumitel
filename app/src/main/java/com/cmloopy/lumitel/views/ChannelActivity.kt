@@ -8,18 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.ChannelAdapter
 import com.cmloopy.lumitel.databinding.ActivityChannelBinding
+import com.cmloopy.lumitel.utils.DialogUtils
 import com.cmloopy.lumitel.viewmodels.ChannelViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ChannelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChannelBinding
     private val viewModel : ChannelViewModel by viewModels()
+    private var isOfficial: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChannelBinding.inflate(layoutInflater)
@@ -46,6 +49,7 @@ class ChannelActivity : AppCompatActivity() {
         viewModel.channel.observe(this){ channel ->
             if(channel != null) {
                 channelID = channel.id
+                isOfficial = channel.isOfficial
                 binding.progressBarLoadingChannel.visibility = View.GONE
                 binding.constraintLayout.visibility = View.VISIBLE
                 binding.constraintLayout2.visibility = View.VISIBLE
@@ -78,9 +82,13 @@ class ChannelActivity : AppCompatActivity() {
             finish()
         }
         binding.btnCreateVideo.setOnClickListener {
-            val intent = Intent(this, CreateVideoActivity::class.java)
-            intent.putExtra("msisdn", msisdn)
-            startActivity(intent)
+            if(isOfficial == 0){
+                DialogUtils.notiDialog(this)
+            } else {
+                val intent = Intent(this, CreateVideoActivity::class.java)
+                intent.putExtra("msisdn", msisdn)
+                startActivity(intent)
+            }
         }
     }
     private fun reloadData() {

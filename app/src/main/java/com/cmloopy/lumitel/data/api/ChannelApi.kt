@@ -1,5 +1,6 @@
 package com.cmloopy.lumitel.data.api
 
+import com.cmloopy.lumitel.data.models.channel.ChannelFollowResponse
 import com.cmloopy.lumitel.data.models.channel.ChannelResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -27,7 +28,7 @@ interface ChannelApi {
         @Query("timestamp") timestamp: String,
         @Query("security") security: String = "",
         @Query("clientType") client_Type: String = "Android",
-        @Query("revision") revision: String = "1.0",
+        @Query("revision") revision: String = "",
         @Header("Accept-language") language: String = "en",
         @Header("Client-Type") clientType: String = "Android",
         @Header("sec-api") secApi: String = "123"
@@ -47,4 +48,14 @@ interface ChannelApi {
         @Header("Accept-Language") language: String = "en",
         @Header("sec-api") secApi: String = "123"
     ): ChannelResponse
+
+    @GET("v1/channel/following")
+    suspend fun getListChannelFollow(
+        @Query("msisdn") msisdn: String,
+        @Query("timestamp") timestamp: String,
+        @Query("security") security: String = "",
+        @Header("Accept-language") language: String = "en",
+        @Header("Client-Type") clientType: String = "Android",
+        @Header("sec-api") secApi: String = "123"
+    ): ChannelFollowResponse
 }
