@@ -2,12 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.CreateVideoActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
+        android:id="@+id/constraintLayout11"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/subtract"
@@ -16,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/btn_back_my_channel"
+            android:id="@+id/btn_back_home_video"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_back_button"
@@ -49,60 +50,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select_video_file"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center|start"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            app:layout_constraintHeight_percent="0.09"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView3"
-            tools:layout_editor_absoluteX="15dp">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txt_name_file"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2.18"
-                android:text="@string/only_support_video_under_200mb"
-                android:textColor="@color/non_gray"
-                android:textSize="16sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_choose_file_video"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.82"
-                android:backgroundTint="@color/blue"
-                android:text="@string/choose_file"
-                android:textAllCaps="false"
-                android:textColor="@color/yellow"
-                android:textSize="11sp"
-                app:cornerRadius="20dp" />
-        </LinearLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView10"
+            android:id="@+id/materialTextView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_video_image"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/linearLayout10"
@@ -112,11 +70,11 @@
             android:orientation="horizontal"
             android:weightSum="3"
             app:layout_constraintHeight_percent="0.09"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView10"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView15"
             tools:layout_editor_absoluteX="15dp">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txt_name_image_file"
+                android:id="@+id/txt_name_image_channel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.18"
@@ -125,7 +83,7 @@
                 android:textSize="16sp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_choose_file_image"
+                android:id="@+id/btn_choose_file_image_channel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.82"
@@ -138,10 +96,10 @@
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView4"
+            android:id="@+id/materialTextView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/video_infomation"
+            android:text="Channel infomation"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -154,18 +112,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             app:hintTextColor="@color/black"
-            android:hint="@string/enter_video_title"
+            android:hint="@string/enter_channel_name"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/gray"
             android:textCursorDrawable="@drawable/custom_cursor"
             app:boxStrokeWidth="1dp"
             app:counterEnabled="true"
             app:counterMaxLength="50"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView4"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView19"
             tools:layout_editor_absoluteX="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_video_title"
+                android:id="@+id/edt_channel_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -179,7 +137,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_video_description"
+            android:hint="@string/enter_channel_description"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/gray"
             app:boxStrokeWidth="1dp"
@@ -191,7 +149,7 @@
             tools:layout_editor_absoluteX="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_video_desc"
+                android:id="@+id/edt_channel_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -200,44 +158,20 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select_category"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleInputLayout" />
-
-        <Spinner
-            android:id="@+id/spinner_category"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/background_spinner_outline"
-            android:gravity="center_vertical"
-            android:paddingStart="12dp"
-            android:paddingEnd="25dp"
-            android:popupBackground="@color/white"
-            android:spinnerMode="dropdown"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView5"/>
-
         <LinearLayout
             android:id="@+id/linearLayout5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_category">
+            app:layout_constraintTop_toBottomOf="@+id/titleInputLayout">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/by_uploading_you_agree_to" />
+                android:text="@string/by_create_channel_you_all_accept" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -247,10 +181,10 @@
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_upload_video"
+            android:id="@+id/btn_create_channel"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:text="@string/upload"
+            android:text="@string/create"
             android:backgroundTint="@color/blue"
             android:textAllCaps="false"
             android:textStyle="bold"

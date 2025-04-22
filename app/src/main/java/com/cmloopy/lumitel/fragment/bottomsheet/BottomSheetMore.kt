@@ -16,6 +16,7 @@ import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.databinding.BottomSheetMoreBinding
 import com.cmloopy.lumitel.viewmodels.BottomSheetMoreViewModel
 import com.cmloopy.lumitel.views.ChannelActivity
+import com.cmloopy.lumitel.views.CreateChannelActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -70,11 +71,11 @@ class BottomSheetMore: BottomSheetDialogFragment() {
                     val intent = Intent(requireContext(), ChannelActivity::class.java)
                     intent.putExtra("msisdn", msisdn)
                     startActivity(intent)
+                    dismiss()
                 } else {
                     channelIsNotExistDialog(msisdn)
                 }
             }
-            dismiss()
         }
         binding.btnShowMyLibrary.setOnClickListener {
 
@@ -92,7 +93,9 @@ class BottomSheetMore: BottomSheetDialogFragment() {
             .setTitle("Notification")
             .setMessage("You don't have channel, create now?")
             .setPositiveButton("Create") { _, _ ->
-                Toast.makeText(requireContext(), "Tao kenh", Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireContext(), CreateChannelActivity::class.java)
+                intent.putExtra("msisdn", msisdn)
+                startActivity(intent)
                 dismiss()
             }
             .setNegativeButton("Cancel") { _, _ ->

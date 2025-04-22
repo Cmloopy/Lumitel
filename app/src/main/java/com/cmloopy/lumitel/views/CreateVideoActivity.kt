@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.cmloopy.lumitel.R
@@ -83,12 +84,7 @@ class CreateVideoActivity : AppCompatActivity() {
             })
         }
         viewModel.statusCreate.observe(this) {
-            if(it) {
-                Toast.makeText(this, "Upload video successfully", Toast.LENGTH_LONG).show()
-            } else{
-                Toast.makeText(this, "Upload video failed", Toast.LENGTH_LONG).show()
-            }
-            //Dialog wait and noti when upload done
+            showSuccessDialog(it)
         }
     }
     fun openGalleryToPickVideo() {
@@ -96,5 +92,15 @@ class CreateVideoActivity : AppCompatActivity() {
     }
     fun openGalleryToPickImage() {
         pickImageLauncher.launch("image/*")
+    }
+    private fun showSuccessDialog(b: Boolean) {
+        var title = ""
+        title = if(b) "Your video was uploaded successfully!"
+        else "Your video was uploaded error"
+        AlertDialog.Builder(this)
+            .setTitle("Upload Status")
+            .setMessage(title)
+            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 }

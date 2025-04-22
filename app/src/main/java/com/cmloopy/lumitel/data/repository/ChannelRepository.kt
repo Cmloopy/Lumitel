@@ -20,4 +20,8 @@ class ChannelRepository {
         Log.e("test", "${result.code}")
         return result
     }
+
+    suspend fun createAndUpdateChannel(channelName: String, channelDesc: String, channelAvatar: String, msisdn:String): ChannelResponse{
+        return channelApi.createAndUpdateChannel(channelName, channelDesc, channelAvatar, msisdn, timestamp, revision = "")
+    }
 }

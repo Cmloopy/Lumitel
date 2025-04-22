@@ -20,6 +20,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_channel_comment"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:scaleType="centerCrop"
@@ -38,6 +39,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txt_name_channel_comment"
                         android:layout_marginStart="10dp"
                         android:textColor="@color/non_gray"
                         android:textSize="12sp"
@@ -58,7 +60,7 @@
                 </LinearLayout>
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txt_comment_short_video"
+                    android:id="@+id/txt_comment_video"
                     android:layout_marginTop="7dp"
                     android:layout_marginStart="10dp"
                     android:layout_width="match_parent"
@@ -80,6 +82,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_like"/>
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txt_total_like_cmt"
                         android:layout_marginStart="5dp"
                         android:textSize="12sp"
                         android:layout_width="40dp"
@@ -90,6 +93,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_dislike"/>
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txt_total_dislike_cmt"
                         android:layout_marginStart="5dp"
                         android:textSize="12sp"
                         android:layout_width="40dp"

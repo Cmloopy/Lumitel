@@ -4,15 +4,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
-import com.cmloopy.lumitel.data.models.Comment
+import com.cmloopy.lumitel.data.models.comment.Comment
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
 class ShortCommentAdapter(private var listShortCmt: List<Comment>): RecyclerView.Adapter<ShortCommentAdapter.ShortCommentViewHolder>() {
     inner class ShortCommentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var commentShortVideo = itemView.findViewById<MaterialTextView>(R.id.txt_comment_short_video)
+        val imgChannel = itemView.findViewById<ShapeableImageView>(R.id.img_channel_comment)
+        val nameChannel = itemView.findViewById<MaterialTextView>(R.id.txt_name_channel_comment)
+        val contentCmt = itemView.findViewById<MaterialTextView>(R.id.txt_comment_video)
+        val like = itemView.findViewById<MaterialTextView>(R.id.txt_total_like_cmt)
+        val dislike = itemView.findViewById<MaterialTextView>(R.id.txt_total_dislike_cmt)
         fun bind(comment: Comment){
-            commentShortVideo.text = comment.titleCm
+            Glide.with(itemView.context).load(comment.avatar).error(R.drawable.ic_logo).into(imgChannel)
+            nameChannel.text = comment.name
+            contentCmt.text = comment.content
+            like.text = comment.like.toString()
+            dislike.text = comment.dislike.toString()
         }
     }
 

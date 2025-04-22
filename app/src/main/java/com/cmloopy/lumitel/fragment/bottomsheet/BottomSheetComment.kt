@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.adapter.ShortCommentAdapter
 import com.cmloopy.lumitel.databinding.BottomSheetCommentBinding
@@ -44,10 +45,9 @@ class BottomSheetComment: BottomSheetDialogFragment() {
     ): View {
         binding = BottomSheetCommentBinding.inflate(inflater, container, false)
         idVideo = arguments?.getInt("idVideo", -1) ?: -1
-        msisdn = arguments?.getString("msisdn")
-
-        //XỬ LÝ CMT
-
+        msisdn = arguments?.getString("msisdn")?: "0"
+        viewModel.getCommentVideo(msisdn = msisdn!!, contentId = idVideo)
+        viewModel.getChannelInfo(msisdn!!)
         return binding.root
     }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -69,6 +69,10 @@ class BottomSheetComment: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.channel.observe(this){
+            Glide.with(this).load(it.channelAvatar).error(R.drawable.ic_logo).into(binding.imgChannelMineComment)
+        }
+
         shortCommentAdapter = ShortCommentAdapter(emptyList())
         binding.recyclerViewShortComment.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewShortComment.adapter = shortCommentAdapter
@@ -76,10 +80,16 @@ class BottomSheetComment: BottomSheetDialogFragment() {
         val dividerItemDecoration = DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL)
         binding.recyclerViewShortComment.addItemDecoration(dividerItemDecoration)
 
+        binding.btnCancelBottomSheetCmt.setOnClickListener {
+            dismiss()
+        }
+
         observeViewModel()
     }
 
     private fun observeViewModel() {
-
+        viewModel.listComment.observe(this){
+            shortCommentAdapter.updateComment(it)
+        }
     }
 }

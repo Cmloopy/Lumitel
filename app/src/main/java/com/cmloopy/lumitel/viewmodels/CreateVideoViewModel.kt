@@ -157,6 +157,7 @@ class CreateVideoViewModel: ViewModel() {
 
             if (videoUploadSuccess && imageUploadSuccess) {
                 val idCate = _categories.value?.find { it.cateName == _chooseFileCate.value }?.id ?: 2
+                Log.e("Cate", "$idCate")
                 try {
                     val result = videoRepository.createVideo(
                         msisdn = msisdn,
@@ -170,6 +171,7 @@ class CreateVideoViewModel: ViewModel() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                     _statusCreate.value = false
+                    Log.e("err", "lỗi upload")
                 }
             } else {
                 _statusCreate.value = false
