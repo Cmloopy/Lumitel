@@ -60,6 +60,11 @@
                     android:layout_width="27dp"
                     android:layout_height="27dp"
                     android:src="@drawable/ic_create_new" />
+                <View
+                    android:id="@+id/block"
+                    android:visibility="gone"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"/>
             </LinearLayout>
 
             <com.google.android.material.tabs.TabLayout

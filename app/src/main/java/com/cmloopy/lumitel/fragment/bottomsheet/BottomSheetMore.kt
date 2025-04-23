@@ -19,6 +19,7 @@ import com.cmloopy.lumitel.utils.DialogUtils
 import com.cmloopy.lumitel.viewmodels.BottomSheetMoreViewModel
 import com.cmloopy.lumitel.views.ChannelActivity
 import com.cmloopy.lumitel.views.CreateChannelActivity
+import com.cmloopy.lumitel.views.FollowChannelActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -87,7 +88,7 @@ class BottomSheetMore: BottomSheetDialogFragment() {
             viewModel.existChannel.observe(viewLifecycleOwner){
                 Log.e("err", "$it")
                 if(it){
-                    val intent = Intent(requireContext(), ChannelActivity::class.java)
+                    val intent = Intent(requireContext(), FollowChannelActivity::class.java)
                     intent.putExtra("msisdn", msisdn)
                     startActivity(intent)
                     dismiss()

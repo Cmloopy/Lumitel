@@ -6,7 +6,6 @@ import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.databinding.ActivityMainBinding
-import com.cmloopy.lumitel.fragment.AccountFragment
 import com.cmloopy.lumitel.fragment.VideoFragment
 
 class MainActivity : AppCompatActivity() {
@@ -28,11 +27,6 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId){
                 R.id.frg_video -> {
                     val fragment = VideoFragment.newInstance(msisdn)
-                    replaceFragment(fragment)
-                    true
-                }
-                R.id.frg_account -> {
-                    val fragment = AccountFragment.newInstance(msisdn)
                     replaceFragment(fragment)
                     true
                 }

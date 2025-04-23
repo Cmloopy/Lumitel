@@ -13,19 +13,17 @@ class ChannelRepository {
 
     private val channelApi = RetrofitClient.instance.create(ChannelApi::class.java)
     suspend fun getInfoChannel(channelId: Int, msisdn: String): Channel {
-        val result = channelApi.getChannelInfo(channelId = channelId, Encode.url(msisdn), timestamp, "")
+        val result = channelApi.getChannelInfo(channelId = channelId, msisdn, timestamp, "")
         return result.data
     }
 
     suspend fun getInfoMyChannel(msisdn: String): ChannelResponse{
         val result = channelApi.getMyChannelInfo(msisdn, timestamp)
-        Log.e("test", "${result.code}")
-        Log.e("test", "${Encode.url(msisdn)}")
         return result
     }
 
     suspend fun createAndUpdateChannel(channelName: String, channelDesc: String, channelAvatar: String, msisdn:String): ChannelResponse{
-        return channelApi.createAndUpdateChannel(channelName, channelDesc, channelAvatar, Encode.url(msisdn), timestamp, revision = "")
+        return channelApi.createAndUpdateChannel(channelName, channelDesc, channelAvatar, msisdn, timestamp, revision = "")
     }
 
     suspend fun getListChannelFollow(msisdn: String): List<Channel>{

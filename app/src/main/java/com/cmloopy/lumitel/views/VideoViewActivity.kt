@@ -11,6 +11,7 @@ import com.cmloopy.lumitel.adapter.ShortAdapter
 import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.databinding.ActivityVideoViewBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
+import com.cmloopy.lumitel.utils.DialogUtils
 import com.cmloopy.lumitel.viewmodels.VideoViewModel
 
 //XỬ LÝ LIKE SHARE
@@ -42,6 +43,7 @@ class VideoViewActivity : AppCompatActivity() {
         msisdn = intent.getStringExtra("msisdn")?:"0"
 
         viewModel.updateId(idCategory, idVideo, isFromChannel, idChannel, isShort, msisdn!!)
+        viewModel.getInfoChannel(msisdn!!)
 
         adapter = ShortAdapter(this, emptyList(),
             { video ->
@@ -64,9 +66,19 @@ class VideoViewActivity : AppCompatActivity() {
             viewModel.videos.removeObservers(this)
         }
         binding.btnCreateNew.setOnClickListener {
-            val intent = Intent(this, CreateVideoActivity::class.java)
-            intent.putExtra("msisdn", msisdn)
-            startActivity(intent)
+            viewModel.channel.observe(this){
+                when (it.state) {
+                    "APPROVED" -> {
+                        val intent = Intent(this, CreateVideoActivity::class.java)
+                        intent.putExtra("msisdn", msisdn)
+                        startActivity(intent)
+                    }
+                    null -> DialogUtils.channelIsNotExistDialog(this, msisdn = msisdn)
+                    else -> {
+                        DialogUtils.notiDialog(this)
+                    }
+                }
+            }
         }
     }
 

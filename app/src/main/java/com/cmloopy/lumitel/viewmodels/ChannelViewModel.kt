@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 class ChannelViewModel: ViewModel() {
     private val channelRepository = ChannelRepository()
     private val _channel = MutableLiveData<Channel>()
-    private val _isOfficial = MutableLiveData<Int>()
     val channel : LiveData<Channel> get() = _channel
     fun setChannelId(channelId: Int, msisdn:String){
         if(channelId >= 0) {

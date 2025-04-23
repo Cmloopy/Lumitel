@@ -4,14 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cmloopy.lumitel.data.models.channel.Channel
 import com.cmloopy.lumitel.data.models.video.Video
+import com.cmloopy.lumitel.data.repository.ChannelRepository
 import com.cmloopy.lumitel.data.repository.VideoRepository
 import kotlinx.coroutines.launch
 
 class VideoViewModel: ViewModel() {
+    private val channelRepo = ChannelRepository()
     private val videoRepo = VideoRepository()
     private val _videos = MutableLiveData<List<Video>>()
+    private val _channel = MutableLiveData<Channel>()
     val videos: LiveData<List<Video>> get() = _videos
+    val channel :LiveData<Channel>get() = _channel
+    fun getInfoChannel(msisdn: String){
+        viewModelScope.launch {
+            try {
+                val result = channelRepo.getInfoMyChannel(msisdn)
+                _channel.value = result.data
+            }catch (e:Exception){
+                e.printStackTrace()
+                _channel.value = Channel(-1,"","","","",null, "", 0,0,0,0L,0,0,"", "")
+            }
+        }
+    }
     fun updateId(idCate: Int, idVideo: Int, isFromChannel: Boolean, idChannel: Int, isShort: Boolean, msisdn: String){
         if(!isFromChannel){
             if(idCate == -1){

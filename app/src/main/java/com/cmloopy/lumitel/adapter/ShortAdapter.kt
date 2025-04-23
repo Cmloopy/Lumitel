@@ -1,6 +1,7 @@
 package com.cmloopy.lumitel.adapter
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -53,6 +54,7 @@ class ShortAdapter(private val context: Context,
         private var scShare: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
         private var imgChannel: ShapeableImageView = itemView.findViewById(R.id.img_channel)
         var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
+        val btnFollow: MaterialButton = itemView.findViewById(R.id.btn_follow_channel)
         //nut pause giua man hinh
         private var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
         private var btnBackward: ShapeableImageView = itemView.findViewById(R.id.btn_back_10s)
@@ -86,6 +88,11 @@ class ShortAdapter(private val context: Context,
             scCmt.text = video.totalComments.toString()
             scShare.text = video.totalShares.toString()
             Glide.with(context).load(video.channel.channelAvatar).into(imgChannel)
+            if(video.channel.isFollow == 1){
+                btnFollow.text = "Đã đăng kí"
+                val color = ContextCompat.getColor(context, R.color.non_gray)
+                btnFollow.backgroundTintList = ColorStateList.valueOf(color)
+            }
             txtNameChannel.text = video.channel.channelName
             txtVideoDesc.text = "${video.videoTitle}\n${video.videoDesc}"
 
