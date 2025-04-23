@@ -40,7 +40,9 @@ class CreateChannelActivity : AppCompatActivity() {
             viewModel.setChannelName(binding.edtChannelName.text.toString())
             viewModel.setChannelDesc(binding.edtChannelDesc.text.toString())
             viewModel.createChannel(msisdn = msisdn.toString())
-            DialogUtils.showProgressDialog(this) {}
+            DialogUtils.showProgressDialog(this) {
+                viewModel.cancelCreateChannel()
+            }
 
             viewModel.statusCreateChannel.observe(this) {
                 DialogUtils.dismissProgressDialog()

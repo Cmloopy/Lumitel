@@ -5,7 +5,6 @@ import com.cmloopy.lumitel.data.api.retrofit.RetrofitClient
 import com.cmloopy.lumitel.data.models.video.UploadVideoResponse
 import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.data.models.video.VideoAllInfo
-import com.cmloopy.lumitel.utils.Encode
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

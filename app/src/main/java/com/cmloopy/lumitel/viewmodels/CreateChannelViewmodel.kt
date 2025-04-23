@@ -100,11 +100,6 @@ class CreateChannelViewmodel: ViewModel() {
                 try {
                     val result = channelRepository.createAndUpdateChannel(_channelName.value.toString(), _channelDesc.value.toString(), _channelAvatar.value.toString(), msisdn)
                     _statusCreateChannel.value = result.code == 200
-                    Log.e("test", "${result.data.msisdn}")
-                    Log.e("test", "${result.data.channelAvatar}")
-                    Log.e("test", "${result.data.channelName}")
-                    Log.e("test", "${result.data.description}")
-                    Log.e("test", "${result.data.id}")
                 } catch (e:Exception){
                     e.printStackTrace()
                     _statusCreateChannel.value = false

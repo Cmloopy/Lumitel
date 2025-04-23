@@ -1,6 +1,5 @@
 package com.cmloopy.lumitel.fragment.bottomsheet
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.cmloopy.lumitel.R
@@ -18,7 +15,6 @@ import com.cmloopy.lumitel.databinding.BottomSheetMoreBinding
 import com.cmloopy.lumitel.utils.DialogUtils
 import com.cmloopy.lumitel.viewmodels.BottomSheetMoreViewModel
 import com.cmloopy.lumitel.views.ChannelActivity
-import com.cmloopy.lumitel.views.CreateChannelActivity
 import com.cmloopy.lumitel.views.FollowChannelActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog

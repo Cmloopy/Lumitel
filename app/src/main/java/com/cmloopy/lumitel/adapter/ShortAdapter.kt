@@ -104,7 +104,6 @@ class ShortAdapter(private val context: Context,
             }
             playerView.player = player
 
-            Log.e("errrrrr", "${video.videoMedia}")
 
             btnCmt.setOnClickListener {
                 onCommentClick(video)

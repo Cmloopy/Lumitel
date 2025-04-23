@@ -1,12 +1,9 @@
 package com.cmloopy.lumitel.data.repository
 
-import android.util.Log
 import com.cmloopy.lumitel.data.api.ChannelApi
 import com.cmloopy.lumitel.data.api.retrofit.RetrofitClient
 import com.cmloopy.lumitel.data.models.channel.Channel
-import com.cmloopy.lumitel.data.models.channel.ChannelFollowResponse
 import com.cmloopy.lumitel.data.models.channel.ChannelResponse
-import com.cmloopy.lumitel.utils.Encode
 
 class ChannelRepository {
     private val timestamp = System.currentTimeMillis().toString()
