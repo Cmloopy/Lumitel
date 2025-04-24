@@ -27,4 +27,10 @@ class ChannelRepository {
         val result = channelApi.getListChannelFollow(msisdn, timestamp, "")
         return result.data
     }
+    suspend fun followChannel(channelId: Int, msisdn: String): ChannelResponse {
+        return channelApi.followChannel(channelId, msisdn, timestamp)
+    }
+    suspend fun unFollowChannel(channelId: Int, msisdn: String): ChannelResponse {
+        return channelApi.unFollowChannel(channelId, msisdn, timestamp)
+    }
 }

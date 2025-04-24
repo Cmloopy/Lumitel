@@ -33,7 +33,7 @@ class ChannelActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val channelID = intent.getIntExtra("idChannel", -1)
+        var channelID = intent.getIntExtra("idChannel", -1)
         val msisdn = intent.getStringExtra("msisdn")?: "0"
         //Xử lý suscribe//
 
@@ -50,7 +50,7 @@ class ChannelActivity : AppCompatActivity() {
 
         viewModel.channel.observe(this){ channel ->
             if(channel != null) {
-                //channelID = channel.id
+                channelID = channel.id
                 state = channel.state
                 if(channel.isOwner == 1){
                     binding.btnSubscribe.visibility = View.GONE
@@ -103,6 +103,20 @@ class ChannelActivity : AppCompatActivity() {
                 val intent = Intent(this, CreateVideoActivity::class.java)
                 intent.putExtra("msisdn", msisdn)
                 startActivity(intent)
+            }
+        }
+        binding.btnSubscribe.setOnClickListener {
+            viewModel.followChannel(msisdn, channelID)
+        }
+        viewModel.isFollow.observe(this){
+            if(it == 1){
+                binding.btnSubscribe.text = "Đã đăng kí"
+                val color = ContextCompat.getColor(this, R.color.non_gray)
+                binding.btnSubscribe.backgroundTintList = ColorStateList.valueOf(color)
+            } else {
+                binding.btnSubscribe.text = "Đăng kí"
+                val color = ContextCompat.getColor(this, R.color.blue)
+                binding.btnSubscribe.backgroundTintList = ColorStateList.valueOf(color)
             }
         }
     }

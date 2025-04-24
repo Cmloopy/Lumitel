@@ -54,7 +54,11 @@ class VideoViewActivity : AppCompatActivity() {
         },
             { video ->
                 showChannel(video)
-            })
+            },
+            {
+                video -> 
+            }
+            )
 
         observeViewModel()
 

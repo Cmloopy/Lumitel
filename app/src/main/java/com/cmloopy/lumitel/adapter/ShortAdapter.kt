@@ -33,7 +33,8 @@ class ShortAdapter(private val context: Context,
                    private var shortList: List<Video>,
                    private val onCommentClick: (Video) -> Unit,
                    private val onRotateClick: (Boolean) -> Unit,
-                   private val infoChannelClick: (Video) -> Unit) :
+                   private val infoChannelClick: (Video) -> Unit,
+                   private val subscribe: (Video) -> Unit) :
     RecyclerView.Adapter<ShortAdapter.ShortViewHolder>() {
 
     private var currentPlayingViewHolder: ShortViewHolder? = null
@@ -104,6 +105,9 @@ class ShortAdapter(private val context: Context,
             }
             playerView.player = player
 
+            btnFollow.setOnClickListener {
+                subscribe(video)
+            }
 
             btnCmt.setOnClickListener {
                 onCommentClick(video)

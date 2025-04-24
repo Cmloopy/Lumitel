@@ -10,8 +10,8 @@ import com.cmloopy.lumitel.fragment.VideoFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    //private var msisdn = "+25768723954"
-    private var msisdn = "+84886686888"
+    private var msisdn = "+25768723954"
+    //private var msisdn = "+84886686888"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

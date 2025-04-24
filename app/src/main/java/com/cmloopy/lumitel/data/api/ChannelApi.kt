@@ -58,4 +58,26 @@ interface ChannelApi {
         @Header("Client-Type") clientType: String = "Android",
         @Header("sec-api") secApi: String = "123"
     ): ChannelFollowResponse
+
+    @GET("v1/channel/{channelId}/follow")
+    suspend fun followChannel(
+        @Path("channelId") channelId: Int,
+        @Query("msisdn") msisdn: String,
+        @Query("timestamp") timestamp: String,
+        @Query("security") security: String = "",
+        @Header("Accept-language") language: String = "en",
+        @Header("Client-Type") clientType: String = "Android",
+        @Header("sec-api") secApi: String = "123"
+    ): ChannelResponse
+
+    @GET("v1/channel/{channelId}/unfollow")
+    suspend fun unFollowChannel(
+        @Path("channelId") channelId: Int,
+        @Query("msisdn") msisdn: String,
+        @Query("timestamp") timestamp: String,
+        @Query("security") security: String = "",
+        @Header("Accept-language") language: String = "en",
+        @Header("Client-Type") clientType: String = "Android",
+        @Header("sec-api") secApi: String = "123"
+    ): ChannelResponse
 }
