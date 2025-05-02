@@ -1,83 +1,109 @@
 package com.cmloopy.lumitel
 
-import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
+import androidx.lifecycle.viewModelScope
+import com.cmloopy.lumitel.data.models.channel.Channel
 import com.cmloopy.lumitel.data.models.video.Video
+import com.cmloopy.lumitel.data.repository.ChannelRepository
+import com.cmloopy.lumitel.data.repository.VideoRepository
+import kotlinx.coroutines.launch
 
-class VideoViewModelRemake(private val context: Context): ViewModel() {
-    private val players = mutableListOf<ExoPlayer>()
-    private var currentIndex = -1
-    private var currentPage = -1
-    init {
-        repeat(3) {
-            players.add(ExoPlayer.Builder(context).build())
-        }
-    }
-    fun onPageSelected(position: Int, videoList: List<Video>) {
-        if (position == currentPage) return
-        val direction = position - currentPage
-        currentPage = position
+class VideoViewModelRemake() : ViewModel() {
 
-        if (direction != 0) {
-            rotatePlayers(direction)
-        }
-
-        val prevVideo = videoList.getOrNull(position - 1)
-        val currVideo = videoList.getOrNull(position)
-        val nextVideo = videoList.getOrNull(position + 1)
-
-        players[0].apply {
-            stop()
-            clearMediaItems()
-            prevVideo?.let {
-                setMediaItem(MediaItem.fromUri(it.videoMedia))
-                prepare()
-                playWhenReady = false
-            }
-        }
-
-        players[1].apply {
-            stop()
-            clearMediaItems()
-            currVideo?.let {
-                setMediaItem(MediaItem.fromUri(it.videoMedia))
-                prepare()
-                playWhenReady = true
-            }
-        }
-
-        players[2].apply {
-            stop()
-            clearMediaItems()
-            nextVideo?.let {
-                setMediaItem(MediaItem.fromUri(it.videoMedia))
-                prepare()
-                playWhenReady = false
+    private val channelRepo = ChannelRepository()
+    private val videoRepo = VideoRepository()
+    private val _videos = MutableLiveData<List<Video>>()
+    private val _channel = MutableLiveData<Channel>()
+    val videos: LiveData<List<Video>> get() = _videos
+    val channel :LiveData<Channel>get() = _channel
+    fun getInfoChannel(msisdn: String){
+        viewModelScope.launch {
+            try {
+                val result = channelRepo.getInfoMyChannel(msisdn)
+                _channel.value = result.data
+            }catch (e:Exception){
+                e.printStackTrace()
+                _channel.value = Channel(-1,"","","","",null, "", 0,0,0,0L,0,0,"", "")
             }
         }
     }
-    private fun rotatePlayers(direction: Int) {
-        if (direction > 0) {
-            // Scroll xuống
-            val first = players.removeAt(0)
-            players.add(first)
-        } else {
-            // Scroll lên
-            val last = players.removeAt(2)
-            players.add(0, last)
+    fun updateId(idCate: Int, idVideo: Int, isFromChannel: Boolean, idChannel: Int, isShort: Boolean, msisdn: String){
+        if(!isFromChannel){
+            if(idCate == -1){
+                loadVideoHot(idVideo, msisdn)
+            }
+            else{
+                loadVideos(idVideo, idCate, msisdn)
+            }
+        }
+        else {
+            loadVideoFromChannel(idVideo, idChannel, isShort, msisdn)
         }
     }
-    fun bindPlayerTo(holder: VideoViewAdapter.VideoViewHolder, position: Int) {
-        /*when (position) {
-            currentPage - 1 -> holder.binding.playerView.player = players[0]
-            currentPage -> holder.binding.playerView.player = players[1]
-            currentPage + 1 -> holder.binding.playerView.player = players[2]
-            else -> holder.binding.playerView.player = null
-        }*/
+
+    private fun loadVideoHot(idVideo: Int, msisdn: String) {
+        viewModelScope.launch {
+            try {
+                val finalList = mutableListOf<Video>()
+                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo, msisdn)
+                finalList.add(firstVideo)
+                val result = videoRepo.getVideoHot(msisdn)
+                val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
+                safeList.forEach {
+                    finalList.add(it)
+                }
+                _videos.value = finalList
+            } catch (e:Exception) {
+                e.printStackTrace()
+            }
+        }
     }
-    override fun onCleared() {
-        players.forEach { it.release() }
+
+    private fun loadVideos(idVideo: Int, idCate: Int, msisdn: String) {
+        viewModelScope.launch {
+            try {
+                val finalList = mutableListOf<Video>()
+                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo, msisdn)
+                finalList.add(firstVideo)
+                val result = videoRepo.getVideoByCategory(idCategory = idCate, msisdn)
+                val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
+                safeList.forEach {
+                    finalList.add(it)
+                }
+                _videos.value = finalList
+            } catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+    private fun loadVideoFromChannel(idVideo: Int, idChannel: Int, isShort: Boolean, msisdn: String){
+        viewModelScope.launch {
+            try {
+                val finalList = mutableListOf<Video>()
+                val firstVideo = videoRepo.getInfoVideo(idVideo = idVideo, msisdn)
+                finalList.add(firstVideo)
+                if (!isShort) {
+                    val result = videoRepo.getVideoByChannel(channelId =  idChannel, msisdn)
+                    val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
+                    safeList.forEach {
+                        finalList.add(it)
+                    }
+                    _videos.value = finalList
+                } else {
+                    val result = videoRepo.getShortByChannel(channelId =  idChannel, msisdn)
+                    val safeList = result.map { it.copy(aspecRatio = it.aspecRatio ?: "1.5") }
+                    safeList.forEach {
+                        finalList.add(it)
+                    }
+                    _videos.value = finalList
+                }
+
+            } catch (e: Exception){
+                _videos.value = emptyList()
+                e.printStackTrace()
+            }
+        }
     }
 }
