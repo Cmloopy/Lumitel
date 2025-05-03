@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cmloopy.lumitel.adapter.VideoChannelAdapter
 import com.cmloopy.lumitel.databinding.FragmentVideoChannelBinding
 import com.cmloopy.lumitel.viewmodels.VideoChannelViewModel
-import com.cmloopy.lumitel.views.VideoViewActivity
+import com.cmloopy.lumitel.views.VideoViewActivityRemake
 
 class VideoChannelFragment : Fragment() {
     private lateinit var binding: FragmentVideoChannelBinding
@@ -43,7 +43,7 @@ class VideoChannelFragment : Fragment() {
 
         viewModel.videol.observe(viewLifecycleOwner) { videol ->
             val adapter = VideoChannelAdapter(videol) {idVideo ->
-                val intent = Intent(requireContext(),VideoViewActivity::class.java)
+                val intent = Intent(requireContext(),VideoViewActivityRemake::class.java)
                 intent.putExtra("idVideo", idVideo)
                 intent.putExtra("isFromChannel", true)
                 intent.putExtra("isShort", false)

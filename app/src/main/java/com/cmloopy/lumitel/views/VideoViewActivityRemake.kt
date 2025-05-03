@@ -7,20 +7,17 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import com.cmloopy.lumitel.adapter.ShortAdapter
+import com.cmloopy.lumitel.adapter.VideoViewAdapter
+import com.cmloopy.lumitel.viewmodels.VideoViewModelRemake
 import com.cmloopy.lumitel.data.models.video.Video
-import com.cmloopy.lumitel.databinding.ActivityVideoViewBinding
+import com.cmloopy.lumitel.databinding.ActivityVideoViewRemakeBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
 import com.cmloopy.lumitel.utils.DialogUtils
-import com.cmloopy.lumitel.viewmodels.VideoViewModel
 
-//XỬ LÝ LIKE SHARE
-
-@Suppress("DEPRECATION")
-class VideoViewActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityVideoViewBinding
-    private val viewModel: VideoViewModel by viewModels()
-    private lateinit var adapter: ShortAdapter
+class VideoViewActivityRemake : AppCompatActivity() {
+    private lateinit var binding: ActivityVideoViewRemakeBinding
+    private val viewModel: VideoViewModelRemake by viewModels()
+    private lateinit var adapter : VideoViewAdapter
     private var idCategory = -1
     private var idVideo = -1
     private var isFromChannel = false
@@ -30,11 +27,10 @@ class VideoViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVideoViewBinding.inflate(layoutInflater)
+        binding = ActivityVideoViewRemakeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
         idCategory = intent.getIntExtra("idCategory", -1)
         idVideo = intent.getIntExtra("idVideo", -1)
         isFromChannel = intent.getBooleanExtra("isFromChannel", false)
@@ -45,31 +41,25 @@ class VideoViewActivity : AppCompatActivity() {
         viewModel.updateId(idCategory, idVideo, isFromChannel, idChannel, isShort, msisdn!!)
         viewModel.getInfoChannel(msisdn!!)
 
-        adapter = ShortAdapter(this, emptyList(),
-            { video ->
+        adapter = VideoViewAdapter(emptyList(), this, msisdn!!,
+        { video ->
             showCommentDialog(video)
         },
-            { isRotated ->
+        { isRotated ->
             rotateVideo(isRotated)
         },
-            { video ->
-                showChannel(video)
-            },
-            {
-                video -> 
-            }
-            )
+        { video ->
+            showChannel(video)
+        })
 
-        observeViewModel()
+        obserViewModel()
 
-        binding.vpgShortVideo.adapter = adapter
-
-        binding.btnDropBack.setOnClickListener {
+        binding.btnDropBackRemake.setOnClickListener {
             finish()
-            binding.vpgShortVideo.adapter = null
+            binding.vpgShortVideoRemake.adapter = null
             viewModel.videos.removeObservers(this)
         }
-        binding.btnCreateNew.setOnClickListener {
+        binding.btnCreateNewRemake.setOnClickListener {
             viewModel.channel.observe(this){
                 when (it.state) {
                     "APPROVED" -> {
@@ -85,65 +75,54 @@ class VideoViewActivity : AppCompatActivity() {
             }
         }
     }
-
+    private fun obserViewModel() {
+        viewModel.videos.observe(this) { videos ->
+            adapter = VideoViewAdapter(videos, this, msisdn!!,
+                { video ->
+                showCommentDialog(video)
+                },
+                { isRotated ->
+                    rotateVideo(isRotated)
+                },
+                { video ->
+                    showChannel(video)
+                })
+            binding.vpgShortVideoRemake.adapter = adapter
+        }
+    }
     private fun showChannel(video: Video) {
         val intent = Intent(this, ChannelActivity::class.java)
         intent.putExtra("idChannel", video.channelId)
         intent.putExtra("msisdn",msisdn)
         startActivity(intent)
     }
-
+    private fun showCommentDialog(video: Video){
+        val dialog = BottomSheetComment.newInstance(video.id, msisdn)
+        dialog.show(supportFragmentManager, "BottomSheetComment")
+    }
     private fun rotateVideo(b: Boolean) {
         if(b){
             hideSystemUI()
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-            binding.btnDropBack.visibility = View.GONE
-            binding.btnCreateNew.visibility = View.GONE
-            binding.vpgShortVideo.isUserInputEnabled = false
+            binding.btnDropBackRemake.visibility = View.GONE
+            binding.btnCreateNewRemake.visibility = View.GONE
+            binding.vpgShortVideoRemake.isUserInputEnabled = false
         }
         else{
             showSystemUI()
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-            binding.btnDropBack.visibility = View.VISIBLE
-            binding.btnCreateNew.visibility = View.VISIBLE
-            binding.vpgShortVideo.isUserInputEnabled = true
+            binding.btnDropBackRemake.visibility = View.VISIBLE
+            binding.btnCreateNewRemake.visibility = View.VISIBLE
+            binding.vpgShortVideoRemake.isUserInputEnabled = true
         }
     }
-
-    private fun observeViewModel() {
-        viewModel.videos.observe(this) { videos ->
-            adapter.updateData(videos)
-        }
-    }
-
-    private fun showCommentDialog(video: Video){
-        //msisdn & idvideo?
-        val dialog = BottomSheetComment.newInstance(video.id, msisdn)
-        dialog.show(supportFragmentManager, "BottomSheetComment")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        adapter.releaseVideo()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        adapter.pauseVideo()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        adapter.resumeVideo()
-    }
-
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if(requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
             adapter.backToPortrait()
         }
         else {
-            binding.vpgShortVideo.adapter = null
+            binding.vpgShortVideoRemake.adapter = null
             viewModel.videos.removeObservers(this)
             super.onBackPressed()
             finish()
@@ -167,5 +146,12 @@ class VideoViewActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 )
     }
-
+    override fun onPause() {
+        super.onPause()
+        adapter.stopVideo()
+    }
+    override fun onResume() {
+        super.onResume()
+        adapter.resumeVideo()
+    }
 }
