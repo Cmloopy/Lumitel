@@ -39,7 +39,6 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
     private var isMute = false
     private val playersMap = mutableMapOf<Int, ExoPlayer>()
     private var currentPlayingViewHolder: VideoViewHolder? = null
-    private var posit: Int = -1
     inner class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val playerView: PlayerView = itemView.findViewById(R.id.player_view_short_video)
         private var player: ExoPlayer? = null
@@ -427,6 +426,14 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
     }
     fun resumeVideo(){
         currentPlayingViewHolder?.resume()
+    }
+    fun releaseAll(){
+        playersMap.forEach { (_, player) ->
+            player.stop()
+            player.release()
+        }
+        playersMap.clear()
+        currentPlayingViewHolder = null
     }
     fun updateFollow(isFollow: Int){
         currentPlayingViewHolder?.updateFollow(isFollow)

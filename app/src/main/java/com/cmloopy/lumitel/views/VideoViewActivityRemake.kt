@@ -59,6 +59,7 @@ class VideoViewActivityRemake : AppCompatActivity() {
 
         binding.btnDropBackRemake.setOnClickListener {
             finish()
+            adapter.releaseAll()
             binding.vpgShortVideoRemake.adapter = null
             viewModel.videos.removeObservers(this)
         }
