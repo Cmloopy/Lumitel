@@ -211,7 +211,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1.2"
+                android:layout_weight="1.9"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="@string/yoonhee_official"
