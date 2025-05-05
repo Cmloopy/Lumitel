@@ -50,7 +50,10 @@ class VideoViewActivityRemake : AppCompatActivity() {
         },
         { video ->
             showChannel(video)
-        })
+        }, {
+            isFollow, channelId ->
+            followChannel(isFollow, channelId, msisdn!!)
+            })
 
         obserViewModel()
 
@@ -75,6 +78,15 @@ class VideoViewActivityRemake : AppCompatActivity() {
             }
         }
     }
+
+    private fun followChannel(follow: Int, channelId: Int, msisdn: String) {
+        viewModel.setStatusFollow(follow)
+        viewModel.followChannel(channelId, msisdn)
+        viewModel.isFollow.observe(this){
+            adapter.updateFollow(it)
+        }
+    }
+
     private fun obserViewModel() {
         viewModel.videos.observe(this) { videos ->
             adapter = VideoViewAdapter(videos, this, msisdn!!,
@@ -86,6 +98,9 @@ class VideoViewActivityRemake : AppCompatActivity() {
                 },
                 { video ->
                     showChannel(video)
+                },{
+                        isFollow, channelId ->
+                    followChannel(isFollow, channelId, msisdn!!)
                 })
             binding.vpgShortVideoRemake.adapter = adapter
         }

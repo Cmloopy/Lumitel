@@ -31,13 +31,15 @@ import kotlin.math.min
 class VideoViewAdapter(private var listVideo: List<Video>, private val context: Context, private val msisdn: String,
                        private val onCommentClick: (Video) -> Unit,
                        private val onRotateClick: (Boolean) -> Unit,
-                       private val infoChannelClick: (Video) -> Unit) :
+                       private val infoChannelClick: (Video) -> Unit,
+                       private val followChannel: (Int, Int) -> Unit) :
     RecyclerView.Adapter<VideoViewAdapter.VideoViewHolder>() {
 
     private var isRotate = false
     private var isMute = false
     private val playersMap = mutableMapOf<Int, ExoPlayer>()
     private var currentPlayingViewHolder: VideoViewHolder? = null
+    private var posit: Int = -1
     inner class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val playerView: PlayerView = itemView.findViewById(R.id.player_view_short_video)
         private var player: ExoPlayer? = null
@@ -47,12 +49,10 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
         private var fullTime: MaterialTextView = itemView.findViewById(R.id.txt_full_short_video)
 
         private var scLike: MaterialTextView = itemView.findViewById(R.id.txt_number_like)
-        private var btnLike: ShapeableImageView = itemView.findViewById(R.id.btn_like)
         private var scCmt: MaterialTextView = itemView.findViewById(R.id.txt_number_cmt)
         private var btnCmt: ShapeableImageView = itemView.findViewById(R.id.btn_comment)
         private var scShare: MaterialTextView = itemView.findViewById(R.id.txt_number_share)
         private var imgChannel: ShapeableImageView = itemView.findViewById(R.id.img_channel)
-        private var btnShare: ShapeableImageView = itemView.findViewById(R.id.btn_share)
         private val btnFollow: MaterialButton = itemView.findViewById(R.id.btn_follow_channel)
 
         private var btnPauseResume: ShapeableImageView = itemView.findViewById(R.id.btn_pause_resume)
@@ -61,7 +61,6 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
         private var btnFullScreen: MaterialButton = itemView.findViewById(R.id.btn_short_fullscreen)
 
         private var btnMuteUnmute: ShapeableImageView = itemView.findViewById(R.id.btn_mute_unmute)
-        private var btnSettingVideoPlay: ShapeableImageView = itemView.findViewById(R.id.btn_setting_video_play)
 
         private var txtNameChannel: MaterialTextView = itemView.findViewById(R.id.txt_name_channel)
         private var txtVideoDesc: MaterialTextView = itemView.findViewById(R.id.txt_video_desc)
@@ -324,9 +323,6 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                     5000
                 )
             }
-            btnFollow.setOnClickListener {
-
-            }
             btnCmt.setOnClickListener {
                 onCommentClick(video)
             }
@@ -337,7 +333,18 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                 infoChannelClick(video)
             }
             btnFollow.setOnClickListener {
-                //Xử lý follow
+                followChannel(video.channel.isFollow, video.channelId)
+            }
+        }
+        fun updateFollow(isFollow: Int){
+            if(isFollow == 1) {
+                btnFollow.text = "Đã đăng kí"
+                val color = ContextCompat.getColor(context, R.color.non_gray)
+                btnFollow.backgroundTintList = ColorStateList.valueOf(color)
+            } else {
+                btnFollow.text = "Đăng kí"
+                val color = ContextCompat.getColor(context, R.color.blue_3)
+                btnFollow.backgroundTintList = ColorStateList.valueOf(color)
             }
         }
         fun onAttached() {
@@ -420,6 +427,13 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
     }
     fun resumeVideo(){
         currentPlayingViewHolder?.resume()
+    }
+    fun updateFollow(isFollow: Int){
+        currentPlayingViewHolder?.updateFollow(isFollow)
+        val posit = currentPlayingViewHolder?.adapterPosition
+        if(posit != null) {
+            listVideo[posit].channel.isFollow = isFollow
+        }
     }
 }
 

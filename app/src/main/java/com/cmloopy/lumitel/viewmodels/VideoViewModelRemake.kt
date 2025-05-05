@@ -16,8 +16,10 @@ class VideoViewModelRemake : ViewModel() {
     private val videoRepo = VideoRepository()
     private val _videos = MutableLiveData<List<Video>>()
     private val _channel = MutableLiveData<Channel>()
+    private val _isFollow = MutableLiveData<Int>()
     val videos: LiveData<List<Video>> get() = _videos
     val channel :LiveData<Channel>get() = _channel
+    val isFollow: LiveData<Int> get() = _isFollow
     fun getInfoChannel(msisdn: String){
         viewModelScope.launch {
             try {
@@ -103,6 +105,32 @@ class VideoViewModelRemake : ViewModel() {
             } catch (e: Exception){
                 _videos.value = emptyList()
                 e.printStackTrace()
+            }
+        }
+    }
+    fun setStatusFollow(isFollow: Int){
+        _isFollow.value = isFollow
+    }
+    fun followChannel(channelId: Int, msisdn: String){
+        var noneStatus: Int = -1
+        viewModelScope.launch {
+            try {
+                if(_isFollow.value == 1){
+                    noneStatus = 1
+                    val result = channelRepo.unFollowChannel(channelId, msisdn)
+                    if(result.code == 200){
+                        _isFollow.value = 0
+                    }
+                } else {
+                    noneStatus = 0
+                    val result = channelRepo.followChannel(channelId, msisdn)
+                    if(result.code == 200){
+                        _isFollow.value = 1
+                    }
+                }
+            } catch (e:Exception){
+                e.printStackTrace()
+                _isFollow.value = noneStatus
             }
         }
     }

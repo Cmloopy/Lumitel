@@ -13,7 +13,7 @@ data class Channel(
     @SerializedName("numVideos") val numVideos: Int,
     @SerializedName("isOfficial") val isOfficial: Int?,
     @SerializedName("createdFrom") val createdFrom: Long?,
-    @SerializedName("isFollow") val isFollow: Int,
+    @SerializedName("isFollow") var isFollow: Int,
     @SerializedName("isOwner") val isOwner: Int,
     @SerializedName("url") val url: String?,
     @SerializedName("state") val state: String?

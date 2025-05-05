@@ -35,7 +35,6 @@ class ChannelActivity : AppCompatActivity() {
 
         var channelID = intent.getIntExtra("idChannel", -1)
         val msisdn = intent.getStringExtra("msisdn")?: "0"
-        //Xử lý suscribe//
 
         viewModel.setChannelId(channelID, msisdn)
         binding.constraintLayout.visibility = View.GONE
