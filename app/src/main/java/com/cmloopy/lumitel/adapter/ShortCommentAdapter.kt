@@ -12,11 +12,11 @@ import com.google.android.material.textview.MaterialTextView
 
 class ShortCommentAdapter(private var listShortCmt: List<Comment>): RecyclerView.Adapter<ShortCommentAdapter.ShortCommentViewHolder>() {
     inner class ShortCommentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val imgChannel = itemView.findViewById<ShapeableImageView>(R.id.img_channel_comment)
-        val nameChannel = itemView.findViewById<MaterialTextView>(R.id.txt_name_channel_comment)
-        val contentCmt = itemView.findViewById<MaterialTextView>(R.id.txt_comment_video)
-        val like = itemView.findViewById<MaterialTextView>(R.id.txt_total_like_cmt)
-        val dislike = itemView.findViewById<MaterialTextView>(R.id.txt_total_dislike_cmt)
+        private val imgChannel = itemView.findViewById<ShapeableImageView>(R.id.img_channel_comment)
+        private val nameChannel = itemView.findViewById<MaterialTextView>(R.id.txt_name_channel_comment)
+        private val contentCmt = itemView.findViewById<MaterialTextView>(R.id.txt_comment_video)
+        private val like = itemView.findViewById<MaterialTextView>(R.id.txt_total_like_cmt)
+        private val dislike = itemView.findViewById<MaterialTextView>(R.id.txt_total_dislike_cmt)
         fun bind(comment: Comment){
             Glide.with(itemView.context).load(comment.avatar).error(R.drawable.ic_logo).into(imgChannel)
             nameChannel.text = comment.name

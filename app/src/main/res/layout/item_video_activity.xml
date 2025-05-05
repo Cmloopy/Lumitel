@@ -191,8 +191,9 @@
     <LinearLayout
         android:id="@+id/linearLayout_title_short"
         android:layout_width="0dp"
+        android:maxHeight="160dp"
         android:layout_marginStart="15dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="25dp"
         app:layout_constraintWidth_percent="0.77"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -203,16 +204,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txt_name_channel"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1.9"
-                android:maxLines="1"
+                android:singleLine="true"
+                android:maxEms="20"
                 android:ellipsize="end"
                 android:text="@string/yoonhee_official"
                 android:textColor="@color/white"
@@ -234,16 +234,26 @@
 
         </LinearLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txt_video_desc"
+        <LinearLayout
+            android:id="@+id/ln_video_desc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:text="@string/test_text_1"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_video_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:text="@string/test_text_1"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView

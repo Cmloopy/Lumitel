@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Handler
 import android.os.Looper
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
         private var txtNameChannel: MaterialTextView = itemView.findViewById(R.id.txt_name_channel)
         private var txtVideoDesc: MaterialTextView = itemView.findViewById(R.id.txt_video_desc)
 
+        //private var linearVideoDesc: LinearLayout = itemView.findViewById(R.id.ln_video_desc)
         private var linearTitile: LinearLayout = itemView.findViewById(R.id.linearLayout_title_short)
         private var linearTimeShort: LinearLayout = itemView.findViewById(R.id.linearLayout_timeShort)
         private var linearSettingVideoPlay: LinearLayout = itemView.findViewById(R.id.ln_setting_video_play)
@@ -79,6 +81,19 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
             scShare.text = video.totalShares.toString()
             txtNameChannel.text = video.channel.channelName
             txtVideoDesc.text = "${video.videoTitle}\n${video.videoDesc}"
+            txtVideoDesc.setOnClickListener {
+                if(txtVideoDesc.maxLines == 3) {
+                    txtVideoDesc.maxLines = Integer.MAX_VALUE
+                    /*val heightInDp = 100
+                    val heightInPx = TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        heightInDp.toFloat(),
+                        context.resources.displayMetrics
+                    ).toInt()
+                    linearVideoDesc.layoutParams.height = heightInPx
+                    linearVideoDesc.requestLayout()*/
+                } else txtVideoDesc.maxLines = 3
+            }
             Glide.with(context).load(video.channel.channelAvatar).into(imgChannel)
             if(msisdn == video.channel.msisdn) btnFollow.visibility = View.GONE
             if(video.channel.isFollow == 1){

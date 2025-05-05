@@ -13,9 +13,9 @@ import com.google.android.material.textview.MaterialTextView
 class ShortVideoAdapter(private var shortVideoList : List<Video>, private val onItemClick: (Int) -> Unit)
     : RecyclerView.Adapter<ShortVideoAdapter.ShortVideoViewHolder>() {
     inner class ShortVideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var thumb = itemView.findViewById<ShapeableImageView>(R.id.img_thumbnail)
-        var title = itemView.findViewById<MaterialTextView>(R.id.txt_title_short_video)
-        var view = itemView.findViewById<MaterialTextView>(R.id.txt_view_short_video)
+        private var thumb = itemView.findViewById<ShapeableImageView>(R.id.img_thumbnail)
+        private var title = itemView.findViewById<MaterialTextView>(R.id.txt_title_short_video)
+        private var view = itemView.findViewById<MaterialTextView>(R.id.txt_view_short_video)
         fun bind(video: Video){
             title.text = video.videoTitle
             Glide.with(itemView.context).load(video.videoImage).into(thumb)

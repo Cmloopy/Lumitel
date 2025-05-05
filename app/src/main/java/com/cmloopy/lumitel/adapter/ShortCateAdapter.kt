@@ -12,11 +12,11 @@ import com.google.android.material.textview.MaterialTextView
 
 class ShortCateAdapter(private var list: List<Video>, private val onItemClick: (Int) -> Unit): RecyclerView.Adapter<ShortCateAdapter.ShortCateViewHolder>() {
     inner class ShortCateViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var imgVideo = itemView.findViewById<ShapeableImageView>(R.id.img_video_image_short)
-        var titleVideo = itemView.findViewById<MaterialTextView>(R.id.txt_title_video_short)
-        var imgChannel = itemView.findViewById<ShapeableImageView>(R.id.img_avatar_channel_short)
-        var txtChanel = itemView.findViewById<MaterialTextView>(R.id.txt_name_channel_short)
-        var txtTotalLike = itemView.findViewById<MaterialTextView>(R.id.txt_total_like_short)
+        private var imgVideo: ShapeableImageView = itemView.findViewById(R.id.img_video_image_short)
+        private var titleVideo: MaterialTextView = itemView.findViewById(R.id.txt_title_video_short)
+        private var imgChannel: ShapeableImageView = itemView.findViewById(R.id.img_avatar_channel_short)
+        private var txtChanel: MaterialTextView = itemView.findViewById(R.id.txt_name_channel_short)
+        private var txtTotalLike: MaterialTextView = itemView.findViewById(R.id.txt_total_like_short)
         fun bind(video: Video){
             Glide.with(itemView.context).load(video.videoImage).into(imgVideo)
             titleVideo.text = video.videoTitle

@@ -96,10 +96,10 @@ class CreateVideoActivity : AppCompatActivity() {
             }
         }
     }
-    fun openGalleryToPickVideo() {
+    private fun openGalleryToPickVideo() {
         pickVideoLauncher.launch("video/*")
     }
-    fun openGalleryToPickImage() {
+    private fun openGalleryToPickImage() {
         pickImageLauncher.launch("image/*")
     }
 }

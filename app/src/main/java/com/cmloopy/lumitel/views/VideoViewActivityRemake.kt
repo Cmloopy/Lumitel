@@ -14,6 +14,7 @@ import com.cmloopy.lumitel.databinding.ActivityVideoViewRemakeBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
 import com.cmloopy.lumitel.utils.DialogUtils
 
+@Suppress("DEPRECATION")
 class VideoViewActivityRemake : AppCompatActivity() {
     private lateinit var binding: ActivityVideoViewRemakeBinding
     private val viewModel: VideoViewModelRemake by viewModels()

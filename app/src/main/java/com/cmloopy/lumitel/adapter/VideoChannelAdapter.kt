@@ -13,9 +13,9 @@ import com.google.android.material.textview.MaterialTextView
 
 class VideoChannelAdapter(private var listVideo: List<Video>, private val onClick: (Int) -> Unit): RecyclerView.Adapter<VideoChannelAdapter.VideoChannelViewHolder>() {
     inner class VideoChannelViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val videoText = itemView.findViewById<MaterialTextView>(R.id.video_title)
-        val img = itemView.findViewById<ShapeableImageView>(R.id.img_video_length_image)
-        val duration = itemView.findViewById<MaterialTextView>(R.id.textDuration)
+        private val videoText = itemView.findViewById<MaterialTextView>(R.id.video_title)
+        private val img = itemView.findViewById<ShapeableImageView>(R.id.img_video_length_image)
+        private val duration = itemView.findViewById<MaterialTextView>(R.id.textDuration)
         fun bind(video:Video){
             videoText.text = video.videoTitle
             Glide.with(itemView.context).load(video.videoImage).into(img)
