@@ -1,6 +1,8 @@
 package com.cmloopy.lumitel.utils
 
-object TimeFormat {
+import java.text.DecimalFormat
+
+object ViewTimeFormat {
     fun formatTime(time: String): String{
         val timee = time.toInt()
         val minute = timee / 60
@@ -35,6 +37,19 @@ object TimeFormat {
             days < 30 -> "$days ngày trước"
             months < 12 -> "$months tháng trước"
             else -> "$years năm trước"
+        }
+    }
+    fun getTotalView(totalView: Int): String {
+        val df = DecimalFormat("#.#")
+
+        val nView = totalView / 1000.0
+        val mView = totalView / 1000000.0
+        val bView = totalView / 1000000000.0
+
+        return when {
+            totalView < 1_000_000 -> "${df.format(nView)}K lượt xem"
+            totalView < 1_000_000_000 -> "${df.format(mView)}M lượt xem"
+            else -> "${df.format(bView)}T lượt xem"
         }
     }
 

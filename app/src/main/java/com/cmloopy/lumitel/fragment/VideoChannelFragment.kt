@@ -56,7 +56,6 @@ class VideoChannelFragment : Fragment() {
 
             if(videol.isEmpty()) binding.txtEmptyDataVideoChannel.visibility = View.VISIBLE else binding.txtEmptyDataVideoChannel.visibility = View.GONE
         }
-
         return binding.root
     }
 }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.video.Video
+import com.cmloopy.lumitel.utils.ViewTimeFormat
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
@@ -19,7 +20,7 @@ class ShortVideoAdapter(private var shortVideoList : List<Video>, private val on
         fun bind(video: Video){
             title.text = video.videoTitle
             Glide.with(itemView.context).load(video.videoImage).into(thumb)
-            view.text = "${video.totalViews} lượt xem"
+            view.text = ViewTimeFormat.getTotalView(video.totalViews)
             itemView.setOnClickListener {
                 onItemClick(video.id)
             }

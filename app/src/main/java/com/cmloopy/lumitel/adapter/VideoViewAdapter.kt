@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Handler
 import android.os.Looper
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.video.Video
-import com.cmloopy.lumitel.utils.TimeFormat
+import com.cmloopy.lumitel.utils.ViewTimeFormat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
@@ -59,13 +58,11 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
         private var btnBackward: ShapeableImageView = itemView.findViewById(R.id.btn_back_10s)
         private var btnForward: ShapeableImageView = itemView.findViewById(R.id.btn_next_10s)
         private var btnFullScreen: MaterialButton = itemView.findViewById(R.id.btn_short_fullscreen)
-
         private var btnMuteUnmute: ShapeableImageView = itemView.findViewById(R.id.btn_mute_unmute)
 
         private var txtNameChannel: MaterialTextView = itemView.findViewById(R.id.txt_name_channel)
         private var txtVideoDesc: MaterialTextView = itemView.findViewById(R.id.txt_video_desc)
 
-        //private var linearVideoDesc: LinearLayout = itemView.findViewById(R.id.ln_video_desc)
         private var linearTitile: LinearLayout = itemView.findViewById(R.id.linearLayout_title_short)
         private var linearTimeShort: LinearLayout = itemView.findViewById(R.id.linearLayout_timeShort)
         private var linearSettingVideoPlay: LinearLayout = itemView.findViewById(R.id.ln_setting_video_play)
@@ -84,14 +81,6 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
             txtVideoDesc.setOnClickListener {
                 if(txtVideoDesc.maxLines == 3) {
                     txtVideoDesc.maxLines = Integer.MAX_VALUE
-                    /*val heightInDp = 100
-                    val heightInPx = TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        heightInDp.toFloat(),
-                        context.resources.displayMetrics
-                    ).toInt()
-                    linearVideoDesc.layoutParams.height = heightInPx
-                    linearVideoDesc.requestLayout()*/
                 } else txtVideoDesc.maxLines = 3
             }
             Glide.with(context).load(video.channel.channelAvatar).into(imgChannel)
@@ -116,14 +105,14 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                 override fun onTimelineChanged(timeline: Timeline, reason: Int) {
                     duration = player!!.duration
                     if (duration != C.TIME_UNSET) {
-                        fullTime.text = TimeFormat.formatTimeDuration(duration)
+                        fullTime.text = ViewTimeFormat.formatTimeDuration(duration)
                     }
                 }
                 override fun onPlaybackStateChanged(state: Int) {
                     if (state == Player.STATE_READY) {
                         duration = player!!.duration
                         if (duration != C.TIME_UNSET) {
-                            fullTime.text = TimeFormat.formatTimeDuration(duration)
+                            fullTime.text = ViewTimeFormat.formatTimeDuration(duration)
                         }
                     }
                 }
@@ -147,7 +136,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                 ) {
                     if (fromUser && player != null) {
                         val newPosition = (progress * duration) / 100
-                        currentTime.text = TimeFormat.formatTimeDuration(newPosition)
+                        currentTime.text = ViewTimeFormat.formatTimeDuration(newPosition)
                         player!!.seekTo(newPosition)
                     }
                 }
@@ -174,7 +163,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                         btnForward.visibility = View.GONE
                         btnPauseResume.setImageResource(R.drawable.ic_play)
                         player?.let {
-                            currentTime.text = TimeFormat.formatTimeDuration(it.currentPosition)
+                            currentTime.text = ViewTimeFormat.formatTimeDuration(it.currentPosition)
                         }
                         handlerCurrentTime.postDelayed({
                             linearTimeShort.visibility = View.GONE
@@ -194,7 +183,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                         btnBackward.visibility = View.VISIBLE
                         btnForward.visibility = View.VISIBLE
                         player?.let {
-                            currentTime.text = TimeFormat.formatTimeDuration(it.currentPosition)
+                            currentTime.text = ViewTimeFormat.formatTimeDuration(it.currentPosition)
                         }
                         seekBar?.setPadding(50, 51, 50, 25)
                         seekBar?.thumb =
@@ -395,7 +384,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
         fun updateSeekbarProgress(position: Long){
             val progress = ((position * 100) / duration).toInt()
             seekBar.progress = progress
-            currentTime.text = TimeFormat.formatTimeDuration(position)
+            currentTime.text = ViewTimeFormat.formatTimeDuration(position)
         }
         fun hideControl(){
             linearSettingVideoPlay.visibility = View.GONE

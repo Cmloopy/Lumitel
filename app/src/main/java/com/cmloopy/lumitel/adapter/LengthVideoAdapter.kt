@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cmloopy.lumitel.R
 import com.cmloopy.lumitel.data.models.video.Video
-import com.cmloopy.lumitel.utils.TimeFormat
+import com.cmloopy.lumitel.utils.ViewTimeFormat
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
@@ -25,10 +25,10 @@ class LengthVideoAdapter(private var videoList: List<Video>, private val onItemC
             Glide.with(itemView.context).load(video.videoImage).into(imgBiaVideo)
             txtLengthVideo.text = formatTime(video.videoTime)
             Glide.with(itemView.context).load(video.channel.channelAvatar).into(imgAuthor)
-            txtUpdatedAt.text = TimeFormat.getTimeAgo(video.publishTime)
+            txtUpdatedAt.text = ViewTimeFormat.getTimeAgo(video.publishTime)
             txtTitleVideo.text = video.videoTitle
             txtNameAuthor.text = video.channel.channelName
-            txtViewVideo.text = "${video.totalViews} Views"
+            txtViewVideo.text = ViewTimeFormat.getTotalView(video.totalViews)
             itemView.setOnClickListener {
                 onItemClick(video.id)
             }

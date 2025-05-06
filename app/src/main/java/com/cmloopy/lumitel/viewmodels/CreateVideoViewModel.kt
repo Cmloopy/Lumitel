@@ -31,7 +31,9 @@ class CreateVideoViewModel: ViewModel() {
     private val _videoTitle = MutableLiveData<String>()
     private val _videoDesc = MutableLiveData<String>()
     private val _videoData = MutableLiveData<Pair<String, MultipartBody.Part>>()
-    private val _imageData = MutableLiveData<Pair<String, MultipartBody.Part>>()
+    private val _imageData = MutableLiveData<Pair<String, MultipartBody.Part?>>().apply {
+        value = Pair("", null)
+    }
 
     private val _statusCreate = MutableLiveData<Boolean>()
 
@@ -40,11 +42,10 @@ class CreateVideoViewModel: ViewModel() {
     private val _imagePath = MutableLiveData<String>()
     val nameCates : LiveData<List<String>> get() = _nameCate
     val videoData: LiveData<Pair<String, MultipartBody.Part>> get() = _videoData
-    val imageData: LiveData<Pair<String, MultipartBody.Part>> get() = _imageData
+    val imageData: LiveData<Pair<String, MultipartBody.Part?>> get() = _imageData
     val statusCreate : LiveData<Boolean> get() = _statusCreate
 
     private var uploadJob: Job? = null
-
     fun setIdUser(msisdn: String){
         getAllRepo(msisdn)
     }
@@ -132,23 +133,30 @@ class CreateVideoViewModel: ViewModel() {
     }
 
     private suspend fun uploadImage(msisdn: String): Boolean {
-        return try {
-            val result = videoRepository.uploadImage(msisdn, _imageData.value!!.first, _imageData.value!!.second)
-            if (result.code == 200) {
-                _imagePath.value = result.mediaPath
-                Log.e("uploadImageViewodel", "Done")
-                true
-            } else {
+        if(_imageData.value?.first != "") {
+            return try {
+                val result = videoRepository.uploadImage(
+                    msisdn,
+                    _imageData.value!!.first,
+                    _imageData.value!!.second!!
+                )
+                if (result.code == 200) {
+                    _imagePath.value = result.mediaPath
+                    Log.e("uploadImageViewodel", "Done")
+                    true
+                } else {
+                    _imagePath.value = ""
+                    Log.e("uploadImageViewodel", "Fail")
+                    false
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
                 _imagePath.value = ""
-                Log.e("uploadImageViewodel", "Fail")
+                Log.e("uploadImageViewodel", "Fail exception")
                 false
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            _imagePath.value = ""
-            Log.e("uploadImageViewodel", "Fail exception")
-            false
         }
+        return true
     }
     fun createVideo(msisdn: String) {
         uploadJob = viewModelScope.launch {
