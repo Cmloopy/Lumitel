@@ -16,4 +16,26 @@ object TimeFormat {
         val seconds = milliseconds / 1000 % 60
         return String.format("%02d:%02d", minutes, seconds)
     }
+
+    fun getTimeAgo(timestamp: Long): String {
+        val now = System.currentTimeMillis()
+        val diff = now - timestamp
+
+        val seconds = diff / 1000
+        val minutes = seconds / 60
+        val hours = minutes / 60
+        val days = hours / 24
+        val months = days / 30
+        val years = days / 365
+
+        return when {
+            seconds < 60 -> "vừa xong"
+            minutes < 60 -> "$minutes phút trước"
+            hours < 24 -> "$hours giờ trước"
+            days < 30 -> "$days ngày trước"
+            months < 12 -> "$months tháng trước"
+            else -> "$years năm trước"
+        }
+    }
+
 }

@@ -54,6 +54,7 @@
             android:maxLines="3"
             android:text="100 ngày đạp bẫy trong Terraria (Master Mode)" />
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txt_video_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"

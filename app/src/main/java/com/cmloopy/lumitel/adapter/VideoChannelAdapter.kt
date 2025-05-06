@@ -16,10 +16,14 @@ class VideoChannelAdapter(private var listVideo: List<Video>, private val onClic
         private val videoText = itemView.findViewById<MaterialTextView>(R.id.video_title)
         private val img = itemView.findViewById<ShapeableImageView>(R.id.img_video_length_image)
         private val duration = itemView.findViewById<MaterialTextView>(R.id.textDuration)
+        private val videoInfo = itemView.findViewById<MaterialTextView>(R.id.txt_video_info)
         fun bind(video:Video){
             videoText.text = video.videoTitle
             Glide.with(itemView.context).load(video.videoImage).into(img)
             duration.text = TimeFormat.formatTime(video.videoTime)
+            val totalView = video.totalViews.toString()
+            val timePublish = TimeFormat.getTimeAgo(video.publishTime)
+            videoInfo.text = "${totalView} lượt xem - ${timePublish}"
 
             itemView.setOnClickListener {
                 onClick(video.id)
