@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Lumitel</string>
     <string name="home">Home</string>
     <string name="phone">Phone</string>
@@ -10,8 +10,8 @@
     <string name="theo_d_i">Theo dõi</string>
     <string name="test_text_1">Thủ Tướng Chỉ Đạo 10 Tỉnh, Thành Phố Chuẩn Bị Sẵn Sàng Để Hỗ Trợ Hà Nội Phòng, Chống Dịch Covid-19 | Tin Nóng ANTV</string>
     <string name="yoonhee_official">Yoonhee Official</string>
-    <string name="test_text_2">Available @ https://BLACKPINK.lnk.to/SQUAREONEFA\n\n#BLACKPINK #붐바야 #BOOMBAYAH #DEBUTSINGLE\n#SQUAREONE #DEBUT #YG\nMore about BLACKPINK\n@ http://blackpinkofficial.com\nhttps://www.facebook.com/BLACKPINKOFF...\nhttp://www.youtube.com/BLACKPINKOFFICIAL\nhttp://www.twitter.com/ygent_official\nhttp://www.instagram.com/BLACKPINKOFF...</string>
-    <string name="add_a_public_comment">Add a public comment...</string>
+    <string name="test_text_2" tools:ignore="TypographyEllipsis">Available @ https://BLACKPINK.lnk.to/SQUAREONEFA\n\n#BLACKPINK #붐바야 #BOOMBAYAH #DEBUTSINGLE\n#SQUAREONE #DEBUT #YG\nMore about BLACKPINK\n@ http://blackpinkofficial.com\nhttps://www.facebook.com/BLACKPINKOFF…\nhttp://www.youtube.com/BLACKPINKOFFICIAL\nhttp://www.twitter.com/ygent_official\nhttp://www.instagram.com/BLACKPINKOFF...</string>
+    <string name="add_a_public_comment" tools:ignore="TypographyEllipsis">Add a public comment...</string>
     <string name="test_text">These are really commendable. The more you try to learn engineering, the more interesting it becomes. Sir I request you to make a detailed video on Ultra High</string>
     <string name="time_wall">  /  </string>
     <string name="defaute_time">00:00</string>
@@ -19,7 +19,7 @@
     <string name="fullScreen">Toàn màn hình</string>
     <string name="xu_t">Đề xuất</string>
     <string name="gautv">GauTV</string>
-    <string name="kh_ng_c_d_li_u">Không có dữ liệu...</string>
+    <string name="kh_ng_c_d_li_u" tools:ignore="TypographyEllipsis">Không có dữ liệu...</string>
     <string name="my_channel">My Channel</string>
     <string name="turn_on_off_video_autoplay">Turn On/Off video autoplay</string>
     <string name="library">Library</string>
@@ -30,7 +30,7 @@
     <string name="select_video_file">Select video file</string>
     <string name="only_support_video_under_200mb">Only support video under 200MB</string>
     <string name="choose_file">Choose file</string>
-    <string name="video_infomation">Video Infomation</string>
+    <string name="video_infomation">Video Information</string>
     <string name="enter_video_description">Enter video description</string>
     <string name="enter_video_title">Enter video title</string>
     <string name="select_category">Select category</string>
@@ -45,7 +45,7 @@
     <string name="create">Create</string>
     <string name="you_don_t_have_channel_create_now">You don\'t have channel, create now?</string>
     <string name="ok">OK</string>
-    <string name="your_channel_was_created_succesfully">Your Channel was created succesfully!</string>
+    <string name="your_channel_was_created_succesfully">Your Channel was created successfully!</string>
     <string name="your_channel_is_waiting_approval">Your Channel is waiting approval!</string>
     <string name="k_nh_ng_k">Kênh đã đăng kí</string>
     <string name="string_contact">-</string>
@@ -53,4 +53,7 @@
     <string name="_12m_views">12M views</string>
     <string name="_100_ng_y_p_b_y_trong_terraria_master_mode">100 ngày đạp bẫy trong Terraria (Master Mode)</string>
     <string name="_33n_l_t_xem_6_gi_tr_c">33N lượt xem - 6 giờ trước</string>
+    <string name="_5_08">5:08</string>
+    <string name="em_n_kh_ng_remix_so_i_nhi_x_orinn_x_guang">EM ỔN KHÔNG REMIX - SOÁI NHI x ORINN x GUANG</string>
+    <string name="_1_months_ago">1 months ago</string>
 </resources>

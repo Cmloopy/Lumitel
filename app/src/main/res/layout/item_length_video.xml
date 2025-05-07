@@ -34,7 +34,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/custom_text_time_video"
-            android:text="5:08"
+            android:text="@string/_5_08"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -73,7 +73,7 @@
                 android:textStyle="bold"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:text="EM ỔN KHÔNG REMIX - SOÁI NHI x ORINN x GUANG"/>
+                android:text="@string/em_n_kh_ng_remix_so_i_nhi_x_orinn_x_guang"/>
             
             <LinearLayout
                 android:orientation="horizontal"
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="11sp"
                     android:textColor="@color/non_black"
-                    android:text="1 months ago"/>
+                    android:text="@string/_1_months_ago"/>
             </LinearLayout>
         </LinearLayout>
 

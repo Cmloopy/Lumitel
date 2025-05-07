@@ -26,7 +26,7 @@
         android:id="@+id/textDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5:08"
+        android:text="@string/_5_08"
         android:textColor="@android:color/white"
         android:background="@drawable/custom_text_time_video"
         android:paddingHorizontal="6dp"
@@ -61,7 +61,8 @@
             android:maxLines="1"
             android:textSize="10sp"
             android:textColor="@color/non_gray"
-            android:text="@string/_33n_l_t_xem_6_gi_tr_c"/>
+            android:text="@string/_33n_l_t_xem_6_gi_tr_c"
+            tools:ignore="SmallSp" />
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
