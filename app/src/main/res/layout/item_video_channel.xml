@@ -51,8 +51,9 @@
             android:id="@+id/video_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="3"
-            android:text="100 ngày đạp bẫy trong Terraria (Master Mode)" />
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@string/_100_ng_y_p_b_y_trong_terraria_master_mode" />
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_video_info"
             android:layout_width="match_parent"
@@ -60,7 +61,7 @@
             android:maxLines="1"
             android:textSize="10sp"
             android:textColor="@color/non_gray"
-            android:text="33N lượt xem - 6 giờ trước"/>
+            android:text="@string/_33n_l_t_xem_6_gi_tr_c"/>
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView

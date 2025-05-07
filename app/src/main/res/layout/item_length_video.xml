@@ -86,19 +86,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="11sp"
+                    android:maxEms="15"
                     android:textColor="@color/non_black"
-                    android:text="Orinn Deep"/>
+                    android:text="@string/orinn_deep"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_contact"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"/>
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_view_video"
-                    android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="11sp"
                     android:textColor="@color/non_black"
-                    android:text="12M views"/>
+                    android:text="@string/_12m_views"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_contact"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"/>
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_updated_at"
-                    android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="11sp"
