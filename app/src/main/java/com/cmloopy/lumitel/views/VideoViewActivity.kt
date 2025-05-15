@@ -10,13 +10,13 @@ import androidx.core.view.WindowCompat
 import com.cmloopy.lumitel.adapter.VideoViewAdapter
 import com.cmloopy.lumitel.viewmodels.VideoViewModel
 import com.cmloopy.lumitel.data.models.video.Video
-import com.cmloopy.lumitel.databinding.ActivityVideoViewRemakeBinding
+import com.cmloopy.lumitel.databinding.ActivityVideoViewBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
 import com.cmloopy.lumitel.utils.DialogUtils
 
 @Suppress("DEPRECATION")
 class VideoViewActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityVideoViewRemakeBinding
+    private lateinit var binding: ActivityVideoViewBinding
     private val viewModel: VideoViewModel by viewModels()
     private lateinit var adapter : VideoViewAdapter
     private var idCategory = -1
@@ -28,7 +28,7 @@ class VideoViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVideoViewRemakeBinding.inflate(layoutInflater)
+        binding = ActivityVideoViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)

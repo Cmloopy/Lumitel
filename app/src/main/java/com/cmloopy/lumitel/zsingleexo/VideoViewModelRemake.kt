@@ -1,4 +1,6 @@
 package com.cmloopy.lumitel.zsingleexo
 
-class VideoViewModelRemake {
+import androidx.lifecycle.ViewModel
+
+class VideoViewModelRemake: ViewModel() {
 }
