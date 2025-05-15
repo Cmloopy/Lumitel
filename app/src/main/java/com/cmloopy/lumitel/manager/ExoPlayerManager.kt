@@ -12,6 +12,8 @@ import androidx.media3.datasource.cache.CacheWriter
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import com.cmloopy.lumitel.LumitelApp
+import kotlinx.coroutines.*
+
 @UnstableApi
 object ExoPlayerManager {
     private var exoPlayer: ExoPlayer? = null
@@ -46,19 +48,19 @@ object ExoPlayerManager {
         exoPlayer?.playWhenReady = true
     }
     fun preloadVideo(url: String) {
-        val dataSpec = DataSpec(Uri.parse(url))
-        val cacheWriter = CacheWriter(
-            cacheDataSourceFactory!!.createDataSource(),
-            dataSpec,
-            null,
-            null
-        )
-        Thread {
+        CoroutineScope(Dispatchers.IO).launch {
+            val dataSpec = DataSpec(Uri.parse(url))
+            val cacheWriter = CacheWriter(
+                cacheDataSourceFactory!!.createDataSource(),
+                dataSpec,
+                null,
+                null
+            )
             try {
                 cacheWriter.cache()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }.start()
+        }
     }
 }

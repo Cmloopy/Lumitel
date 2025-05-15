@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cmloopy.lumitel.views.VideoViewActivityRemake
+import com.cmloopy.lumitel.views.VideoViewActivity
 import com.cmloopy.lumitel.viewmodels.VideoCateViewModel
 import com.cmloopy.lumitel.adapter.LengthVideoAdapter
 import com.cmloopy.lumitel.adapter.ShortVideoAdapter
@@ -127,7 +127,7 @@ class VideoCateFragment : Fragment() {
         }
         //Test
         viewModel.idVideo.observe(viewLifecycleOwner) {idVideo ->
-            val intent = Intent(requireContext(), VideoViewActivityRemake::class.java)
+            val intent = Intent(requireContext(), VideoViewActivity::class.java)
             intent.putExtra("idVideo", idVideo)
             intent.putExtra("idCategory", idCategory)
             intent.putExtra("isFromChannel", false)

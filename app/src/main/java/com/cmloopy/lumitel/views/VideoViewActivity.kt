@@ -8,16 +8,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.cmloopy.lumitel.adapter.VideoViewAdapter
-import com.cmloopy.lumitel.viewmodels.VideoViewModelRemake
+import com.cmloopy.lumitel.viewmodels.VideoViewModel
 import com.cmloopy.lumitel.data.models.video.Video
 import com.cmloopy.lumitel.databinding.ActivityVideoViewRemakeBinding
 import com.cmloopy.lumitel.fragment.bottomsheet.BottomSheetComment
 import com.cmloopy.lumitel.utils.DialogUtils
 
 @Suppress("DEPRECATION")
-class VideoViewActivityRemake : AppCompatActivity() {
+class VideoViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVideoViewRemakeBinding
-    private val viewModel: VideoViewModelRemake by viewModels()
+    private val viewModel: VideoViewModel by viewModels()
     private lateinit var adapter : VideoViewAdapter
     private var idCategory = -1
     private var idVideo = -1

@@ -10,7 +10,7 @@ import com.cmloopy.lumitel.data.repository.ChannelRepository
 import com.cmloopy.lumitel.data.repository.VideoRepository
 import kotlinx.coroutines.launch
 
-class VideoViewModelRemake : ViewModel() {
+class VideoViewModel : ViewModel() {
 
     private val channelRepo = ChannelRepository()
     private val videoRepo = VideoRepository()

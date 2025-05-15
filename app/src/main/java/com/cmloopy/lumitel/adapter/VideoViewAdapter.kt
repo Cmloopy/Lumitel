@@ -63,7 +63,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
         private var txtNameChannel: MaterialTextView = itemView.findViewById(R.id.txt_name_channel)
         private var txtVideoDesc: MaterialTextView = itemView.findViewById(R.id.txt_video_desc)
 
-        private var linearTitile: LinearLayout = itemView.findViewById(R.id.linearLayout_title_short)
+        private var linearTitle: LinearLayout = itemView.findViewById(R.id.linearLayout_title_short)
         private var linearTimeShort: LinearLayout = itemView.findViewById(R.id.linearLayout_timeShort)
         private var linearSettingVideoPlay: LinearLayout = itemView.findViewById(R.id.ln_setting_video_play)
         private var linearLikeCmtShare: LinearLayout = itemView.findViewById(R.id.linearLayout_like_cmt_share_short)
@@ -144,7 +144,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
                     player?.pause()
                     handler.removeCallbacksAndMessages(null)
-                    linearTitile.visibility = View.GONE
+                    linearTitle.visibility = View.GONE
                     linearLikeCmtShare.visibility = View.GONE
                     linearTimeShort.visibility = View.VISIBLE
                     linearSettingVideoPlay.visibility = View.VISIBLE
@@ -156,7 +156,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                     player?.play()
                     if (!isRotate) {
-                        linearTitile.visibility = View.VISIBLE
+                        linearTitle.visibility = View.VISIBLE
                         linearLikeCmtShare.visibility = View.VISIBLE
                         btnPauseResume.visibility = View.GONE
                         btnBackward.visibility = View.GONE
@@ -246,7 +246,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                 hideControl()
                 btnFullScreen.visibility = View.GONE
                 linearLikeCmtShare.visibility = View.GONE
-                linearTitile.visibility = View.GONE
+                linearTitle.visibility = View.GONE
             }
             btnBackToPortrait.setOnClickListener {
                 isRotate = false
@@ -256,7 +256,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
                 seekBar.visibility = View.VISIBLE
                 btnFullScreen.visibility = View.VISIBLE
                 linearLikeCmtShare.visibility = View.VISIBLE
-                linearTitile.visibility = View.VISIBLE
+                linearTitle.visibility = View.VISIBLE
             }
             btnPauseResume.setOnClickListener {
                 if (isRotate) {

@@ -9,7 +9,7 @@ import androidx.media3.datasource.cache.SimpleCache
 class LumitelApp: Application() {
     companion object {
         lateinit var simpleCache: SimpleCache
-        const val EXOCACHESIZE: Long = 100 * 1024 * 1024
+        const val EXOCACHESIZE: Long = 200 * 1024 * 1024
         lateinit var leastRecentlyUsedCacheEvictor: LeastRecentlyUsedCacheEvictor
         lateinit var exoDatabaseProvider: StandaloneDatabaseProvider
     }
@@ -18,5 +18,9 @@ class LumitelApp: Application() {
         leastRecentlyUsedCacheEvictor = LeastRecentlyUsedCacheEvictor(EXOCACHESIZE)
         exoDatabaseProvider = StandaloneDatabaseProvider(this)
         simpleCache = SimpleCache(cacheDir, leastRecentlyUsedCacheEvictor, exoDatabaseProvider)
+    }
+    override fun onTerminate() {
+        super.onTerminate()
+        simpleCache.release()
     }
 }
