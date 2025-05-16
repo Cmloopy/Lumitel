@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpg_short_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/btn_drop_back"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:padding="5dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ic_drop_down"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/btn_create_new"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:padding="5dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="11dp"
+        android:src="@drawable/ic_create"/>
+</FrameLayout>

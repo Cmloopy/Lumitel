@@ -18,6 +18,8 @@ import kotlinx.coroutines.*
 object ExoPlayerManager {
     private var exoPlayer: ExoPlayer? = null
     private var cacheDataSourceFactory: CacheDataSource.Factory? = null
+    private var currentUrl: String? = null
+
     fun getPlayer(context: Context): ExoPlayer {
         if (exoPlayer == null) {
             val dataSourceFactory = DefaultDataSource.Factory(context)
@@ -25,42 +27,72 @@ object ExoPlayerManager {
                 .setCache(LumitelApp.simpleCache)
                 .setUpstreamDataSourceFactory(dataSourceFactory)
                 .setFlags(CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR)
+
             exoPlayer = ExoPlayer.Builder(context)
                 .setMediaSourceFactory(DefaultMediaSourceFactory(cacheDataSourceFactory!!))
                 .build()
         }
         return exoPlayer!!
     }
-    fun releasePlayer() {
-        exoPlayer?.release()
-        exoPlayer = null
+
+    fun play(context: Context, videoUrl: String) {
+        val player = getPlayer(context)
+
+        if (currentUrl != videoUrl) {
+            val mediaItem = MediaItem.fromUri(videoUrl)
+            val mediaSource = DefaultMediaSourceFactory(cacheDataSourceFactory!!).createMediaSource(mediaItem)
+            player.setMediaSource(mediaSource)
+            /*player.setMediaItem(mediaItem)*/
+            player.prepare()
+            currentUrl = videoUrl
+        }
+
+        player.repeatMode = Player.REPEAT_MODE_ALL
+        player.playWhenReady = true
     }
-    fun pauseVideo() {
+
+    fun pause() {
         exoPlayer?.pause()
     }
-    fun resumeVideo(){
+    fun resume() {
         exoPlayer?.play()
     }
-    fun play(mediaItem: MediaItem) {
-        exoPlayer?.setMediaItem(mediaItem)
-        exoPlayer?.prepare()
-        exoPlayer?.repeatMode = Player.REPEAT_MODE_ALL
-        exoPlayer?.playWhenReady = true
+    fun release() {
+        exoPlayer?.release()
+        exoPlayer = null
+        currentUrl = null
     }
+
     fun preloadVideo(url: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val dataSpec = DataSpec(Uri.parse(url))
-            val cacheWriter = CacheWriter(
-                cacheDataSourceFactory!!.createDataSource(),
-                dataSpec,
-                null,
-                null
-            )
             try {
+                if (isVideoCached(url)) return@launch
+
+                val dataSpec = DataSpec.Builder()
+                    .setUri(Uri.parse(url))
+                    .setLength(1 * 1024 * 1024)
+                    .build()
+                val cacheWriter = CacheWriter(
+                    cacheDataSourceFactory!!.createDataSource(),
+                    dataSpec,
+                    null,
+                    null
+                )
                 cacheWriter.cache()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
+    private fun isVideoCached(url: String): Boolean {
+        val uri = Uri.parse(url)
+        val key = uri.toString()
+        val spans = LumitelApp.simpleCache.getCachedSpans(key)
+        var cachedBytes = 0L
+        for (span in spans) {
+            cachedBytes += span.length
+        }
+        return cachedBytes > 100 * 1024
+    }
+
 }

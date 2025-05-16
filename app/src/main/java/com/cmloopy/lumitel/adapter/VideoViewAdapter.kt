@@ -1,5 +1,6 @@
 package com.cmloopy.lumitel.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Handler
@@ -27,7 +28,8 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 import kotlin.math.max
 import kotlin.math.min
-
+@Suppress("DEPRECATION")
+@SuppressLint("SetTextI18n")
 class VideoViewAdapter(private var listVideo: List<Video>, private val context: Context, private val msisdn: String,
                        private val onCommentClick: (Video) -> Unit,
                        private val onRotateClick: (Boolean) -> Unit,
@@ -73,9 +75,9 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
 
         var btnBackToPortrait: ShapeableImageView = itemView.findViewById(R.id.btn_back_to_portrait)
         fun bind(video: Video, position: Int) {
-            scLike.text = video.totalLikes.toString()
-            scCmt.text = video.totalComments.toString()
-            scShare.text = video.totalShares.toString()
+            scLike.text = ViewTimeFormat.getTotalView(video.totalViews)
+            scCmt.text = ViewTimeFormat.getTotalView(video.totalComments)
+            scShare.text = ViewTimeFormat.getTotalView(video.totalShares)
             txtNameChannel.text = video.channel.channelName
             txtVideoDesc.text = "${video.videoTitle}\n${video.videoDesc}"
             txtVideoDesc.setOnClickListener {
@@ -242,7 +244,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
             }
             btnFullScreen.setOnClickListener {
                 isRotate = true
-                onRotateClick(isRotate)
+                onRotateClick(true)
                 hideControl()
                 btnFullScreen.visibility = View.GONE
                 linearLikeCmtShare.visibility = View.GONE
@@ -250,7 +252,7 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
             }
             btnBackToPortrait.setOnClickListener {
                 isRotate = false
-                onRotateClick(isRotate)
+                onRotateClick(false)
                 handler.removeCallbacksAndMessages(null)
                 hideControl()
                 seekBar.visibility = View.VISIBLE
@@ -293,15 +295,14 @@ class VideoViewAdapter(private var listVideo: List<Video>, private val context: 
             }
             btnMuteUnmute.setOnClickListener {
                 if (isMute) {
-                    player?.volume = 1.0f; // Bật âm thanh
+                    player?.volume = 1.0f
                     btnMuteUnmute.setImageResource(R.drawable.ic_unmute)
                 } else {
-                    player?.volume = 0f; // Tắt âm thanh
+                    player?.volume = 0f
                     btnMuteUnmute.setImageResource(R.drawable.ic_mute)
                 }
-                isMute = !isMute;
+                isMute = !isMute
             }
-            //Xử lý tua đi & tua ngược 10s Video
             btnBackward.setOnClickListener {
                 handler.removeCallbacksAndMessages(null)
                 val newPosition = max(0, player!!.currentPosition - 10000)

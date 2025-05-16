@@ -47,6 +47,7 @@ object ViewTimeFormat {
         val bView = totalView / 1000000000.0
 
         return when {
+            totalView < 1000 -> "$totalView lượt xem"
             totalView < 1_000_000 -> "${df.format(nView)}K lượt xem"
             totalView < 1_000_000_000 -> "${df.format(mView)}M lượt xem"
             else -> "${df.format(bView)}T lượt xem"
