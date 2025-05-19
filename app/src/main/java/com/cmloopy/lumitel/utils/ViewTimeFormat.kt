@@ -4,9 +4,9 @@ import java.text.DecimalFormat
 
 object ViewTimeFormat {
     fun formatTime(time: String): String{
-        val timee = time.toInt()
-        val minute = timee / 60
-        val sec = timee % 60
+        val uploadTime = time.toInt()
+        val minute = uploadTime / 60
+        val sec = uploadTime % 60
         return if(sec > 9) {
             "$minute:$sec"
         } else {
@@ -53,5 +53,18 @@ object ViewTimeFormat {
             else -> "${df.format(bView)}T lượt xem"
         }
     }
+    fun formatTotal(totalView: Int): String {
+        val df = DecimalFormat("#.#")
 
+        val nView = totalView / 1000.0
+        val mView = totalView / 1000000.0
+        val bView = totalView / 1000000000.0
+
+        return when {
+            totalView < 1000 -> "$totalView"
+            totalView < 1_000_000 -> "${df.format(nView)}K"
+            totalView < 1_000_000_000 -> "${df.format(mView)}M"
+            else -> "${df.format(bView)}T"
+        }
+    }
 }

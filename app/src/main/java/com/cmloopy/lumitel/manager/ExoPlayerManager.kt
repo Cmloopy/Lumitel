@@ -12,10 +12,12 @@ import androidx.media3.datasource.cache.CacheWriter
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import com.cmloopy.lumitel.LumitelApp
+import com.cmloopy.lumitel.utils.ViewTimeFormat
 import kotlinx.coroutines.*
 
 @UnstableApi
 object ExoPlayerManager {
+    private const val PRECACHE_SIZE = 3 * 1024 * 1024L
     private var exoPlayer: ExoPlayer? = null
     private var cacheDataSourceFactory: CacheDataSource.Factory? = null
     private var currentUrl: String? = null
@@ -42,7 +44,6 @@ object ExoPlayerManager {
             val mediaItem = MediaItem.fromUri(videoUrl)
             val mediaSource = DefaultMediaSourceFactory(cacheDataSourceFactory!!).createMediaSource(mediaItem)
             player.setMediaSource(mediaSource)
-            /*player.setMediaItem(mediaItem)*/
             player.prepare()
             currentUrl = videoUrl
         }
@@ -62,7 +63,24 @@ object ExoPlayerManager {
         exoPlayer = null
         currentUrl = null
     }
-
+    fun getStatus(): Boolean{
+        return exoPlayer?.isPlaying ?: false
+    }
+    fun getDuration(): Long{
+        return exoPlayer?.duration ?: 0L
+    }
+    fun getCurrentPosition(): Long{
+        return exoPlayer?.currentPosition ?: 0
+    }
+    fun seekTo(newDuration: Long){
+        exoPlayer?.seekTo(newDuration)
+    }
+    fun mute(){
+        exoPlayer?.volume = 0f
+    }
+    fun unMute(){
+        exoPlayer?.volume = 1f
+    }
     fun preloadVideo(url: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -70,7 +88,7 @@ object ExoPlayerManager {
 
                 val dataSpec = DataSpec.Builder()
                     .setUri(Uri.parse(url))
-                    .setLength(1 * 1024 * 1024)
+                    .setLength(PRECACHE_SIZE)
                     .build()
                 val cacheWriter = CacheWriter(
                     cacheDataSourceFactory!!.createDataSource(),

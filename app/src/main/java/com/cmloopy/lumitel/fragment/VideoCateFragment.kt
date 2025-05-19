@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cmloopy.lumitel.views.VideoViewActivity
 import com.cmloopy.lumitel.viewmodels.VideoCateViewModel
 import com.cmloopy.lumitel.adapter.LengthVideoAdapter
 import com.cmloopy.lumitel.adapter.ShortVideoAdapter
 import com.cmloopy.lumitel.databinding.FragmentVideoCateBinding
+import com.cmloopy.lumitel.zsingleexo.VideoViewActivityRemake
 
 class VideoCateFragment : Fragment() {
     private lateinit var binding: FragmentVideoCateBinding
@@ -81,6 +83,7 @@ class VideoCateFragment : Fragment() {
         }
     }
 
+    @OptIn(UnstableApi::class)
     private fun observeViewModel() {
         viewModel.videos.observe(viewLifecycleOwner) { videos ->
             shortAdapter.updateData(videos)
@@ -127,7 +130,7 @@ class VideoCateFragment : Fragment() {
         }
         //Test
         viewModel.idVideo.observe(viewLifecycleOwner) {idVideo ->
-            val intent = Intent(requireContext(), VideoViewActivity::class.java)
+            val intent = Intent(requireContext(), VideoViewActivityRemake::class.java)
             intent.putExtra("idVideo", idVideo)
             intent.putExtra("idCategory", idCategory)
             intent.putExtra("isFromChannel", false)

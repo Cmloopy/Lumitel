@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cmloopy.lumitel.adapter.ShortCateAdapter
 import com.cmloopy.lumitel.databinding.FragmentShortCateBinding
 import com.cmloopy.lumitel.viewmodels.VideoCateViewModel
-import com.cmloopy.lumitel.views.VideoViewActivity
+import com.cmloopy.lumitel.zsingleexo.VideoViewActivityRemake
 
 class ShortCateFragment : Fragment() {
     private lateinit var binding: FragmentShortCateBinding
@@ -63,6 +65,7 @@ class ShortCateFragment : Fragment() {
         binding.recycleViewShortCate.layoutManager = GridLayoutManager(requireContext(),2)
         binding.recycleViewShortCate.adapter = adapter
     }
+    @OptIn(UnstableApi::class)
     private fun observeViewModel() {
         viewModel.videos.observe(viewLifecycleOwner){videos ->
             adapter.updateData(videos)
@@ -98,7 +101,8 @@ class ShortCateFragment : Fragment() {
         }
 
         viewModel.idVideo.observe(viewLifecycleOwner) {idVideo ->
-            val intent = Intent(requireContext(), VideoViewActivity::class.java)
+            //val intent = Intent(requireContext(), VideoViewActivity::class.java)
+            val intent = Intent(requireContext(), VideoViewActivityRemake::class.java)
             intent.putExtra("idVideo", idVideo)
             intent.putExtra("idCategory", idCategory)
             intent.putExtra("isFromChannel",false)
